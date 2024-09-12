@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cadastro de Usuário"
+            android:textSize="24sp"
+            android:textColor="#1A1F71"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <EditText
+            android:id="@+id/edtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome Completo"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp" />
+
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <EditText
+            android:id="@+id/edtIdade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Idade"
+            android:inputType="number"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <Button
+            android:id="@+id/btnCadastrarUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cadastrar"
+            android:backgroundTint="#A3E635"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="244dp"
+            android:layout_height="268dp"
+            android:paddingTop="100px"
+            app:srcCompat="@drawable/logomaratona" />
+    </LinearLayout>
+</ScrollView>
+
+
