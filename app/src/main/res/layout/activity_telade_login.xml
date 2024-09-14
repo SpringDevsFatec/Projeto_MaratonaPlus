@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="Logo do aplicativo"
+        android:src="@drawable/logomaratona" />
+
+    <EditText
+        android:id="@+id/edtEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:backgroundTint="#1A1F71"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/edtSenha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Senha"
+        android:inputType="textPassword"
+        android:backgroundTint="#1A1F71"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entrar"
+        android:backgroundTint="#A3E635"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:id="@+id/tvCadastrar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Não tem conta? Cadastre-se"
+        android:textColor="#A3E635"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold" />
+</LinearLayout>
