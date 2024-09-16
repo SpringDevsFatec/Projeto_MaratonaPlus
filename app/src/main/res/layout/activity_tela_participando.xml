@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tela_participando">
+
+    <LinearLayout
+        android:layout_width="408dp"
+        android:layout_height="732dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="-1dp">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:background="#A3E635"
+            android:text="Você está participando dessa maratona"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            android:textColorLink="#000000"
+            android:textSize="22sp"
+            android:textStyle="normal" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="406dp"
+            app:srcCompat="@drawable/maratona_cartoon" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Concluir Maratona"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="187dp"
+            app:srcCompat="@drawable/logo" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
