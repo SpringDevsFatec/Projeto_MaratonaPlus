@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TelaHub">
+
+
+    <LinearLayout
+        android:layout_width="362dp"
+        android:layout_height="361dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="16dp">
+
+        <TextView
+            android:id="@+id/edtHubUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Hub de Usuário"
+            android:textColor="#1A1F71"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnVisualizarMaratona"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Visualizar Maratonas Abertas"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnVisualizarMaratonaAberta"
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Visualizar Maratonas Inscritas"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnVisualizarMaratonaInscrita"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Visualizar Maratonas Criadas"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
