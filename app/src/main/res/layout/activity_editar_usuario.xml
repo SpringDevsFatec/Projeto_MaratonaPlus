@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cadastro de Corredor"
+            android:text="Editar Dados do Corredor"
             android:textSize="24sp"
             android:textColor="#1A1F71"
             android:textStyle="bold"
@@ -115,17 +116,16 @@
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Botão Cadastrar -->
+        <!-- Botão Atualizar -->
         <Button
-            android:id="@+id/btnCadastrarCorredor"
+            android:id="@+id/btnAtualizarCorredor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar"
-            android:backgroundTint="#A3E635"
+            android:text="Atualizar"
+            android:backgroundTint="#1A1F71"
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp" />
 
-        <!-- Imagem (logo opcional ou outra imagem relevante) -->
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="244dp"

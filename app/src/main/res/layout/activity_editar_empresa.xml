@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,18 +14,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cadastro de Corredor"
+            android:text="Editar Dados da Empresa"
             android:textSize="24sp"
             android:textColor="#1A1F71"
             android:textStyle="bold"
             android:layout_gravity="center" />
 
-        <!-- Nome -->
+        <!-- Nome da Empresa -->
         <EditText
-            android:id="@+id/edtNome"
+            android:id="@+id/edtNomeEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome Completo"
+            android:hint="Nome da Empresa"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="20dp" />
 
@@ -38,13 +39,22 @@
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Email -->
+        <!-- E-mail -->
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="E-mail"
             android:inputType="textEmailAddress"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Usuário -->
+        <EditText
+            android:id="@+id/edtUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Usuário"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
@@ -58,80 +68,61 @@
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Data de Nascimento -->
+        <!-- CNPJ -->
         <EditText
-            android:id="@+id/edtDataNascimento"
+            android:id="@+id/edtCnpj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Data de Nascimento (DD/MM/AAAA)"
-            android:inputType="date"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
-
-        <!-- CPF -->
-        <EditText
-            android:id="@+id/edtCpf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="CPF"
+            android:hint="CNPJ"
             android:inputType="number"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Endereço -->
+        <!-- Localização -->
         <EditText
-            android:id="@+id/edtEndereco"
+            android:id="@+id/edtLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Endereço"
+            android:hint="Localização"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Gênero -->
+        <!-- URL do Logo -->
         <EditText
-            android:id="@+id/edtGenero"
+            android:id="@+id/edtUrlLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Gênero"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
-
-        <!-- URL da Foto -->
-        <EditText
-            android:id="@+id/edtUrlFoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="URL da Foto"
+            android:hint="URL do Logo"
             android:inputType="textUri"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- País de Origem -->
+        <!-- Data de Criação -->
         <EditText
-            android:id="@+id/edtPaisOrigem"
+            android:id="@+id/edtDataNascimento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="País de Origem"
+            android:hint="Data de Criação (DD/MM/AAAA)"
+            android:inputType="date"
             android:backgroundTint="#1A1F71"
             android:layout_marginTop="10dp" />
 
-        <!-- Botão Cadastrar -->
+        <!-- Botão Atualizar -->
         <Button
-            android:id="@+id/btnCadastrarCorredor"
+            android:id="@+id/btnAtualizarEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar"
-            android:backgroundTint="#A3E635"
+            android:text="Atualizar Dados"
+            android:backgroundTint="#1A1F71"
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp" />
 
-        <!-- Imagem (logo opcional ou outra imagem relevante) -->
+        <!-- Imagem (logo ou outra imagem relevante) -->
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="244dp"
             android:layout_height="268dp"
             android:paddingTop="100px"
             app:srcCompat="@drawable/logomaratona" />
-
     </LinearLayout>
 </ScrollView>
