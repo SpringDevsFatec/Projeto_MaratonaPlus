@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TelaMaratona">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        tools:layout_editor_absoluteX="-79dp"
+        tools:layout_editor_absoluteY="-29dp">>
+
+        <TextView
+            android:id="@+id/edtTituloMaratona"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Nome da Maratona"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/edtDescricaoMaratona"
+            android:layout_width="375dp"
+            android:layout_height="182dp"
+            android:layout_marginTop="8dp"
+            android:text="Informações sobre a maratona..."
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnInscrever"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Inscrever-se" />
+
+        <Button
+            android:id="@+id/btnIniciarCorrida"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A3E635"
+            android:text="Iniciar Corrida" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
