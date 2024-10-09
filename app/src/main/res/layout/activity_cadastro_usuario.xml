@@ -14,11 +14,35 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cadastro de Usuário"
-            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:text="Cadastro "
             android:textColor="#1A1F71"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="Troca"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdbEmpresa"
+                android:layout_width="151dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="25dp"
+                android:text="Empresa"
+                android:textColor="#A3E635"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rdbRunner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Corredor"
+                android:textColor="#A3E635"
+                android:textStyle="bold" />
+        </RadioGroup>
 
         <EditText
             android:id="@+id/edtNome"
@@ -46,22 +70,60 @@
             android:layout_marginTop="10dp" />
 
         <EditText
-            android:id="@+id/edtIdade"
+            android:id="@+id/edtCpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Idade"
-            android:inputType="number"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Cpf"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edtCnpj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1A1F71"
+            android:hint="Cnpj"
+            android:inputType="number"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/edtOrigem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1A1F71"
+            android:hint="Pais de Origem"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/edtTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1A1F71"
+            android:hint="Telefone"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edtEndereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1A1F71"
+            android:hint="Endereco"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/btnCadastrarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cadastrar"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="20dp" />
+            android:onClick="Cadastrar"
+            android:text="Cadastrar"
+            android:textColor="#FFFFFF" />
 
         <ImageView
             android:id="@+id/imgLogo"

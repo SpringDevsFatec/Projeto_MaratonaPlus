@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Maratona"
         tools:targetApi="31">
+
+        <!-- Atividades da versão original -->
         <activity
+            android:name=".TelaHub"
             android:exported="false" />
         <activity
             android:name=".CadastroUsuario"
@@ -25,10 +28,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Atividade adicionada na outra versão -->
+        <activity
+            android:name="com.example.maratona.visualizar_abertas"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

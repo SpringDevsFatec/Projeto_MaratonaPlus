@@ -30,21 +30,44 @@
         android:backgroundTint="#1A1F71"
         android:layout_marginTop="10dp" />
 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rdbEmpresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:text="Empresa"
+            android:textColor="#A3E635" />
+
+        <RadioButton
+            android:id="@+id/rdbRunner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Corredor"
+            android:textColor="#A3E635" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Entrar"
+        android:layout_marginTop="20dp"
         android:backgroundTint="#A3E635"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="20dp" />
+        android:onClick="Logar"
+        android:text="Entrar"
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvCadastrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="Tela_Cadastrar"
         android:text="Não tem conta? Cadastre-se"
         android:textColor="#A3E635"
-        android:layout_marginTop="20dp"
         android:textStyle="bold" />
 </LinearLayout>

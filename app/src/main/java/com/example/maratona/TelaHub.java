@@ -1,6 +1,8 @@
 package com.example.maratona;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,5 +22,34 @@ public class TelaHub extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
+
+    public void Maratonas_Abertas(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, visualizar_abertas.class);
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+    public void Maratonas_Concluidas(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, visualizarConcluidas.class);
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+    public void Maratonas_Inscritas(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, visualizarInscritas.class);
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+
+    public void voltar(View view){
+        finish();
     }
 }
