@@ -6,10 +6,11 @@
     android:padding="20dp">
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -48,26 +49,26 @@
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome Completo"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="20dp" />
+            android:hint="Nome Completo" />
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="E-mail" />
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Senha"
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/edtCpf"
