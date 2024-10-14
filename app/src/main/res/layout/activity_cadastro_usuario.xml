@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="TrocaAdm"
     android:padding="20dp">
 
     <LinearLayout
@@ -32,6 +33,7 @@
                 android:layout_width="151dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="25dp"
+                android:onClick="TrocaAdm"
                 android:text="Empresa"
                 android:textColor="#A3E635"
                 android:textStyle="bold" />
@@ -40,6 +42,7 @@
                 android:id="@+id/rdbRunner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="TrocaCorredor"
                 android:text="Corredor"
                 android:textColor="#A3E635"
                 android:textStyle="bold" />

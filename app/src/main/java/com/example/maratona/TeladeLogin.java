@@ -15,7 +15,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.maratona.dao.CorredoresDAO;
 import com.example.maratona.dao.EmpresasDAO;
+import com.example.maratona.dao.MaratonasDAO;
 
 public class TeladeLogin extends AppCompatActivity {
 
@@ -54,23 +56,28 @@ public class TeladeLogin extends AppCompatActivity {
             Toast.makeText(this, "O campo Email não pode estar vazio", Toast.LENGTH_SHORT).show();
         } else if(senha.trim().isEmpty()) {
             Toast.makeText(this, "O campo Senha não pode estar vazio", Toast.LENGTH_SHORT).show();
-        }else {
+        }else if(!rdbRunner.isChecked() && !rdbEmpresa.isChecked()) {
+            Toast.makeText(this, "Escolha a forma de Login", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
-            if(rdbRunner.isChecked()){
+            if(rdbEmpresa.isChecked()){
                 // Lógica de buscar e comparar os dados
 
                 EmpresasDAO empresaDAO = new EmpresasDAO(this);
-                boolean loginValido = empresaDAO.verificarLoginEmpresa(email, senha);
+                int loginValido = empresaDAO.verificarLoginEmpresaId(email, senha);
 
-                if (loginValido) {
-                    // Login válido, prossiga com a lógica necessária
+                if (loginValido != -1) {
+
+
+                    Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
                     //Declarando uma variável do tipo Intent
                     Intent it = new Intent(this, TelaHub.class);
 
-                    // it.putExtra(
-                    //        "nome",
-                    //       nome
-                    //  );
+                     it.putExtra(
+                            "id",
+                           loginValido
+                      );
                     //Iniciando a Tela desejada (tela 2)
                     startActivity(it);
 
@@ -83,17 +90,27 @@ public class TeladeLogin extends AppCompatActivity {
 
             }else {
                 // Lógica de buscar e comparar os dados
+                CorredoresDAO corredorDAO = new CorredoresDAO(this);
+                int loginValido = corredorDAO.verificarLoginCorredorId(email, senha);
 
-                //Declarando uma variável do tipo Intent
-                Intent it = new Intent(this, TelaHub.class);
+                if (loginValido != -1) {
 
-                // it.putExtra(
-                //        "nome",
-                //       nome
-                //  );
-                //Iniciando a Tela desejada (tela 2)
-                startActivity(it);
 
+                    Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
+                    //Declarando uma variável do tipo Intent
+                    Intent it = new Intent(this, TelaAdm.class);
+
+                    it.putExtra(
+                            "id",
+                            loginValido
+                    );
+                    //Iniciando a Tela desejada (tela 2)
+                    startActivity(it);
+
+
+                } else {
+                    Toast.makeText(this, "Login inválido", Toast.LENGTH_SHORT).show();
+                }
             }
 
 

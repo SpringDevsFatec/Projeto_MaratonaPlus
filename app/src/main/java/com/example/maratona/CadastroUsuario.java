@@ -15,6 +15,11 @@ import androidx.core.view.WindowInsetsCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.maratona.dao.CorredoresDAO;
+import com.example.maratona.dao.EmpresasDAO;
+import com.example.maratona.model.Corredores;
+import com.example.maratona.model.Empresas;
+
 public class CadastroUsuario extends AppCompatActivity {
     // instanciando EditText
     private EditText edtNome;
@@ -44,6 +49,7 @@ public class CadastroUsuario extends AppCompatActivity {
         rdbEmpresa = findViewById(R.id.rdbEmpresa);
         edtNome = findViewById(R.id.edtNome);
         edtEmail = findViewById(R.id.edtEmail);
+        edtSenha = findViewById(R.id.edtSenha);
         edtCpf = findViewById(R.id.edtCpf);
         edtCnpj = findViewById(R.id.edtCnpj);
         edtEndereco = findViewById(R.id.edtEndereco);
@@ -61,48 +67,79 @@ public class CadastroUsuario extends AppCompatActivity {
         if (email.trim().isEmpty() ) {
             // O EditText está vazio
             Toast.makeText(this, "O campo Email não pode estar vazio", Toast.LENGTH_SHORT).show();
+            return;
         } else if(senha.trim().isEmpty()) {
             Toast.makeText(this, "O campo Senha não pode estar vazio", Toast.LENGTH_SHORT).show();
+            return;
         } else if(nome.trim().isEmpty()) {
             Toast.makeText(this, "O campo Nome não pode estar vazio", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if(rdbRunner.isChecked()) {
 
+            Corredores c = new Corredores();
+            c.setNome(edtNome.getText().toString());
+            c.setTelefone(edtTelefone.getText().toString());
+            c.setEmail(edtEmail.getText().toString());
+            c.setSenha(edtSenha.getText().toString());
+            c.setCpf(edtCpf.getText().toString());
+            c.setEndereco(edtEndereco.getText().toString());
+            c.setPaisOrigem(edtOrigem.getText().toString());
 
+            CorredoresDAO corredordao = new CorredoresDAO(this);
+
+            long id = corredordao.insert(c);
+            Toast.makeText(getApplicationContext(), "Corredor inserido com o ID " + id,
+                    Toast.LENGTH_LONG).show();
+
+
+            setResult(RESULT_OK);
             Log.d("aaaaa","aaaaaa");
 
-
-            //Declarando uma variável do tipo Intent
-            Intent it = new Intent(this, TelaHub.class);
-
-            //Iniciando a Tela desejada (tela 2)
-            startActivity(it);
+            finish();
 
         }else{
 
 
+            Empresas e = new Empresas();
+            e.setNome(edtNome.getText().toString());
+            e.setTelefone(edtTelefone.getText().toString());
+            e.setEmail(edtEmail.getText().toString());
+            e.setSenha(edtSenha.getText().toString());
+            e.setCnpj(edtCnpj.getText().toString());
+            e.setLocal(edtEndereco.getText().toString());
 
+            EmpresasDAO empresadao = new EmpresasDAO(this);
+
+            long id = empresadao.insert(e);
+            Toast.makeText(getApplicationContext(), "Empresa inserida com o ID " + id,
+                    Toast.LENGTH_LONG).show();
+
+
+            setResult(RESULT_OK);
+            Log.d("bbbb","bbbbb");
             //Declarando uma variável do tipo Intent
-            Intent it = new Intent(this, TelaHub.class);
 
-            //Iniciando a Tela desejada (tela 2)
-            startActivity(it);
 
+            finish();
         }
 
 
     }
 
-    public void Troca(View view) {
+    public void TrocaCorredor(View view) {
 
-        if(rdbEmpresa.isChecked()){
-            edtCpf.setVisibility(View.GONE);
-            edtCnpj.setVisibility(View.VISIBLE);
-        }if (rdbRunner.isChecked()){
             edtCnpj.setVisibility(View.GONE);
             edtCpf.setVisibility(View.VISIBLE);
-        }
+            edtOrigem.setVisibility(View.VISIBLE);
+
     }
+    public void TrocaAdm(View view) {
+            edtCpf.setVisibility(View.GONE);
+            edtOrigem.setVisibility(View.GONE);
+            edtCnpj.setVisibility(View.VISIBLE);
+    }
+
 
 }

@@ -113,4 +113,22 @@ public class EmpresasDAO {
         return existe;
     }
 
+    // Verificar login da empresa e retornar o id_empresa
+    public int verificarLoginEmpresaId(String email, String senha) {
+        String[] columns = {"id_empresa"};  // Coluna que queremos obter
+        String selection = "email = ? AND senha = ?";
+        String[] selectionArgs = {email, senha};
+
+        Cursor cursor = banco.query("empresa", columns, selection, selectionArgs, null, null, null);
+
+        // Se o cursor tiver algum resultado, significa que a combinação de email e senha existe
+        int idEmpresa = -1; // Valor padrão para indicar falha
+        if (cursor.moveToFirst()) {
+            idEmpresa = cursor.getInt(0);  // Obtém o id_empresa da primeira (e única) linha
+        }
+        cursor.close(); // Não se esqueça de fechar o cursor para liberar recursos
+        return idEmpresa; // Retorna o id da empresa ou -1 se não encontrar
+    }
+
+
 }

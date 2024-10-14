@@ -65,6 +65,17 @@ import java.util.List;
             banco.update("maratona", values, "id_maratona=?", args);
         }
 
+        // Atualizar status da maratona para "fechado"
+        public void fecharMaratona(int idMaratona) {
+            ContentValues values = new ContentValues();
+            values.put("status", "fechado");
+
+            // Atualiza a maratona com o id especificado
+            String[] args = {String.valueOf(idMaratona)};
+            banco.update("maratona", values, "id_maratona=?", args);
+        }
+
+
         // Deletar
         public void delete(Maratonas maratona) {
             String[] args = {String.valueOf(maratona.getId())};
@@ -95,6 +106,113 @@ import java.util.List;
                 maratona.setClima_esperado(cursor.getString(14));
                 maratonas.add(maratona);
             }
+            return maratonas;
+        }
+
+
+
+        // Obter todas as maratonas com status "aberta"
+        public List<Maratonas> obterMaratonasAbertas() {
+            List<Maratonas> maratonas = new ArrayList<>();
+
+            // Query para buscar maratonas onde o status é 'aberta'
+            Cursor cursor = banco.query("maratona",
+                    new String[]{"id_maratona", "id_empresa", "nome", "local", "data_inicio", "criador", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_criacao", "tipo_terreno", "clima_esperado"},
+                    "status = ?", // Cláusula WHERE
+                    new String[]{"aberta"}, // Parâmetro para o WHERE
+                    null, null, null);
+
+            while (cursor.moveToNext()) {
+                Maratonas maratona = new Maratonas();
+                maratona.setId(cursor.getInt(0));
+                maratona.setCriador(cursor.getInt(1));
+                maratona.setNome(cursor.getString(2));
+                maratona.setLocal(cursor.getString(3));
+                maratona.setData_inicio(Date.valueOf(cursor.getString(4))); // DATETIME
+                maratona.setCriador(Integer.parseInt(cursor.getString(5)));
+                maratona.setStatus(cursor.getString(6));
+                maratona.setDistancia(cursor.getString(7));
+                maratona.setDescricao(cursor.getString(8));
+                maratona.setLimite_participantes(cursor.getInt(9));
+                maratona.setRegras(cursor.getString(10));
+                maratona.setValor(cursor.getFloat(11));
+                maratona.setData_final(Date.valueOf(cursor.getString(12))); // TIMESTAMP
+                maratona.setTipo_terreno(cursor.getString(13));
+                maratona.setClima_esperado(cursor.getString(14));
+                maratonas.add(maratona);
+            }
+
+            cursor.close(); // Não se esqueça de fechar o cursor
+            return maratonas;
+        }
+
+        // Obter todas as maratonas com status "fechado"
+        public List<Maratonas> obterMaratonasFechadas() {
+            List<Maratonas> maratonas = new ArrayList<>();
+
+            // Query para buscar maratonas onde o status é 'fechado'
+            Cursor cursor = banco.query("maratona",
+                    new String[]{"id_maratona", "id_empresa", "nome", "local", "data_inicio", "criador", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_criacao", "tipo_terreno", "clima_esperado"},
+                    "status = ?", // Cláusula WHERE
+                    new String[]{"fechado"}, // Parâmetro para o WHERE
+                    null, null, null);
+
+            while (cursor.moveToNext()) {
+                Maratonas maratona = new Maratonas();
+                maratona.setId(cursor.getInt(0));
+                maratona.setCriador(cursor.getInt(1));
+                maratona.setNome(cursor.getString(2));
+                maratona.setLocal(cursor.getString(3));
+                maratona.setData_inicio(Date.valueOf(cursor.getString(4))); // DATETIME
+                maratona.setCriador(cursor.getInt(5));
+                maratona.setStatus(cursor.getString(6));
+                maratona.setDistancia(cursor.getString(7));
+                maratona.setDescricao(cursor.getString(8));
+                maratona.setLimite_participantes(cursor.getInt(9));
+                maratona.setRegras(cursor.getString(10));
+                maratona.setValor(cursor.getFloat(11));
+                maratona.setData_final(Date.valueOf(cursor.getString(12))); // TIMESTAMP
+                maratona.setTipo_terreno(cursor.getString(13));
+                maratona.setClima_esperado(cursor.getString(14));
+                maratonas.add(maratona);
+            }
+
+            cursor.close(); // Não se esqueça de fechar o cursor
+            return maratonas;
+        }
+
+        // Obter todas as maratonas criadas por um determinado criador
+        public List<Maratonas> obterMaratonasPorCriador(int idCriador) {
+            List<Maratonas> maratonas = new ArrayList<>();
+
+            // Query para buscar maratonas onde o id_criador é igual ao id passado
+            Cursor cursor = banco.query("maratona",
+                    new String[]{"id_maratona", "id_empresa", "nome", "local", "data_inicio", "criador", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_criacao", "tipo_terreno", "clima_esperado"},
+                    "criador = ?", // Cláusula WHERE
+                    new String[]{String.valueOf(idCriador)}, // Parâmetro para o WHERE
+                    null, null, null);
+
+            while (cursor.moveToNext()) {
+                Maratonas maratona = new Maratonas();
+                maratona.setId(cursor.getInt(0));
+                maratona.setCriador(cursor.getInt(1));
+                maratona.setNome(cursor.getString(2));
+                maratona.setLocal(cursor.getString(3));
+                maratona.setData_inicio(Date.valueOf(cursor.getString(4))); // DATETIME
+                maratona.setCriador(cursor.getInt(5));
+                maratona.setStatus(cursor.getString(6));
+                maratona.setDistancia(cursor.getString(7));
+                maratona.setDescricao(cursor.getString(8));
+                maratona.setLimite_participantes(cursor.getInt(9));
+                maratona.setRegras(cursor.getString(10));
+                maratona.setValor(cursor.getFloat(11));
+                maratona.setData_final(Date.valueOf(cursor.getString(12))); // TIMESTAMP
+                maratona.setTipo_terreno(cursor.getString(13));
+                maratona.setClima_esperado(cursor.getString(14));
+                maratonas.add(maratona);
+            }
+
+            cursor.close(); // Não se esqueça de fechar o cursor
             return maratonas;
         }
 
