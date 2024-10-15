@@ -30,7 +30,7 @@
         android:id="@+id/imageView"
         android:layout_width="143dp"
         android:layout_height="120dp"
-        app:srcCompat="@drawable/ic_check_circle" />
+        app:srcCompat="@drawable/logomaratona" />
 
     <Button
         android:id="@+id/btnBack"
