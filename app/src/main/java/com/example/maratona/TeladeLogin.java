@@ -72,7 +72,7 @@ public class TeladeLogin extends AppCompatActivity {
 
                     Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
                     //Declarando uma variável do tipo Intent
-                    Intent it = new Intent(this, TelaHub.class);
+                    Intent it = new Intent(this, TelaAdm.class);
 
                      it.putExtra(
                             "id",
@@ -98,11 +98,11 @@ public class TeladeLogin extends AppCompatActivity {
 
                     Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
                     //Declarando uma variável do tipo Intent
-                    Intent it = new Intent(this, TelaAdm.class);
+                    Intent it = new Intent(this, TelaHub.class);
 
                     it.putExtra(
                             "id",
-                            loginValido
+                             loginValido
                     );
                     //Iniciando a Tela desejada (tela 2)
                     startActivity(it);

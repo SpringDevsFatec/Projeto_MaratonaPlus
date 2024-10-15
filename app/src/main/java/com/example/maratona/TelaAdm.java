@@ -1,6 +1,8 @@
 package com.example.maratona;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class TelaAdm extends AppCompatActivity {
+
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +24,34 @@ public class TelaAdm extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Recebendo os dados do Intent
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("id", -1);
+    }
+
+    public void Criarmaratona(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, TelaMaratonaAdm.class);
+        it.putExtra(
+                "id",
+                userId
+        );
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+
+    public void Visualizarmaratona(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, VisualizarCriadas.class);
+        it.putExtra(
+                "id",
+                userId
+        );
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
     }
 }

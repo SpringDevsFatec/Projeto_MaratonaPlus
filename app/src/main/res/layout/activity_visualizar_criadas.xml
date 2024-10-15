@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VisualizarInscritas">
+    tools:context=".VisualizarCriadas">
 
     <LinearLayout
         android:layout_width="409dp"
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#A3E635"
-            android:text="Maratonas Inscritas"
+            android:text="Maratonas Criadas"
             android:textAlignment="center"
             android:textSize="24sp" />
 
@@ -28,6 +28,11 @@
             android:layout_width="match_parent"
             android:layout_height="228dp"
             app:srcCompat="@drawable/maratona_cartoon" />
+
+        <TextView
+            android:id="@+id/idid2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ListView
             android:id="@+id/listabertas"
@@ -41,4 +46,6 @@
             app:srcCompat="@drawable/logomaratona" />
 
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

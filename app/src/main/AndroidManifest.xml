@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Maratona"
         tools:targetApi="31">
-
+        <activity
+            android:name=".VisualizarCriadas"
+            android:exported="false" />
         <activity
             android:name=".CadastroUsuario"
             android:exported="false" />
@@ -41,10 +43,13 @@
             android:name=".TelaMaratonaAdm"
             android:exported="false" />
         <activity
-            android:name=".visualizarInscritas"
+            android:name=".VisualizarAbertas"
             android:exported="false" />
         <activity
-            android:name=".visualizarConcluidas"
+            android:name=".VisualizarInscritas"
+            android:exported="false" />
+        <activity
+            android:name=".VisualizarConcluidas"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

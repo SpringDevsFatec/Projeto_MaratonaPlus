@@ -29,7 +29,7 @@ public class Tela_concluir extends AppCompatActivity {
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Tela_concluir.this, visualizarConcluidas.class);
+                Intent intent = new Intent(Tela_concluir.this, VisualizarConcluidas.class);
                 startActivity(intent);
             }
         });

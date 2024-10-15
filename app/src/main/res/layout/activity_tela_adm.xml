@@ -26,21 +26,23 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnAdmVisualizarMaratona"
-            android:layout_width="match_parent"
-            android:layout_height="68dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#2E2E2E"
-            android:text="Visualizar Maratonas"
-            android:textColor="#FFFFFF" />
-
-        <Button
             android:id="@+id/btnAdmCadastrarMaratona"
             android:layout_width="match_parent"
             android:layout_height="71dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
+            android:onClick="Criarmaratona"
             android:text="Cadastrar Maratona"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnAdmVisualizarMaratona"
+            android:layout_width="match_parent"
+            android:layout_height="68dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#2E2E2E"
+            android:onClick="Visualizarmaratona"
+            android:text="Visualizar Maratonas Criadas"
             android:textColor="#FFFFFF" />
 
         />

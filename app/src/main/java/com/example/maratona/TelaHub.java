@@ -3,6 +3,7 @@ package com.example.maratona;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class TelaHub extends AppCompatActivity {
+
+    private int userId;
+    private TextView idid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +26,18 @@ public class TelaHub extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Recebendo os dados do Intent
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("id", -1);
+        idid = findViewById(R.id.idid);
+        idid.setText(String.valueOf(userId));
     }
 
     public void Maratonas_Abertas(View view) {
 
         //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, visualizar_abertas.class);
+        Intent it = new Intent(this, VisualizarAbertas.class);
+
 
         //Iniciando a Tela desejada (tela 2)
         startActivity(it);
@@ -35,7 +45,11 @@ public class TelaHub extends AppCompatActivity {
     public void Maratonas_Concluidas(View view) {
 
         //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, visualizarConcluidas.class);
+        Intent it = new Intent(this, VisualizarConcluidas.class);
+        it.putExtra(
+                "id",
+                userId
+        );
 
         //Iniciando a Tela desejada (tela 2)
         startActivity(it);
@@ -43,8 +57,11 @@ public class TelaHub extends AppCompatActivity {
     public void Maratonas_Inscritas(View view) {
 
         //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, visualizarInscritas.class);
-
+        Intent it = new Intent(this, VisualizarInscritas.class);
+        it.putExtra(
+                "id",
+                userId
+        );
         //Iniciando a Tela desejada (tela 2)
         startActivity(it);
     }

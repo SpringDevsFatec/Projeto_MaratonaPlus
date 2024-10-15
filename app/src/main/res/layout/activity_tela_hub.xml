@@ -26,30 +26,38 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/idid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
-            android:id="@+id/btnVisualizarMaratona"
+            android:id="@+id/btnVisualizarMaratonaAbertas"
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
+            android:onClick="Maratonas_Abertas"
             android:text="Visualizar Maratonas Abertas"
             android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/btnVisualizarMaratonaAberta"
+            android:id="@+id/btnVisualizarMaratonasInscritas"
             android:layout_width="match_parent"
             android:layout_height="71dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
+            android:onClick="Maratonas_Inscritas"
             android:text="Visualizar Maratonas Inscritas"
             android:textColor="#FFFFFF" />
 
         <Button
-            android:id="@+id/btnVisualizarMaratonaInscrita"
+            android:id="@+id/btnVisualizarMaratonaConcluidas"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
+            android:onClick="Maratonas_Concluidas"
             android:text="Visualizar Maratonas Concluidas"
             android:textColor="#FFFFFF" />
     </LinearLayout>
