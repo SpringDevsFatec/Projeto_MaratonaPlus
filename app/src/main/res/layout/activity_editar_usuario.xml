@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Editar Dados do Corredor"
+            android:textSize="24sp"
+            android:textColor="#1A1F71"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
+
+        <!-- Nome -->
+        <EditText
+            android:id="@+id/edtNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome Completo"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp" />
+
+        <!-- Telefone -->
+        <EditText
+            android:id="@+id/edtTelefone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Telefone"
+            android:inputType="phone"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Senha -->
+        <EditText
+            android:id="@+id/edtSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Data de Nascimento -->
+        <EditText
+            android:id="@+id/edtDataNascimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data de Nascimento (DD/MM/AAAA)"
+            android:inputType="date"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- CPF -->
+        <EditText
+            android:id="@+id/edtCpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CPF"
+            android:inputType="number"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Endereço -->
+        <EditText
+            android:id="@+id/edtEndereco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Endereço"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Gênero -->
+        <EditText
+            android:id="@+id/edtGenero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Gênero"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- URL da Foto -->
+        <EditText
+            android:id="@+id/edtUrlFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="URL da Foto"
+            android:inputType="textUri"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- País de Origem -->
+        <EditText
+            android:id="@+id/edtPaisOrigem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="País de Origem"
+            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="10dp" />
+
+        <!-- Botão Atualizar -->
+        <Button
+            android:id="@+id/btnAtualizarCorredor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atualizar"
+            android:backgroundTint="#1A1F71"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="244dp"
+            android:layout_height="268dp"
+            android:paddingTop="100px"
+            app:srcCompat="@drawable/logomaratona" />
+
+    </LinearLayout>
+</ScrollView>

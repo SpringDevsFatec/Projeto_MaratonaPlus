@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Maratona+</string>
+    <string name="generate_qr_code">Gerar QR Code</string>
+    <string name="qr_code_description">QR Code</string>
 </resources>

@@ -71,4 +71,14 @@
         android:text="Não tem conta? Cadastre-se"
         android:textColor="#A3E635"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvCadastrarEmpresa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="É uma empresa? Cadastre-se"
+        android:textColor="#A3E635"
+        android:textStyle="bold" />
+
 </LinearLayout>

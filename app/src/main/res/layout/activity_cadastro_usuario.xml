@@ -60,16 +60,14 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:hint="E-mail"
             android:backgroundTint="#1A1F71"
-            android:hint="E-mail" />
+            android:layout_marginTop="10dp" />
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
             android:hint="Senha"
             android:inputType="textPassword" />
 

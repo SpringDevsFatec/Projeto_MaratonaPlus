@@ -13,6 +13,21 @@
         android:theme="@style/Theme.Maratona"
         tools:targetApi="31">
         <activity
+            android:name=".ConfirmacaoQrCode"
+            android:exported="false" />
+        <activity
+            android:name=".GerarQRCode"
+            android:exported="false" />
+        <activity
+            android:name=".EditarEmpresa"
+            android:exported="false" />
+        <activity
+            android:name=".CadastroEmpresa"
+            android:exported="false" />
+        <activity
+            android:name=".EditarUsuario"
+            android:exported="false" />
+        <activity
             android:name=".VisualizarCriadas"
             android:exported="false" />
         <activity
