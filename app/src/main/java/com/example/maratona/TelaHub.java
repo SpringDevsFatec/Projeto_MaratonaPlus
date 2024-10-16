@@ -37,7 +37,10 @@ public class TelaHub extends AppCompatActivity {
 
         //Declarando uma variável do tipo Intent
         Intent it = new Intent(this, VisualizarAbertas.class);
-
+        it.putExtra(
+                "id",
+                userId
+        );
 
         //Iniciando a Tela desejada (tela 2)
         startActivity(it);

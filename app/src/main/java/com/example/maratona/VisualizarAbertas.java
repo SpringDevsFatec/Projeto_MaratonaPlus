@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,7 @@ import java.util.List;
 public class VisualizarAbertas extends AppCompatActivity {
 
     ListView listViewAbertas;
-
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,10 @@ public class VisualizarAbertas extends AppCompatActivity {
             return insets;
         });
 
+        // Recebendo os dados do Intent
+        Intent it = getIntent();
+        userId = it.getIntExtra("id", -1);
+
         // Inicializando o ListView
         listViewAbertas = findViewById(R.id.listabertas);
 
@@ -41,10 +46,12 @@ public class VisualizarAbertas extends AppCompatActivity {
         /* Adicionando o OnItemClickListener */
         listViewAbertas.setOnItemClickListener((parent, view, position, id) -> {
             Maratonas maratonaSelecionada = (Maratonas) parent.getItemAtPosition(position);
-
+            //Toast.makeText(this, String.valueOf(maratonaSelecionada.getId()), Toast.LENGTH_SHORT).show();
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent intent = new Intent(VisualizarAbertas.this, TelaMaratona.class);
-            intent.putExtra("id", maratonaSelecionada.getId());
+            intent.putExtra("maratonaId", maratonaSelecionada.getId());
+            intent.putExtra("id", userId);
+            intent.putExtra("activity", "VisualizarAbertas");
 
             startActivityForResult(intent, 1);
         });
@@ -59,6 +66,7 @@ public class VisualizarAbertas extends AppCompatActivity {
 
         // Verificar se a lista está preenchida
         if (listaMaratonas == null || listaMaratonas.isEmpty()) {
+            Toast.makeText(this, "Nenhuma maratona aberta encontrada", Toast.LENGTH_SHORT).show();
             Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
         }
 
@@ -72,4 +80,16 @@ public class VisualizarAbertas extends AppCompatActivity {
         listViewAbertas.setAdapter(adapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos
+            carregarMaratonasAbertas();
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos após adi cionar
+            carregarMaratonasAbertas();
+        }
+    }
 }

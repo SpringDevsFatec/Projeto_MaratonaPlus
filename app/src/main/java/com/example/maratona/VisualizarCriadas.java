@@ -66,4 +66,17 @@ public class VisualizarCriadas extends AppCompatActivity {
 
         listViewCriadas.setAdapter(adapter);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos
+            carregarMaratonasCriadas();
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos após adicionar
+            carregarMaratonasCriadas();
+        }
+    }
 }

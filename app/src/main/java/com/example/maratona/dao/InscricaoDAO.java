@@ -28,7 +28,7 @@ public class InscricaoDAO {
         ContentValues values = new ContentValues();
         values.put("id_corredor", inscricao.getIdCorredor());
         values.put("id_maratona", inscricao.getIdMaratona());
-        values.put("data_hora", String.valueOf(inscricao.getDataHora())); // Se estiver usando Timestamp
+        values.put("data_hora", "CURRENT_TIMESTAMP"); // Se estiver usando Timestamp
         values.put("forma_pagamento", inscricao.getFormaPagamento());
         return banco.insert("inscricao", null, values);
     }
@@ -75,7 +75,7 @@ public class InscricaoDAO {
         // Query com JOIN entre a tabela de inscrição e maratona
         String query = "SELECT m.id_maratona, m.id_empresa, m.nome, m.local, m.data_inicio, " +
                 "m.criador, m.status, m.distancia, m.descricao, m.limite_participantes, " +
-                "m.regras, m.valor, m.data_criacao, m.tipo_terreno, m.clima_esperado " +
+                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " + // Adiciona `m.data_final`
                 "FROM maratona m " +
                 "INNER JOIN inscricao i ON m.id_maratona = i.id_maratona " +
                 "WHERE i.id_corredor = ?";
@@ -88,7 +88,7 @@ public class InscricaoDAO {
             maratona.setCriador(cursor.getInt(1));
             maratona.setNome(cursor.getString(2));
             maratona.setLocal(cursor.getString(3));
-            maratona.setData_inicio(Date.valueOf(cursor.getString(4))); // DATETIME
+            maratona.setData_inicio(cursor.getString(4)); // DATETIME
             maratona.setCriador(cursor.getInt(5));
             maratona.setStatus(cursor.getString(6));
             maratona.setDistancia(cursor.getString(7));
@@ -96,7 +96,7 @@ public class InscricaoDAO {
             maratona.setLimite_participantes(cursor.getInt(9));
             maratona.setRegras(cursor.getString(10));
             maratona.setValor(cursor.getFloat(11));
-            maratona.setData_final(Date.valueOf(cursor.getString(12))); // TIMESTAMP
+            maratona.setData_final(cursor.getString(12)); // TIMESTAMP
             maratona.setTipo_terreno(cursor.getString(13));
             maratona.setClima_esperado(cursor.getString(14));
             maratonas.add(maratona);
@@ -105,6 +105,7 @@ public class InscricaoDAO {
         cursor.close(); // Não se esqueça de fechar o cursor
         return maratonas;
     }
+
 
 
     // Ler uma inscrição pelo ID
@@ -123,4 +124,23 @@ public class InscricaoDAO {
         cursor.close();
         return inscricao;
     }
+
+    public int getIdInscricao(int idCorredor, int idMaratona) {
+        String[] args = {String.valueOf(idCorredor), String.valueOf(idMaratona)};
+
+        // Query para buscar o id_inscricao baseado no id_corredor e id_maratona
+        Cursor cursor = banco.query("inscricao", new String[]{"id_inscricao"},
+                "id_corredor=? AND id_maratona=?", args, null, null, null);
+
+        int idInscricao = -1; // Valor padrão caso não seja encontrada uma inscrição
+
+        if (cursor.moveToFirst()) {
+            idInscricao = cursor.getInt(0); // Pega o id_inscricao
+        }
+
+        cursor.close();
+
+        return idInscricao; // Retorna o id_inscricao ou -1 se não encontrado
+    }
+
 }

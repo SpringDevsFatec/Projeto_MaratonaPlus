@@ -5,32 +5,101 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaMaratona">
+    tools:context=".TelaMaratona"
+    tools:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
-        tools:layout_editor_absoluteX="-79dp"
-        tools:layout_editor_absoluteY="-29dp">>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">>
 
         <TextView
-            android:id="@+id/edtTituloMaratona"
+            android:id="@+id/txtTituloMaratona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Nome da Maratona"
+            android:hint="Nome da Maratona"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/edtDescricaoMaratona"
+            android:id="@+id/txtDescricaoMaratona"
             android:layout_width="375dp"
-            android:layout_height="182dp"
+            android:layout_height="47dp"
             android:layout_marginTop="8dp"
-            android:text="Informações sobre a maratona..."
+            android:hint="Informações sobre a maratona..."
             android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txtlocal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="local" />
+
+        <TextView
+            android:id="@+id/txtDataIncial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data de Inicio" />
+
+        <TextView
+            android:id="@+id/txtDataFinal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Data de final" />
+
+        <TextView
+            android:id="@+id/txtStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Status" />
+
+        <TextView
+            android:id="@+id/txtDistancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Distancia" />
+
+        <TextView
+            android:id="@+id/txtRegras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Regras" />
+
+        <TextView
+            android:id="@+id/txtTipoT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de terreno" />
+
+        <TextView
+            android:id="@+id/txtClimaEsperado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Clima Esperado" />
+
+        <TextView
+            android:id="@+id/txtValor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Valor" />
+
+        <TextView
+            android:id="@+id/txtIdmaratona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Id Maratona" />
+
+        <TextView
+            android:id="@+id/txtEmpresa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Criadora" />
 
         <Button
             android:id="@+id/btnInscrever"
@@ -39,6 +108,44 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="#A3E635"
             android:text="Inscrever-se" />
+
+        <TextView
+            android:id="@+id/txtForma"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forma de Pagamento:"
+            tools:visibility="gone" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <RadioButton
+                android:id="@+id/rdbBoleto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:text="Boleto"
+                android:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/rdbCartao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:text="Cartão"
+                tools:visibility="gone" />
+
+            <RadioButton
+                android:id="@+id/rdbPix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pix"
+                android:visibility="gone" />
+        </RadioGroup>
 
         <Button
             android:id="@+id/btnIniciarCorrida"

@@ -32,7 +32,7 @@ public class TelaAdm extends AppCompatActivity {
     public void Criarmaratona(View view) {
 
         //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, TelaMaratonaAdm.class);
+        Intent it = new Intent(this, CadastrarMaratona.class);
         it.putExtra(
                 "id",
                 userId

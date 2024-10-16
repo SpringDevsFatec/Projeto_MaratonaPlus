@@ -34,22 +34,21 @@ public class ConnectionFactory extends SQLiteOpenHelper{
         // Tabela Maratona
         db.execSQL("CREATE TABLE maratona ("
                 + "id_maratona INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "id_empresa INTEGER, "
+                + "criador INTEGER, "
                 + "nome VARCHAR(50), "
                 + "local VARCHAR(100), "
                 + "data_inicio DATETIME, "
-                + "criador VARCHAR(50), "
-                + "status VARCHAR(50), "
+                + "data_final DATETIME, "
+                + "status VARCHAR(20), "
                 + "distancia VARCHAR(50), "
                 + "descricao TEXT, "
                 + "limite_participantes INTEGER, "
                 + "regras TEXT, "
                 + "valor FLOAT, "
-                + "data_criacao TIMESTAMP, "
                 + "tipo_terreno VARCHAR(50), "
-                + "clima_esperado VARCHAR(50), "
-                + "FOREIGN KEY(id_empresa) REFERENCES empresa(id_empresa)"
+                + "clima_esperado VARCHAR(50)"
                 + ")");
+
 
         // Tabela Corredor
         db.execSQL("CREATE TABLE corredor ("
@@ -58,7 +57,7 @@ public class ConnectionFactory extends SQLiteOpenHelper{
                 + "telefone VARCHAR(50), "
                 + "email VARCHAR(50), "
                 + "senha VARCHAR(50), "
-                + "data_nasc DATE, "
+                + "data_nasc VARCHAR(50), "
                 + "cpf VARCHAR(50), "
                 + "endereco VARCHAR(100), "
                 + "genero VARCHAR(20), "
@@ -82,9 +81,9 @@ public class ConnectionFactory extends SQLiteOpenHelper{
                 + "id_participacao INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "id_inscricao INTEGER, "
                 + "status_conclusao VARCHAR(50), "
-                + "tempo_registrado TIME, "
-                + "tempo_inicio TIME, "
-                + "tempo_fim TIME, "
+                + "tempo_registrado VARCHAR(50), "
+                + "tempo_inicio VARCHAR(50), "
+                + "tempo_fim VARCHAR(50), "
                 + "FOREIGN KEY(id_inscricao) REFERENCES inscricao(id_inscricao)"
                 + ")");
     }

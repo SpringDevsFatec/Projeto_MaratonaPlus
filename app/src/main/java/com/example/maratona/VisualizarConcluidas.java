@@ -45,6 +45,7 @@ public class VisualizarConcluidas extends AppCompatActivity {
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent it = new Intent(VisualizarConcluidas.this, TelaMaratona.class);
             it.putExtra("id", maratonaSelecionada.getId());
+            it.putExtra("activity", "VisualizarConcluidas");
 
             startActivityForResult(it, 1);
         });
@@ -62,5 +63,17 @@ public class VisualizarConcluidas extends AppCompatActivity {
         );
 
         listViewConcluidas.setAdapter(adapter);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos
+            carregarMaratonasConcluidas();
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos após adicionar
+            carregarMaratonasConcluidas();
+        }
     }
 }
