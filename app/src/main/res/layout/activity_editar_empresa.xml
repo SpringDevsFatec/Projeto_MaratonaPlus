@@ -88,24 +88,8 @@
             android:layout_marginTop="10dp" />
 
         <!-- URL do Logo -->
-        <EditText
-            android:id="@+id/edtUrlLogo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="URL do Logo"
-            android:inputType="textUri"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
 
         <!-- Data de Criação -->
-        <EditText
-            android:id="@+id/edtDataNascimento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Data de Criação (DD/MM/AAAA)"
-            android:inputType="date"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
 
         <!-- Botão Atualizar -->
         <Button

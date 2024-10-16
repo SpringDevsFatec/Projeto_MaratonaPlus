@@ -60,14 +60,6 @@
             android:layout_marginTop="10dp" />
 
         <!-- Data de Nascimento -->
-        <EditText
-            android:id="@+id/edtDataNascimento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Data de Nascimento (DD/MM/AAAA)"
-            android:inputType="date"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
 
         <!-- CPF -->
         <EditText
@@ -80,13 +72,6 @@
             android:layout_marginTop="10dp" />
 
         <!-- Endereço -->
-        <EditText
-            android:id="@+id/edtEndereco"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Endereço"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
 
         <!-- Gênero -->
         <EditText
@@ -98,14 +83,6 @@
             android:layout_marginTop="10dp" />
 
         <!-- URL da Foto -->
-        <EditText
-            android:id="@+id/edtUrlFoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="URL da Foto"
-            android:inputType="textUri"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
 
         <!-- País de Origem -->
         <EditText
