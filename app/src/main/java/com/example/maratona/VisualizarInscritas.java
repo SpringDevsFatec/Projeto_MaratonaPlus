@@ -46,7 +46,8 @@ public class VisualizarInscritas extends AppCompatActivity {
 
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent it = new Intent(VisualizarInscritas.this, TelaMaratona.class);
-            it.putExtra("id", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("id", userId);
             it.putExtra("activity", "VisualizarInscritas");
 
             startActivityForResult(it, 1);

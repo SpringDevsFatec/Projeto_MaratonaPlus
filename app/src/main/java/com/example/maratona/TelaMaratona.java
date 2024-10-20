@@ -22,6 +22,7 @@ import com.example.maratona.model.Maratonas;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 public class TelaMaratona extends AppCompatActivity {
 
@@ -72,7 +73,7 @@ public class TelaMaratona extends AppCompatActivity {
 
         Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
 
-        if (Activity != "VisualizarAbertas"){
+        if (!Objects.equals(Activity, "VisualizarAbertas")){
             btnInscrever.setVisibility(View.GONE);
         }
 
@@ -81,25 +82,25 @@ public class TelaMaratona extends AppCompatActivity {
 
         confereStatus(maratona);
 
-        if (maratona != null){
-
-            txtTituloMaratona.setText(maratona.getNome());
-            txtDescricaoMaratona.setText(maratona.getDescricao());
-            txtlocal.setText(maratona.getLocal());
-            txtDataIncial.setText(maratona.getData_inicio());
-            txtDataFinal.setText(maratona.getData_final());
-            txtStatus.setText(maratona.getStatus());
-            txtDistancia.setText(maratona.getDistancia());
-            txtRegras.setText(maratona.getRegras());
-            txtTipoT.setText(maratona.getTipo_terreno());
-            txtClimaEsperado.setText(maratona.getClima_esperado());
-            txtValor.setText(String.valueOf( maratona.getValor()));
-            txtIdmaratona.setText(String.valueOf(maratona.getId()));
-            txtEmpresa.setText(maratona.getNomeCriador());
-
-        }else{
+        if (maratona == null){
             Toast.makeText(this, "Maratona não encontrada.", Toast.LENGTH_SHORT).show();
             finish();
+
+
+        }else{
+            txtTituloMaratona.setText(maratona.getNome());
+            txtDescricaoMaratona.setText("Descrição:"+ maratona.getDescricao());
+            txtlocal.setText("Local:"+maratona.getLocal());
+            txtDataIncial.setText("data de Inicio:"+maratona.getData_inicio());
+            txtDataFinal.setText("data de termino:"+maratona.getData_final());
+            txtStatus.setText("Status:"+maratona.getStatus());
+            txtDistancia.setText("Distancia:"+maratona.getDistancia());
+            txtRegras.setText("Regras:"+maratona.getRegras());
+            txtTipoT.setText("Tipo de Terreno:"+maratona.getTipo_terreno());
+            txtClimaEsperado.setText("Clima Esperado:"+maratona.getClima_esperado());
+            txtValor.setText("Valor: R$"+ maratona.getValor());
+            txtIdmaratona.setText("Id da Maratona:"+ maratona.getId());
+            txtEmpresa.setText("nome da empresa:"+maratona.getNomeCriador());
         }
 
     }
@@ -107,10 +108,11 @@ public class TelaMaratona extends AppCompatActivity {
     private void confereStatus(Maratonas maratonas){
         String status = maratonas.getStatus();
 
-        if (status != "aberta"){
+        if (!status.equals("aberta para Inscrição")){
             btnIniciarCorrida.setVisibility(View.GONE);
         }
     }
+
 
     private String confereForma(){
         String Forma = "";
@@ -130,7 +132,8 @@ public class TelaMaratona extends AppCompatActivity {
         return Forma;
     }
 
-    private void inscrever(){
+    public void Inscrever(View view){
+
         if (inscreve == 0 ){
             int confereInsc;
             InscricaoDAO dao = new InscricaoDAO(this);
@@ -151,24 +154,26 @@ public class TelaMaratona extends AppCompatActivity {
         }else{
             InscricaoDAO dao = new InscricaoDAO(this);
             Inscricao i = new Inscricao();
-            String Forma = confereForma();
+            String Form = confereForma();
 
-            if (Forma == ""){
-                return;
+            if (Form == ""){
+                Toast.makeText(this, "Escolha uma forma.", Toast.LENGTH_SHORT).show();
             }else{
                 i.setIdCorredor(userId);
                 i.setIdMaratona(maratonaId);
-                i.setFormaPagamento(Forma);
+                i.setFormaPagamento(Form);
                long id = dao.insert(i);
                 Toast.makeText(getApplicationContext(), "Inscricao inserida com o ID " + id,
                         Toast.LENGTH_LONG).show();
 
                 setResult(RESULT_OK);
+                view.invalidate();
+                txtForma.setVisibility(View.GONE);
+                rdbCartao.setVisibility(View.GONE);
+                rdbBoleto.setVisibility(View.GONE);
+                rdbPix.setVisibility(View.GONE);
                 inscreve = 0;
             }
         }
-
-
-
     }
 }

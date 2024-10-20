@@ -7,59 +7,151 @@
     android:layout_height="match_parent"
     tools:context=".TelaMaratonaAdm">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/edtTituloMaratona"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Nome da Maratona"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/edtDescricaoMaratona"
-            android:layout_width="match_parent"
-            android:layout_height="198dp"
-            android:layout_marginTop="8dp"
-            android:text="Informações sobre a maratona..."
-            android:textSize="16sp" />
-
-        <Button
-            android:id="@+id/btnIniciarMaratona"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
-            android:text="Iniciar Maratona"
-            android:visibility="visible" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="186dp"
-            android:orientation="vertical"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnConcluirVencedores"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
-            android:text="Concluir Vencedores" />
+            <TextView
+                android:id="@+id/txtTituloMaratona"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:hint="Nome da Maratona"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnEncerrarMaratona"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#8D8D8D"
-            android:text="Encerrar Maratona" />
+            <TextView
+                android:id="@+id/txtDescricaoMaratona"
+                android:layout_width="375dp"
+                android:layout_height="47dp"
+                android:layout_marginTop="8dp"
+                android:hint="Informações sobre a maratona..."
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtlocal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="local" />
+
+            <TextView
+                android:id="@+id/txtDataIncial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data de Inicio" />
+
+            <TextView
+                android:id="@+id/txtDataFinal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data de final" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Status" />
+
+            <TextView
+                android:id="@+id/txtDistancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Distancia" />
+
+            <TextView
+                android:id="@+id/txtRegras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Regras" />
+
+            <TextView
+                android:id="@+id/txtTipoT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tipo de terreno" />
+
+            <TextView
+                android:id="@+id/txtClimaEsperado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Clima Esperado" />
+
+            <TextView
+                android:id="@+id/txtValor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Valor" />
+
+            <TextView
+                android:id="@+id/txtIdmaratona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Id Maratona" />
+
+            <TextView
+                android:id="@+id/txtEmpresa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Criadora" />
+
+            <Button
+                android:id="@+id/btnIniciarMaratona"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:text="Iniciar Maratona"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnEncerrar"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:text="Encerrar Maratona"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="186dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnConcluirVencedores"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:visibility="gone"
+                android:text="Concluir Vencedores" />
+
+            <Button
+                android:id="@+id/btnMostrarInscritos"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:text="Mostrar Inscritos na Maratona" />
+
+            <Button
+                android:id="@+id/btnAtualizarMaratona"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#8D8D8D"
+                android:text="Atualizar Maratona" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,13 +16,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">>
+        app:layout_constraintTop_toTopOf="parent">
+
 
         <TextView
             android:id="@+id/txtTituloMaratona"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center_horizontal"
             android:hint="Nome da Maratona"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -106,6 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginTop="20dp"
+            android:maxWidth="320dp"
+            android:onClick="Inscrever"
             android:backgroundTint="#A3E635"
             android:text="Inscrever-se" />
 
@@ -114,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Forma de Pagamento:"
-            tools:visibility="gone" />
+            android:visibility="gone" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -137,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"
                 android:text="Cartão"
-                tools:visibility="gone" />
+                android:visibility="gone" />
 
             <RadioButton
                 android:id="@+id/rdbPix"

@@ -71,6 +71,7 @@ public class VisualizarAbertas extends AppCompatActivity {
         }
 
         // Criando um ArrayAdapter para mostrar a lista
+        assert listaMaratonas != null;
         ArrayAdapter<Maratonas> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,

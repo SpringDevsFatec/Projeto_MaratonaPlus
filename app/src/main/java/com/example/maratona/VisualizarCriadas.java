@@ -48,7 +48,9 @@ public class VisualizarCriadas extends AppCompatActivity {
 
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent it = new Intent(VisualizarCriadas.this, TelaMaratonaAdm.class);
-            it.putExtra("id", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("id", userId);
+            it.putExtra("activity", "VisualizarCriadas");
 
             startActivityForResult(it, 1);
         });

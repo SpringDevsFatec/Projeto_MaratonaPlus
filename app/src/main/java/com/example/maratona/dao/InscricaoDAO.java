@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
 import com.example.maratona.util.ConnectionFactory;
@@ -73,7 +75,7 @@ public class InscricaoDAO {
         List<Maratonas> maratonas = new ArrayList<>();
 
         // Query com JOIN entre a tabela de inscrição e maratona
-        String query = "SELECT m.id_maratona, m.id_empresa, m.nome, m.local, m.data_inicio, " +
+        String query = "SELECT m.id_maratona, m.criador, m.nome, m.local, m.data_inicio, " +
                 "m.criador, m.status, m.distancia, m.descricao, m.limite_participantes, " +
                 "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " + // Adiciona `m.data_final`
                 "FROM maratona m " +
@@ -105,6 +107,44 @@ public class InscricaoDAO {
         cursor.close(); // Não se esqueça de fechar o cursor
         return maratonas;
     }
+
+    public List<Corredores> obterCorredoresPorMaratona(int idMaratona) {
+        List<Corredores> corredores = new ArrayList<>();
+
+        // Consulta com JOIN entre a tabela de inscricao e corredor
+        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
+                "c.cpf, c.endereco, c.pais_origem " +
+                "FROM corredor c " +
+                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
+                "WHERE i.id_maratona = ?";
+
+        // Executa a consulta e passa o idMaratona como parâmetro
+        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+
+        while (cursor.moveToNext()) {
+            Corredores corredor = new Corredores();
+            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
+            corredor.setNome(cursor.getString(1)); // nome
+            corredor.setTelefone(cursor.getString(2)); // telefone
+            corredor.setEmail(cursor.getString(3)); // email
+            corredor.setSenha(cursor.getString(4)); // senha
+            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
+            corredor.setCpf(cursor.getString(5)); // cpf
+            corredor.setEndereco(cursor.getString(6)); // endereco
+            //corredor.setGenero(cursor.getString(8)); // genero
+            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
+            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+
+            // Adiciona o corredor à lista
+            corredores.add(corredor);
+        }
+
+        // Fecha o cursor para liberar os recursos
+        cursor.close();
+
+        return corredores;
+    }
+
 
 
 

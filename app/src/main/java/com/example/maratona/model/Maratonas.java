@@ -22,6 +22,10 @@ public class Maratonas {
     private String clima_esperado;
     private String NomeCriador;
 
+    @Override
+    public String toString() {
+        return "Maratona "+ Nome; // ou qualquer outra informação que você queira exibir na ListView
+    }
 
     public Maratonas() {
     }

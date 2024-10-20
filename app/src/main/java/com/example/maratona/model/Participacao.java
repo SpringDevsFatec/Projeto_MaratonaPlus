@@ -10,24 +10,24 @@ public class Participacao {
     private Time tempoRegistrado;
     private Time tempoInicio;
     private Time tempoFim;
+    private int Passos;
 
-    public Participacao(int idInscricao, String statusConclusao, int idParticipacao, Time tempoRegistrado, Time tempoInicio, Time tempoFim) {
-        this.idInscricao = idInscricao;
-        this.statusConclusao = statusConclusao;
-        this.idParticipacao = idParticipacao;
-        this.tempoRegistrado = tempoRegistrado;
-        this.tempoInicio = tempoInicio;
-        this.tempoFim = tempoFim;
+    public Participacao() {
     }
 
     public Participacao(int idParticipacao) {
         this.idParticipacao = idParticipacao;
     }
 
-    public Participacao() {
+    public Participacao(int idParticipacao, int idInscricao, String statusConclusao, Time tempoRegistrado, Time tempoFim, Time tempoInicio, int passos) {
+        this.idParticipacao = idParticipacao;
+        this.idInscricao = idInscricao;
+        this.statusConclusao = statusConclusao;
+        this.tempoRegistrado = tempoRegistrado;
+        this.tempoFim = tempoFim;
+        this.tempoInicio = tempoInicio;
+        Passos = passos;
     }
-
-    //Getters e Setters
 
     public int getIdParticipacao() {
         return idParticipacao;
@@ -43,6 +43,14 @@ public class Participacao {
 
     public void setIdInscricao(int idInscricao) {
         this.idInscricao = idInscricao;
+    }
+
+    public Time getTempoRegistrado() {
+        return tempoRegistrado;
+    }
+
+    public void setTempoRegistrado(Time tempoRegistrado) {
+        this.tempoRegistrado = tempoRegistrado;
     }
 
     public String getStatusConclusao() {
@@ -61,19 +69,19 @@ public class Participacao {
         this.tempoInicio = tempoInicio;
     }
 
-    public Time getTempoRegistrado() {
-        return tempoRegistrado;
-    }
-
-    public void setTempoRegistrado(Time tempoRegistrado) {
-        this.tempoRegistrado = tempoRegistrado;
-    }
-
     public Time getTempoFim() {
         return tempoFim;
     }
 
     public void setTempoFim(Time tempoFim) {
         this.tempoFim = tempoFim;
+    }
+
+    public int getPassos() {
+        return Passos;
+    }
+
+    public void setPassos(int passos) {
+        Passos = passos;
     }
 }

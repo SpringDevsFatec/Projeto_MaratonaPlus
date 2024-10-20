@@ -84,6 +84,7 @@ public class ConnectionFactory extends SQLiteOpenHelper{
                 + "tempo_registrado VARCHAR(50), "
                 + "tempo_inicio VARCHAR(50), "
                 + "tempo_fim VARCHAR(50), "
+                + "passos INTEGER, "
                 + "FOREIGN KEY(id_inscricao) REFERENCES inscricao(id_inscricao)"
                 + ")");
     }
