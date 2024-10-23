@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class TelaMaratonaAdm extends AppCompatActivity {
 
-    private String Activity;
+    private String Activity,Status;
     private int userId,maratonaId;
     //private int inscreve = 0;
     private Button btnIniciarMaratona, btnEncerrar, btnAtualizarMaratona, btnGerarVencedores, btnMostrarInscritos;
@@ -70,7 +70,8 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         MaratonasDAO dao = new MaratonasDAO(this);
         Maratonas maratona = dao.readMaratona(maratonaId);
 
-        confereStatus(maratona);
+        Status = maratona.getStatus();
+        confereStatus(Status);
 
         if (maratona == null){
             Toast.makeText(this, "Maratona não encontrada.", Toast.LENGTH_SHORT).show();
@@ -94,25 +95,44 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         }
 
     }
-    private void confereStatus(Maratonas maratonas){
-        String status = maratonas.getStatus();
+    private void confereStatus(String maratonas){
 
-        if (status.equals("aberta para Inscrição")){
+        if (maratonas.equals("aberta para Inscrição")){
             btnIniciarMaratona.setVisibility(View.VISIBLE);
             btnMostrarInscritos.setVisibility(View.VISIBLE);
             btnGerarVencedores.setVisibility(View.GONE);
             btnEncerrar.setVisibility(View.GONE);
-        } else if (status.equals("aberta")){
+        } else if (maratonas.equals("aberta")){
             btnIniciarMaratona.setVisibility(View.GONE);
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.VISIBLE);
-        }else if(status.equals("Concluida")){
+        }else if(maratonas.equals("Concluida")){
             btnIniciarMaratona.setVisibility(View.GONE);
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.GONE);
             btnAtualizarMaratona.setVisibility(View.GONE);
         }
+    }
+
+    public void IniciaMaratona(View view){
+
+        Intent intent = new Intent(this, GerarQRCode.class);
+        intent.putExtra("maratonaId", maratonaId);
+        intent.putExtra("id", userId);
+        intent.putExtra("activity", Status);
+
+        startActivity(intent);
+    }
+
+    public void EditarMaratona(View view){
+
+        Intent intent = new Intent(this, EditarMaratona.class);
+        intent.putExtra("maratonaId", maratonaId);
+        intent.putExtra("id", userId);
+        intent.putExtra("activity", Status);
+
+        startActivity(intent);
     }
 }

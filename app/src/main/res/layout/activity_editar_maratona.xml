@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditarMaratona">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Atualizar Maratona "
+                android:textColor="#1A1F71"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="ID da Maratona:" />
+
+            <EditText
+                android:id="@+id/edtId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Id da Maratona" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:text="Status da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:backgroundTint="#1A1F71"
+                android:hint="Status" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Nome Comercial da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtNome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Nome Completo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Endereco da Maratona:" />
+
+            <EditText
+                android:id="@+id/edtLocal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Endereco" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Data de inicio da Maratona:" />
+
+            <EditText
+                android:id="@+id/edtData_I"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data inicial"
+                android:backgroundTint="#1A1F71"
+                android:inputType="text|date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Data de Final das Inscrições para Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtData_F"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data Final"
+                android:inputType="text|date" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:text="Kilometros da Maratona:" />
+
+            <EditText
+                android:id="@+id/edtDistancia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Distancia"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginTop="10dp"
+                android:text="Descrição da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtDescricao"
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:backgroundTint="#1A1F71"
+                android:hint="Descricao"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="limete de participantes da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtLimite_p"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="limite de Participantes"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Regras da Maratona:" />
+
+            <EditText
+                android:id="@+id/edtRegras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Regras"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Valor da Inscricao para Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtValor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Valor"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Tipo de Terreno da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtTipoTerreno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Tipo de Terreno"
+                android:inputType="text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left"
+                android:text="Clima Esperado da Maratona:" />
+
+
+            <EditText
+                android:id="@+id/edtClimaEsperado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#1A1F71"
+                android:hint="Clima Esperado"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/btnCadastrarUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:onClick="CadastrarMaratonas"
+                android:text="Atualizar"
+                android:textColor="#FFFFFF" />
+
+            <ImageView
+                android:id="@+id/imgLogo"
+                android:layout_width="244dp"
+                android:layout_height="268dp"
+                android:paddingTop="100px"
+                app:srcCompat="@drawable/logomaratona" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -108,7 +108,9 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#A3E635"
                 android:text="Iniciar Maratona"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:onClick="IniciaMaratona"
+                />
 
             <Button
                 android:id="@+id/btnEncerrar"
@@ -148,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginTop="20dp"
+                android:onClick="EditarMaratona"
                 android:backgroundTint="#8D8D8D"
                 android:text="Atualizar Maratona" />
 
