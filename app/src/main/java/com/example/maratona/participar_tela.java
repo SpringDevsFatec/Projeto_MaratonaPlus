@@ -29,7 +29,7 @@ public class participar_tela extends AppCompatActivity {
         btnParticipar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(participar_tela.this, tela_participando.class);
+                Intent intent = new Intent(participar_tela.this, TelaParticipando.class);
                 startActivity(intent);
             }
         });

@@ -11,7 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class tela_participando extends AppCompatActivity {
+public class TelaParticipando extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class tela_participando extends AppCompatActivity {
         buttonConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tela_participando.this, Tela_concluir.class);
+                Intent intent = new Intent(TelaParticipando.this, Tela_concluir.class);
                 startActivity(intent);
             }
         });

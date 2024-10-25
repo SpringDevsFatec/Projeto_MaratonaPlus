@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Maratona"
         tools:targetApi="31">
         <activity
+            android:name=".ScanQRCode"
+            android:exported="false" />
+        <activity
             android:name=".EditarMaratona"
             android:exported="false" />
         <activity
@@ -48,7 +51,7 @@
             android:name=".Tela_concluir"
             android:exported="false" />
         <activity
-            android:name=".tela_participando"
+            android:name=".TelaParticipando"
             android:exported="false" />
         <activity
             android:name=".TelaAdm"
