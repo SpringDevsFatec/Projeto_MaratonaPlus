@@ -232,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#A3E635"
-                android:onClick="CadastrarMaratonas"
+                android:onClick="AtualizarMaratona"
                 android:text="Atualizar"
                 android:textColor="#FFFFFF" />
 

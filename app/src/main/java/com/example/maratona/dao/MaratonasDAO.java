@@ -59,6 +59,18 @@ public class MaratonasDAO {
         banco.update("maratona", values, "id_maratona=?", args);
     }
 
+    //atualiza status
+    public void updateStatus(int idMaratona, String novoStatus) {
+        ContentValues values = new ContentValues();
+        values.put("status", novoStatus);
+
+        String[] args = {String.valueOf(idMaratona)};
+
+        // Atualiza apenas o campo status da maratona com o id fornecido
+        banco.update("maratona", values, "id_maratona=?", args);
+    }
+
+
     // Fechar maratona
     public void fecharMaratona(int idMaratona) {
         ContentValues values = new ContentValues();
@@ -177,7 +189,7 @@ public class MaratonasDAO {
         Cursor cursor = banco.query("maratona",
                 new String[]{"id_maratona", "criador", "nome", "local", "data_inicio", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_final", "tipo_terreno", "clima_esperado"},
                 "status = ?", // Cláusula WHERE
-                new String[]{"fechado"}, // Parâmetro para o WHERE
+                new String[]{"fechada"}, // Parâmetro para o WHERE
                 null, null, null);
 
         while (cursor.moveToNext()) {

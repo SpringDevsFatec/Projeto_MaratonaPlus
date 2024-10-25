@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class TelaMaratonaAdm extends AppCompatActivity {
 
-    private String Activity,Status;
+    private String Activity,Status,nomeMaratona;
     private int userId,maratonaId;
     //private int inscreve = 0;
     private Button btnIniciarMaratona, btnEncerrar, btnAtualizarMaratona, btnGerarVencedores, btnMostrarInscritos;
@@ -92,6 +92,8 @@ public class TelaMaratonaAdm extends AppCompatActivity {
             txtValor.setText("Valor: R$"+ maratona.getValor());
             txtIdmaratona.setText("Id da Maratona:"+ maratona.getId());
             txtEmpresa.setText("nome da empresa:"+maratona.getNomeCriador());
+
+            nomeMaratona = maratona.getNome();
         }
 
     }
@@ -103,7 +105,8 @@ public class TelaMaratonaAdm extends AppCompatActivity {
             btnGerarVencedores.setVisibility(View.GONE);
             btnEncerrar.setVisibility(View.GONE);
         } else if (maratonas.equals("aberta")){
-            btnIniciarMaratona.setVisibility(View.GONE);
+            btnIniciarMaratona.setVisibility(View.VISIBLE);
+            btnIniciarMaratona.setText("Exibir QrCode");
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.VISIBLE);
@@ -120,10 +123,11 @@ public class TelaMaratonaAdm extends AppCompatActivity {
 
         Intent intent = new Intent(this, GerarQRCode.class);
         intent.putExtra("maratonaId", maratonaId);
-        intent.putExtra("id", userId);
+        intent.putExtra("nomeMaratona", nomeMaratona );
         intent.putExtra("activity", Status);
 
         startActivity(intent);
+        finish();
     }
 
     public void EditarMaratona(View view){
@@ -134,5 +138,6 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         intent.putExtra("activity", Status);
 
         startActivity(intent);
+        finish();
     }
 }
