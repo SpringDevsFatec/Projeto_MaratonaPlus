@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Maratona" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Cor do botão ou elementos principais no modo escuro -->
+        <item name="colorPrimary">#A3E635</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <!-- Cor de fundo para o modo escuro -->
+        <item name="android:windowBackground">#121212</item>
+        <item name=
     </style>
 </resources>

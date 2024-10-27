@@ -1,5 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Cor verde que será usada em ambos os modos -->
+    <color name="colorPrimary">#A3E635</color>
+
+    <!-- Cor do texto ou ícones que aparecem sobre a cor primária -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- Texto branco sobre o botão verde -->
+
+    <!-- Cor de fundo para o modo claro -->
+    <color name="background_light">#FFFFFF</color> <!-- Fundo claro -->
 </resources>
