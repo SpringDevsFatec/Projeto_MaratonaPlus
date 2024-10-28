@@ -11,7 +11,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:contentDescription="Logo do aplicativo"
-        android:src="@drawable/logomaratona" />
+        style="@style/ImgLogo" />
 
     <EditText
         android:id="@+id/edtEmail"

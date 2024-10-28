@@ -10,4 +10,13 @@
         <!-- Cor para textos secundários, se necessário -->
         <item name="colorSecondary">@color/cinza</item>
     </style>
+
+    <style name="ImgBackground">
+        <item name="android:background">@drawable/bglogo</item>
+    </style>
+
+
+    <style name="ImgLogo">
+        <item name="android:src">@drawable/logo</item>
+    </style>
 </resources>

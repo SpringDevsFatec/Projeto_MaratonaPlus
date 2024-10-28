@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bglogo"
+    style="@style/ImgBackground"
     tools:context=".VisualizarInscritas">
 
     <LinearLayout
@@ -22,6 +22,7 @@
             android:background="#A3E635"
             android:text="Maratonas Concluídas"
             android:textAlignment="center"
+            android:textColor="@color/branco"
             android:textSize="24sp" />
 
         <ImageView

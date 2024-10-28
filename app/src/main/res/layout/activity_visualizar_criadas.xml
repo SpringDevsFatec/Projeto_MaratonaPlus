@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bglogo"
+    style="@style/ImgBackground"
     tools:context=".VisualizarCriadas">
 
     <LinearLayout
@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:background="#A3E635"
             android:text="Maratonas Criadas"
+            android:textColor="@color/branco"
             android:textAlignment="center"
             android:textSize="24sp" />
 
