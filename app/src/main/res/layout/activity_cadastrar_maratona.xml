@@ -129,6 +129,7 @@
             android:layout_width="244dp"
             android:layout_height="268dp"
             android:paddingTop="100px"
+            android:visibility="gone"
             app:srcCompat="@drawable/logomaratona" />
     </LinearLayout>
 </ScrollView>

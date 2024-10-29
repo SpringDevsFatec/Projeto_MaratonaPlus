@@ -47,6 +47,7 @@
         android:id="@+id/logoConcluidas"
         android:layout_width="match_parent"
         android:layout_height="148dp"
+        android:visibility="gone"
         app:srcCompat="@drawable/logomaratona" />
 
   </LinearLayout>

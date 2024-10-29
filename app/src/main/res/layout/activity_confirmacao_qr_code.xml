@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    style="@style/ImgBackground"
     android:padding="20dp">
 
     <TextView
@@ -30,6 +31,7 @@
         android:id="@+id/imageView"
         android:layout_width="143dp"
         android:layout_height="120dp"
+        android:visibility="gone"
         app:srcCompat="@drawable/logomaratona" />
 
     <Button
