@@ -28,9 +28,9 @@ public class ParticipacaoDAO {
         values.put("idParticipacao", participacao.getIdParticipacao());
         values.put("idInscricao", participacao.getIdInscricao());
         values.put("statusConclusao", participacao.getStatusConclusao());
-        values.put("tempoRegistrado", participacao.getTempoRegistrado().toString()); // Armazenar como string
+        values.put("tempoRegistrado", "0:0:0"); // Armazenar como string
         values.put("tempoInicio", participacao.getTempoInicio().toString());
-        values.put("tempoFim", participacao.getTempoFim().toString());
+        values.put("tempoFim", "0:0:0");
         values.put("Passos", participacao.getPassos());
         return banco.insert("participacao", null, values);
     }
@@ -117,4 +117,24 @@ public class ParticipacaoDAO {
         cursor.close();
         return participacoes;
     }
+
+    public int getIdParticipacao(int idInscricao) {
+        String[] args = {String.valueOf(idInscricao)};
+
+        // Query para buscar o id_participacao baseado no id_inscricao
+        Cursor cursor = banco.query("participacao", new String[]{"id_participacao"},
+                "id_inscricao=?", args, null, null, null);
+
+        int idParticipacao = -1; // Valor padrão caso não seja encontrada uma participação
+
+        if (cursor.moveToFirst()) {
+            idParticipacao = cursor.getInt(0); // Pega o id_participacao
+        }
+
+        cursor.close();
+
+        return idParticipacao; // Retorna o id_participacao ou -1 se não encontrado
+    }
+
+
 }

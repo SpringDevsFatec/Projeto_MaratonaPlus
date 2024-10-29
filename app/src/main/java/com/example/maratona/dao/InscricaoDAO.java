@@ -25,6 +25,8 @@ public class InscricaoDAO {
         banco = conexao.getWritableDatabase();
     }
 
+
+
     // Inserir nova inscrição
     public long insert(Inscricao inscricao) {
         ContentValues values = new ContentValues();
@@ -32,6 +34,7 @@ public class InscricaoDAO {
         values.put("id_maratona", inscricao.getIdMaratona());
         values.put("data_hora", "CURRENT_TIMESTAMP"); // Se estiver usando Timestamp
         values.put("forma_pagamento", inscricao.getFormaPagamento());
+        values.put("status", "Inscrito");
         return banco.insert("inscricao", null, values);
     }
 
@@ -42,6 +45,7 @@ public class InscricaoDAO {
         values.put("id_maratona", inscricao.getIdMaratona());
         values.put("data_hora", String.valueOf(inscricao.getDataHora()));
         values.put("forma_pagamento", inscricao.getFormaPagamento());
+        values.put("status", inscricao.getFormaPagamento());
         String[] args = {String.valueOf(inscricao.getIdInscricao())};
         banco.update("inscricao", values, "id_inscricao=?", args);
     }
@@ -181,6 +185,17 @@ public class InscricaoDAO {
         cursor.close();
 
         return idInscricao; // Retorna o id_inscricao ou -1 se não encontrado
+    }
+
+    //atualiza status
+    public void updateStatus(int idInscricao, String novoStatus) {
+        ContentValues values = new ContentValues();
+        values.put("status", novoStatus);
+
+        String[] args = {String.valueOf(idInscricao)};
+
+        // Atualiza apenas o campo status da maratona com o id fornecido
+        banco.update("inscricao", values, "id_inscricao=?", args);
     }
 
 }

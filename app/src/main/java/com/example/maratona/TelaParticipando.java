@@ -13,6 +13,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class TelaParticipando extends AppCompatActivity {
 
+    private int userId,maratonaId,inscricaoId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,12 @@ public class TelaParticipando extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("id", -1);
+        maratonaId = intent.getIntExtra("maratonaId", -1);
+        inscricaoId = intent.getIntExtra("inscricaoId", -1);
+
 
         Button buttonConcluir = findViewById(R.id.button);
         buttonConcluir.setOnClickListener(new View.OnClickListener() {

@@ -71,6 +71,7 @@ public class ConnectionFactory extends SQLiteOpenHelper{
                 + "id_corredor INTEGER, "
                 + "id_maratona INTEGER, "
                 + "data_hora DATETIME, "
+                + "status VARCHAR(20), "
                 + "forma_pagamento VARCHAR(50), "
                 + "FOREIGN KEY(id_corredor) REFERENCES corredor(id_corredor), "
                 + "FOREIGN KEY(id_maratona) REFERENCES maratona(id_maratona)"

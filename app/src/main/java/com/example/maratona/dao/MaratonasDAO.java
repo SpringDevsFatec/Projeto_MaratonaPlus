@@ -154,7 +154,7 @@ public class MaratonasDAO {
         Cursor cursor = banco.query("maratona",
                 new String[]{"id_maratona", "criador", "nome", "local", "data_inicio", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_final", "tipo_terreno", "clima_esperado"},
                 "status = ?", // Cláusula WHERE
-                new String[]{"aberta"}, // Parâmetro para o WHERE
+                new String[]{"aberta para Inscrição"}, // Parâmetro para o WHERE
                 null, null, null);
 
         while (cursor.moveToNext()) {
@@ -188,8 +188,8 @@ public class MaratonasDAO {
         // Query para buscar maratonas onde o status é 'fechado'
         Cursor cursor = banco.query("maratona",
                 new String[]{"id_maratona", "criador", "nome", "local", "data_inicio", "status", "distancia", "descricao", "limite_participantes", "regras", "valor", "data_final", "tipo_terreno", "clima_esperado"},
-                "status = ?", // Cláusula WHERE
-                new String[]{"fechada"}, // Parâmetro para o WHERE
+                "status IN (?, ?)", // Cláusula WHERE para múltiplos valores
+                new String[]{"fechada", "aberta"}, // Parâmetros para o WHERE
                 null, null, null);
 
         while (cursor.moveToNext()) {

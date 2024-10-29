@@ -29,8 +29,9 @@ public class TelaHub extends AppCompatActivity {
         // Recebendo os dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
-        idid = findViewById(R.id.idid);
-        idid.setText(String.valueOf(userId));
+        //teste de chegada dos Id's
+        //idid = findViewById(R.id.idid);
+       // idid.setText(String.valueOf(userId));
     }
 
     public void Maratonas_Abertas(View view) {

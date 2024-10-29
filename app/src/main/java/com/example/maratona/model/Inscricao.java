@@ -9,13 +9,15 @@ public class Inscricao {
     private int idMaratona;
     private Date dataHora;
     private String formaPagamento;
+    private String status;
 
-    public Inscricao(int idCorredor, int idInscricao, int idMaratona, Date dataHora, String formaPagamento) {
-        this.idCorredor = idCorredor;
+    public Inscricao(int idInscricao, int idCorredor, int idMaratona, String formaPagamento, Date dataHora, String status) {
         this.idInscricao = idInscricao;
+        this.idCorredor = idCorredor;
         this.idMaratona = idMaratona;
-        this.dataHora = dataHora;
         this.formaPagamento = formaPagamento;
+        this.dataHora = dataHora;
+        this.status = status;
     }
 
     public Inscricao(int idInscricao) {
@@ -66,5 +68,13 @@ public class Inscricao {
 
     public void setFormaPagamento(String formaPagamento) {
         this.formaPagamento = formaPagamento;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

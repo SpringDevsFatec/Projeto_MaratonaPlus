@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -14,11 +15,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.maratona.dao.InscricaoDAO;
+import com.example.maratona.dao.ParticipacaoDAO;
+import com.example.maratona.model.Inscricao;
+import com.example.maratona.model.Participacao;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
+import java.sql.Time;
 import java.util.List;
 
 public class ScanQRCode extends AppCompatActivity {
@@ -63,10 +69,31 @@ public class ScanQRCode extends AppCompatActivity {
                 if (result != null) {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
+                        // adicona participação e muda status da inscrição
+                        InscricaoDAO idao = new InscricaoDAO(ScanQRCode.this);
+                        int id = idao.getIdInscricao(maratonaId, userId);
+                        idao.updateStatus(id,"Participando");
+
+                        Participacao p = new Participacao();
+                        p.setIdInscricao(id);
+                        p.setStatusConclusao("Participação Aberta");
+                        p.setPassos(0);
+                        p.setTempoInicio(Time.valueOf(String.valueOf(new Time(System.currentTimeMillis()))));
+
+                        ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCode.this);
+                        Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
+
+                        pdao.insert(p);
+
                         // Vai para a tela de Participando
                         Intent intent;
                         intent = new Intent(ScanQRCode.this, TelaParticipando.class);
 
+                        intent.putExtra("maratonaId", maratonaId);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("inscricaoId", id);
+
+                      //  startActivityForResult(intent, 1);
                         startActivity(intent);
                     }
                 }

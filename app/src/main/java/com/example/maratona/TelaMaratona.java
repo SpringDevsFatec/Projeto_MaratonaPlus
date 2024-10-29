@@ -73,9 +73,7 @@ public class TelaMaratona extends AppCompatActivity {
 
         Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
 
-        if (!Objects.equals(Activity, "VisualizarAbertas")){
-            btnInscrever.setVisibility(View.GONE);
-        }
+
 
         MaratonasDAO dao = new MaratonasDAO(this);
         Maratonas maratona = dao.readMaratona(maratonaId);
@@ -108,8 +106,16 @@ public class TelaMaratona extends AppCompatActivity {
     private void confereStatus(Maratonas maratonas){
         String status = maratonas.getStatus();
 
-        if (!status.equals("aberta para Inscrição")){
+        if (status.equals("aberta para Inscrição")){
+            btnInscrever.setVisibility(View.VISIBLE);
             btnIniciarCorrida.setVisibility(View.GONE);
+        } else if (status.equals("aberta")){
+            btnInscrever.setVisibility(View.GONE);
+            btnIniciarCorrida.setVisibility(View.VISIBLE);
+        }else {
+            btnInscrever.setVisibility(View.GONE);
+            btnIniciarCorrida.setVisibility(View.VISIBLE);
+            Toast.makeText(this, "Evento Já finalizado ou passado o Prazo de Inscrição!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -142,15 +148,16 @@ public class TelaMaratona extends AppCompatActivity {
 
             if(confereInsc != -1){
                 Toast.makeText(this, "Você já está inscrito na Maratona.", Toast.LENGTH_SHORT).show();
+                btnInscrever.setText("Inscrição já realizada");
             }else{
+                btnInscrever.setText("Finalizar Inscrição");
                 txtForma.setVisibility(View.VISIBLE);
                 rdbCartao.setVisibility(View.VISIBLE);
                 rdbBoleto.setVisibility(View.VISIBLE);
                 rdbPix.setVisibility(View.VISIBLE);
                 Toast.makeText(this, "Escolha a forma de Pagamento.", Toast.LENGTH_SHORT).show();
+                inscreve = 1;
             }
-
-            inscreve = 1;
         }else{
             InscricaoDAO dao = new InscricaoDAO(this);
             Inscricao i = new Inscricao();
@@ -172,8 +179,20 @@ public class TelaMaratona extends AppCompatActivity {
                 rdbCartao.setVisibility(View.GONE);
                 rdbBoleto.setVisibility(View.GONE);
                 rdbPix.setVisibility(View.GONE);
+                btnInscrever.setText("Inscrição já realizada");
                 inscreve = 0;
             }
         }
+    }
+
+    public void iniciarMaratona(View view){
+
+        Intent intent = new Intent(this, ScanQRCode.class);
+        intent.putExtra("maratonaId", maratonaId);
+        intent.putExtra("id", userId);
+
+        startActivityForResult(intent, 1);
+
+
     }
 }
