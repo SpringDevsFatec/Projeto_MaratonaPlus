@@ -81,10 +81,11 @@ public class InscricaoDAO {
         // Query com JOIN entre a tabela de inscrição e maratona
         String query = "SELECT m.id_maratona, m.criador, m.nome, m.local, m.data_inicio, " +
                 "m.criador, m.status, m.distancia, m.descricao, m.limite_participantes, " +
-                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " + // Adiciona `m.data_final`
+                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " +
                 "FROM maratona m " +
                 "INNER JOIN inscricao i ON m.id_maratona = i.id_maratona " +
-                "WHERE i.id_corredor = ?";
+                "WHERE i.id_corredor = ? " +
+                "AND (m.status = 'Aberta para Inscrição' OR m.status = 'Aberta')";
 
         Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idCorredor)});
 

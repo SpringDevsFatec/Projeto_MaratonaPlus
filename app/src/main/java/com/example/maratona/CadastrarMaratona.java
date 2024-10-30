@@ -73,7 +73,7 @@ public class CadastrarMaratona extends AppCompatActivity {
                 m.setData_final(edtData_F.getText().toString());
 
 
-            m.setStatus("aberta para Inscrição");
+            m.setStatus("Aberta para Inscrição");
             m.setLocal(edtEndereco.getText().toString());
             m.setDistancia(edtDistancia.getText().toString());
             m.setDescricao(descricao);

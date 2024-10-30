@@ -99,18 +99,18 @@ public class TelaMaratonaAdm extends AppCompatActivity {
     }
     private void confereStatus(String maratonas){
 
-        if (maratonas.equals("aberta para Inscrição")){
+        if (maratonas.equals("Aberta para Inscrição")){
             btnIniciarMaratona.setVisibility(View.VISIBLE);
             btnMostrarInscritos.setVisibility(View.VISIBLE);
             btnGerarVencedores.setVisibility(View.GONE);
             btnEncerrar.setVisibility(View.GONE);
-        } else if (maratonas.equals("aberta")){
+        } else if (maratonas.equals("Aberta")){
             btnIniciarMaratona.setVisibility(View.VISIBLE);
             btnIniciarMaratona.setText("Exibir QrCode");
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.VISIBLE);
-        }else if(maratonas.equals("Concluida")){
+        }else if(maratonas.equals("Finalizada")){
             btnIniciarMaratona.setVisibility(View.GONE);
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);

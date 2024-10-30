@@ -106,10 +106,10 @@ public class TelaMaratona extends AppCompatActivity {
     private void confereStatus(Maratonas maratonas){
         String status = maratonas.getStatus();
 
-        if (status.equals("aberta para Inscrição")){
+        if (status.equals("Aberta para Inscrição")){
             btnInscrever.setVisibility(View.VISIBLE);
             btnIniciarCorrida.setVisibility(View.GONE);
-        } else if (status.equals("aberta")){
+        } else if (status.equals("Aberta")){
             btnInscrever.setVisibility(View.GONE);
             btnIniciarCorrida.setVisibility(View.VISIBLE);
         }else {
@@ -190,6 +190,7 @@ public class TelaMaratona extends AppCompatActivity {
         Intent intent = new Intent(this, ScanQRCode.class);
         intent.putExtra("maratonaId", maratonaId);
         intent.putExtra("id", userId);
+        intent.putExtra("activity", "Participar");
 
         startActivityForResult(intent, 1);
 
