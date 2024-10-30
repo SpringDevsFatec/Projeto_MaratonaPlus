@@ -15,6 +15,12 @@ public class Corredores {
     //private String urlFoto;
     private String paisOrigem;
 
+
+    @Override
+    public String toString() {
+        return  nome; // ou qualquer outra informação que você queira exibir na ListView
+    }
+
     public Corredores(int idCorredor, String nome, String telefone, String email, String senha, String cpf, String endereco, String paisOrigem) {
         this.idCorredor = idCorredor;
         this.nome = nome;
