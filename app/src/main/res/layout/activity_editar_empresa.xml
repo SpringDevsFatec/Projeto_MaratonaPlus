@@ -5,87 +5,132 @@
     android:layout_height="match_parent"
     android:background="@drawable/bglogo"
     android:padding="20dp">
+
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Editar Dados da Empresa"
-            android:textSize="24sp"
             android:textColor="#1A1F71"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <!-- Nome da Empresa -->
+        <TextView
+            android:id="@+id/txtNomeEmpresa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome da Empresa:" />
+
         <EditText
-            android:id="@+id/edtNomeEmpresa"
+            android:id="@+id/edtNomeEmpresa2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome da Empresa"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="20dp" />
+            android:hint="Nome da Empresa" />
 
         <!-- Telefone -->
+        <TextView
+            android:id="@+id/txtTelefone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone:" />
+
         <EditText
-            android:id="@+id/edtTelefone"
+            android:id="@+id/edtTelefone2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Telefone"
-            android:inputType="phone"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Telefone"
+            android:inputType="phone" />
 
         <!-- E-mail -->
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="E-mail:" />
+
         <EditText
-            android:id="@+id/edtEmail"
+            android:id="@+id/edtEmail2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
 
         <!-- Usuário -->
+        <TextView
+            android:id="@+id/txtUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Usuário:" />
+
         <EditText
-            android:id="@+id/edtUsuario"
+            android:id="@+id/edtUsuario2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Usuário"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Usuário" />
 
         <!-- Senha -->
+        <TextView
+            android:id="@+id/txtSenha2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Senha:" />
+
         <EditText
-            android:id="@+id/edtSenha"
+            android:id="@+id/edtSenha2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Senha"
+            android:inputType="textPassword" />
 
         <!-- CNPJ -->
+        <TextView
+            android:id="@+id/txtCnpj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CNPJ:" />
+
         <EditText
-            android:id="@+id/edtCnpj"
+            android:id="@+id/edtCnpj2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CNPJ"
-            android:inputType="number"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="CNPJ"
+            android:inputType="number" />
 
         <!-- Localização -->
+        <TextView
+            android:id="@+id/txtLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Localização:" />
+
         <EditText
-            android:id="@+id/edtLocal"
+            android:id="@+id/edtLocal2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Localização"
+            android:layout_marginTop="5dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Localização" />
+
 
         <!-- URL do Logo -->
 
@@ -96,10 +141,11 @@
             android:id="@+id/btnAtualizarEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atualizar Dados"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#1A1F71"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="20dp" />
+            android:onClick="AtualizarEmpresa"
+            android:text="Atualizar Dados"
+            android:textColor="#FFFFFF" />
 
         <!-- Imagem (logo ou outra imagem relevante) -->
         <ImageView

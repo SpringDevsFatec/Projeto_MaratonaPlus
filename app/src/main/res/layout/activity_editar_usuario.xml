@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bglogo"
@@ -9,17 +10,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Editar Dados do Corredor"
-            android:textSize="24sp"
             android:textColor="#1A1F71"
-            android:textStyle="bold"
-            android:layout_gravity="center" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
         <!--id-->
 
         <!-- Nome -->
@@ -49,9 +50,9 @@
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome Completo"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Nome Completo" />
 
         <!-- Telefone -->
         <TextView
@@ -65,10 +66,10 @@
             android:id="@+id/edtTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Telefone"
-            android:inputType="phone"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Telefone"
+            android:inputType="phone" />
 
         <!-- Email -->
         <TextView
@@ -82,10 +83,10 @@
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
 
         <!-- Senha -->
         <TextView
@@ -99,10 +100,10 @@
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Senha"
-            android:inputType="textPassword"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Senha"
+            android:inputType="textPassword" />
 
         <!-- Data de Nascimento -->
 
@@ -118,10 +119,10 @@
             android:id="@+id/edtCpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CPF"
-            android:inputType="number"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="CPF"
+            android:inputType="number" />
 
         <!-- Endereço -->
 
@@ -137,9 +138,9 @@
             android:id="@+id/edtGenero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Gênero"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="Gênero" />
 
         <!-- URL da Foto -->
 
@@ -155,19 +156,19 @@
             android:id="@+id/edtPaisOrigem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="País de Origem"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:hint="País de Origem" />
 
         <!-- Botão Atualizar -->
         <Button
             android:id="@+id/btnAtualizarCorredor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atualizar"
+            android:layout_marginTop="20dp"
             android:backgroundTint="#1A1F71"
-            android:textColor="#FFFFFF"
-            android:layout_marginTop="20dp" />
+            android:text="Atualizar"
+            android:textColor="#FFFFFF" />
 
         <ImageView
             android:id="@+id/imgLogo"

@@ -30,6 +30,7 @@ public class CadastroUsuario extends AppCompatActivity {
     private EditText edtCnpj;
     private EditText edtEndereco;
     private EditText edtOrigem;
+    private EditText edtGenero;
     private RadioButton rdbRunner;
     private RadioButton rdbEmpresa;
     //private EditText url_foto;
@@ -55,6 +56,7 @@ public class CadastroUsuario extends AppCompatActivity {
         edtEndereco = findViewById(R.id.edtEndereco);
         edtTelefone = findViewById(R.id.edtTelefone);
         edtOrigem = findViewById(R.id.edtOrigem);
+        edtGenero = findViewById(R.id.edtGenero);
         //edtUrl_foto = findViewById(R.id.edtUrl_foto);
     }
 
@@ -86,6 +88,7 @@ public class CadastroUsuario extends AppCompatActivity {
             c.setCpf(edtCpf.getText().toString());
             c.setEndereco(edtEndereco.getText().toString());
             c.setPaisOrigem(edtOrigem.getText().toString());
+            c.setGenero(edtGenero.getText().toString());
 
             CorredoresDAO corredordao = new CorredoresDAO(this);
 

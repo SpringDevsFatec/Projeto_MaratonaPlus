@@ -2,6 +2,7 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -52,6 +53,13 @@ public class TelaAdm extends AppCompatActivity {
         );
 
         //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+
+    public void Editar_Empresa(View view) {
+        Log.d("TelaHub", "Sending userId to EditarUsuario: " + userId);  // Log para verificar o ID
+        Intent it = new Intent(this, EditarEmpresa.class);
+        it.putExtra("id", userId);
         startActivity(it);
     }
 }

@@ -47,8 +47,7 @@ public class EmpresasDAO {
         values.put("senha", empresa.getSenha());
         values.put("cnpj", empresa.getCnpj());
         values.put("local", empresa.getLocal());
-        values.put("url_logo", empresa.getUrlLogo());
-        values.put("data_criacao", String.valueOf(empresa.getDataCriacao()));
+        //values.put("url_logo", empresa.getUrlLogo());
         String[] args = {String.valueOf(empresa.getIdEmpresa())};
         banco.update("empresa", values, "id_empresa=?", args);
     }
@@ -83,7 +82,7 @@ public class EmpresasDAO {
     // Ler uma empresa pelo ID
     public Empresas read(int id) {
         String[] args = {String.valueOf(id)};
-        Cursor cursor = banco.query("empresa", new String[]{"id_empresa", "nome", "telefone", "email", "usuario", "cnpj", "local", "url_logo", "data_criacao"},
+        Cursor cursor = banco.query("empresa", new String[]{"id_empresa", "nome", "telefone", "email", "usuario", "cnpj", "local", "url_logo", "senha"},
                 "id_empresa=?", args, null, null, null);
         Empresas empresa = new Empresas();
         if (cursor.moveToFirst()) {
@@ -95,7 +94,7 @@ public class EmpresasDAO {
             empresa.setCnpj(cursor.getString(5));
             empresa.setLocal(cursor.getString(6));
             empresa.setUrlLogo(cursor.getString(7));
-            empresa.setDataCriacao(Timestamp.valueOf(cursor.getString(8)));
+            empresa.setSenha(cursor.getString(8));
         }
         return empresa;
     }

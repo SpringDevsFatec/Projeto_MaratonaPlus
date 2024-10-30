@@ -25,6 +25,7 @@
             android:layout_gravity="right"
             android:baselineAlignBottom="false"
             android:src="@drawable/icone"
+            android:onClick="Editar_Empresa"
             android:textAlignment="textEnd" />
 
         <TextView
