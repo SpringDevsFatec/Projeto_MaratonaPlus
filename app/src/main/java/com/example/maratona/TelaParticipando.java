@@ -28,7 +28,7 @@ public class TelaParticipando extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        userId = intent.getIntExtra("id", -1);
+        userId = intent.getIntExtra("userId", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
         inscricaoId = intent.getIntExtra("inscricaoId", -1);
 
@@ -37,8 +37,12 @@ public class TelaParticipando extends AppCompatActivity {
         buttonConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TelaParticipando.this, Tela_concluir.class);
+                Intent intent = new Intent(TelaParticipando.this, ScanQRCodeConcuir.class);
+                intent.putExtra("id", userId);
+                intent.putExtra("maratonaId", maratonaId);
+                intent.putExtra("inscricaoId", inscricaoId);
                 startActivity(intent);
+                finish();
             }
         });
     }

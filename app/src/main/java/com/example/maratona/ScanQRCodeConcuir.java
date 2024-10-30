@@ -27,9 +27,9 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView;
 import java.sql.Time;
 import java.util.List;
 
-public class ScanQRCode extends AppCompatActivity {
+public class ScanQRCodeConcuir extends AppCompatActivity {
 
-    private int userId,maratonaId;
+    private int userId,maratonaId, inscricaoId;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -37,7 +37,7 @@ public class ScanQRCode extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_scan_qrcode);
+        setContentView(R.layout.activity_scan_qrcode_concuir);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -47,22 +47,24 @@ public class ScanQRCode extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
+        inscricaoId = intent.getIntExtra("inscricaoId", -1);
 
 
-        barcodeScannerView = findViewById(R.id.barcodeScanner);
+
+        barcodeScannerView = findViewById(R.id.barcodeScanner2);
 
         // Verificar se a permissão da câmera foi concedida
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             // Se a permissão não foi concedida, solicitar permissão
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
         } else {
-            iniciarLeituraQRCode();  // Iniciar leitura do QR Code se a permissão já foi concedida
+            FinalizarLeituraQRCode();  // Iniciar leitura do QR Code se a permissão já foi concedida
         }
 
     }
 
     // Método para iniciar a leitura do QR Code
-    private void iniciarLeituraQRCode() {
+    private void FinalizarLeituraQRCode() {
         barcodeScannerView.decodeContinuous(new BarcodeCallback() {
             @Override
             public void barcodeResult(BarcodeResult result) {
@@ -70,37 +72,61 @@ public class ScanQRCode extends AppCompatActivity {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
 
-                            // adicona participação e muda status da inscrição
-                            InscricaoDAO idao = new InscricaoDAO(ScanQRCode.this);
-                            int id = idao.getIdInscricao(userId, maratonaId);
-                            idao.updateStatus(id,"Participando");
+                        // adicona participação e muda status da inscrição
+                        ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCodeConcuir.this);
+                        int id = pdao.getIdParticipacao(inscricaoId);
 
+                        // Buscar tempo inicial
+                        long time_inicial = pdao.readTimeInicialParticipacao(id);
+
+                        // Se o tempo inicial foi encontrado (diferente de -1)
+                        if (time_inicial != -1) {
+                            // Obter o tempo atual em milissegundos
+                            long time_atual = System.currentTimeMillis();
+
+                            // Calcular a diferença entre o tempo atual e o tempo inicial
+                            long tempo_registrado_ms = time_atual - time_inicial;
+
+                            // Criar objeto Participacao e atualizar os tempos
                             Participacao p = new Participacao();
-                            p.setIdInscricao(id);
-                            p.setStatusConclusao("Ativo");
-                            p.setPassos(0);
-                            p.setTempoInicio(Time.valueOf(String.valueOf(new Time(System.currentTimeMillis()))));
+                            p.setIdParticipacao(id);
+                            p.setStatusConclusao("Desativado");
 
-                            ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCode.this);
-                            Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
+                            // Definir o tempo final como o tempo atual
+                            p.setTempoFim(new Time(time_atual));  // Converte de milissegundos para Time
 
-                            pdao.insert(p);
+                            // Definir o tempo registrado como a diferença
+                            p.setTempoRegistrado(new Time(tempo_registrado_ms));  // Converte de milissegundos para Time
 
-                            // Vai para a tela de Participando
-                            Intent intent;
-                            intent = new Intent(ScanQRCode.this, TelaParticipando.class);
+                            // Atualizar o status da participação no banco
+                            pdao.updateStatus(p);
+                        }else{
+                            Toast.makeText(ScanQRCodeConcuir.this, "Tempo errado!", Toast.LENGTH_SHORT).show();
 
-                            intent.putExtra("maratonaId", maratonaId);
-                            intent.putExtra("userId", userId);
-                            intent.putExtra("inscricaoId", id);
+                            return ;
+                        }
 
-                            //  startActivityForResult(intent, 1);
-                            startActivity(intent);
-                            finish();
+                        InscricaoDAO idao = new InscricaoDAO(ScanQRCodeConcuir.this);
 
-                    }
+
+                        idao.updateStatus(inscricaoId,"Concluido");
+                        Toast.makeText(ScanQRCodeConcuir.this, "Participação Finalizada, Parabens!", Toast.LENGTH_SHORT).show();
+                        // Vai para a tela de Participando
+                        Intent intent;
+                        intent = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
+
+                        //intent.putExtra("maratonaId", maratonaId);
+                        intent.putExtra("id", userId);
+                        //intent.putExtra("inscricaoId", id);
+
+                        //  startActivityForResult(intent, 1);
+                        startActivityForResult(intent,2);
+                        finish();
+
+
+
                 }
-            }
+            }}
 
             @Override
             public void possibleResultPoints(List<ResultPoint> resultPoints) {
@@ -115,7 +141,7 @@ public class ScanQRCode extends AppCompatActivity {
         if (requestCode == CAMERA_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Se a permissão foi concedida, iniciar a leitura do QR Code
-                iniciarLeituraQRCode();
+                FinalizarLeituraQRCode();
             } else {
                 // Se a permissão for negada, você pode mostrar uma mensagem ao usuário
                 // dizendo que a câmera é necessária para ler o QR Code

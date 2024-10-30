@@ -113,6 +113,52 @@ public class InscricaoDAO {
         return maratonas;
     }
 
+    // Obter maratonas de um determinado corredor
+    public List<Maratonas> obterMaratonasConcluidasPorCorredor(int idCorredor) {
+        List<Maratonas> maratonas = new ArrayList<>();
+
+        // Query com JOIN entre a tabela de inscrição e maratona
+        String query = "SELECT m.id_maratona, m.criador, m.nome, m.local, m.data_inicio, " +
+                "m.status, m.distancia, m.descricao, m.limite_participantes, " +
+                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " +
+                "FROM maratona m " +
+                "INNER JOIN inscricao i ON m.id_maratona = i.id_maratona " +
+                "WHERE i.id_corredor = ? " +
+                "AND i.status = 'Concluido'";
+
+        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idCorredor)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                Maratonas maratona = new Maratonas();
+                maratona.setId(cursor.getInt(0));
+                maratona.setCriador(cursor.getInt(1));
+                maratona.setNome(cursor.getString(2));
+                maratona.setLocal(cursor.getString(3));
+                maratona.setData_inicio(cursor.getString(4)); // DATETIME
+                maratona.setStatus(cursor.getString(5)); // Correção do índice
+                maratona.setDistancia(cursor.getString(6));
+                maratona.setDescricao(cursor.getString(7));
+                maratona.setLimite_participantes(cursor.getInt(8));
+                maratona.setRegras(cursor.getString(9));
+                maratona.setValor(cursor.getFloat(10));
+                maratona.setData_final(cursor.getString(11)); // TIMESTAMP
+                maratona.setTipo_terreno(cursor.getString(12));
+                maratona.setClima_esperado(cursor.getString(13));
+
+                maratonas.add(maratona);
+            } while (cursor.moveToNext());
+        }
+
+        // Fechar cursor para evitar memory leaks
+        if (cursor != null) {
+            cursor.close();
+        }
+
+        return maratonas;
+    }
+
+
     public List<Corredores> obterCorredoresPorMaratona(int idMaratona) {
         List<Corredores> corredores = new ArrayList<>();
 
@@ -121,7 +167,7 @@ public class InscricaoDAO {
                 "c.cpf, c.endereco, c.pais_origem " +
                 "FROM corredor c " +
                 "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
-                "WHERE i.id_maratona = ?";
+                "WHERE i.id_maratona = ?  AND i.status = 'Inscrito'";
 
         // Executa a consulta e passa o idMaratona como parâmetro
         Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
@@ -150,6 +196,80 @@ public class InscricaoDAO {
         return corredores;
     }
 
+    public List<Corredores> obterCorredoresParticipandoPorMaratona(int idMaratona) {
+        List<Corredores> corredores = new ArrayList<>();
+
+        // Consulta com JOIN entre a tabela de inscricao e corredor, incluindo filtro de status "Participando"
+        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
+                "c.cpf, c.endereco, c.pais_origem " +
+                "FROM corredor c " +
+                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
+                "WHERE i.id_maratona = ? AND i.status = 'Participando'";
+
+        // Executa a consulta e passa o idMaratona como parâmetro
+        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+
+        while (cursor.moveToNext()) {
+            Corredores corredor = new Corredores();
+            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
+            corredor.setNome(cursor.getString(1)); // nome
+            corredor.setTelefone(cursor.getString(2)); // telefone
+            corredor.setEmail(cursor.getString(3)); // email
+            corredor.setSenha(cursor.getString(4)); // senha
+            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
+            corredor.setCpf(cursor.getString(5)); // cpf
+            corredor.setEndereco(cursor.getString(6)); // endereco
+            //corredor.setGenero(cursor.getString(8)); // genero
+            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
+            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+
+            // Adiciona o corredor à lista
+            corredores.add(corredor);
+        }
+
+        // Fecha o cursor para liberar os recursos
+        cursor.close();
+
+        return corredores;
+    }
+
+
+    public List<Corredores> obterCorredoresConcluidosPorMaratona(int idMaratona) {
+        List<Corredores> corredores = new ArrayList<>();
+
+        // Consulta com JOIN entre a tabela de inscricao e corredor, incluindo filtro de status "Participando"
+        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
+                "c.cpf, c.endereco, c.pais_origem " +
+                "FROM corredor c " +
+                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
+                "WHERE i.id_maratona = ? AND i.status = 'Concluido'";
+
+        // Executa a consulta e passa o idMaratona como parâmetro
+        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+
+        while (cursor.moveToNext()) {
+            Corredores corredor = new Corredores();
+            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
+            corredor.setNome(cursor.getString(1)); // nome
+            corredor.setTelefone(cursor.getString(2)); // telefone
+            corredor.setEmail(cursor.getString(3)); // email
+            corredor.setSenha(cursor.getString(4)); // senha
+            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
+            corredor.setCpf(cursor.getString(5)); // cpf
+            corredor.setEndereco(cursor.getString(6)); // endereco
+            //corredor.setGenero(cursor.getString(8)); // genero
+            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
+            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+
+            // Adiciona o corredor à lista
+            corredores.add(corredor);
+        }
+
+        // Fecha o cursor para liberar os recursos
+        cursor.close();
+
+        return corredores;
+    }
 
 
 
