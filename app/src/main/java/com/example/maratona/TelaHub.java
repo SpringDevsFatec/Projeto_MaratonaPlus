@@ -36,8 +36,8 @@ public class TelaHub extends AppCompatActivity {
         Log.d("TelaHub", "Received userId: " + userId);
 
         // teste de chegada dos Id's
-        idid = findViewById(R.id.idid);
-        idid.setText(String.valueOf(userId));
+        //idid = findViewById(R.id.idid);
+        //idid.setText(String.valueOf(userId));
     }
 
     public void Editar_Usuario(View view) {
@@ -52,6 +52,31 @@ public class TelaHub extends AppCompatActivity {
         // Declarando uma variável do tipo Intent
         Intent it = new Intent(this, VisualizarInscritas.class);
         it.putExtra("id", userId);
+        startActivity(it);
+    }
+
+    public void Maratonas_Abertas(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, VisualizarAbertas.class);
+        it.putExtra(
+                "id",
+                userId
+        );
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
+    public void Maratonas_Concluidas(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, VisualizarConcluidas.class);
+        it.putExtra(
+                "id",
+                userId
+        );
+
+        //Iniciando a Tela desejada (tela 2)
         startActivity(it);
     }
 
