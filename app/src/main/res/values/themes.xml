@@ -1,9 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.Maratona" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Cor do botão ou elementos principais -->
+        <item name="colorPrimary">@color/primaria</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+         <!-- Cor de fundo da janela para o modo claro -->
+        <item name="android:windowBackground">@color/branco</item>
+
+        <!-- Cor para textos secundários, se necessário -->
+        <item name="colorSecondary">@color/cinza</item>
     </style>
 
-    <style name="Theme.Maratona" parent="Base.Theme.Maratona" />
+    <style name="ImgBackground">
+        <item name="android:background">@drawable/bglogo</item>
+    </style>
+
+
+    <style name="ImgLogo">
+        <item name="android:src">@drawable/logomaratona</item>
+    </style>
 </resources>

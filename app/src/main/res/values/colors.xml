@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Cores para o tema -->
+    <color name="primaria">#A3E635</color> <!-- Verde principal -->
+    <color name="escura">#2E2E2E</color>   <!-- Fundo escuro para o modo escuro -->
+    <color name="branco">#F2F2F2</color>   <!-- Fundo claro para o modo claro -->
+    <color name="cinza">#8D8D8D</color>    <!-- Cinza para textos secundários -->
+
 </resources>

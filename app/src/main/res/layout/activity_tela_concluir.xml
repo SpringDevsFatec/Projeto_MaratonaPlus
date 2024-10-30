@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/ImgBackground"
     tools:context=".participar_tela">
 
     <LinearLayout
@@ -43,6 +44,7 @@
         <ImageView
             android:id="@+id/ImgLogo"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="247dp"
             app:srcCompat="@drawable/logo" />
     </LinearLayout>

@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/ImgBackground"
     tools:context=".participar_tela">
 
     <LinearLayout
@@ -44,6 +45,7 @@
             android:id="@+id/ImgLogo"
             android:layout_width="match_parent"
             android:layout_height="247dp"
+            android:visibility="gone"
             app:srcCompat="@drawable/logo" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
