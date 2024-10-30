@@ -70,7 +70,7 @@ public class TeladeLogin extends AppCompatActivity {
                 if (loginValido != -1) {
 
 
-                    Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Seja bem vindo novamente!", Toast.LENGTH_SHORT).show();
                     //Declarando uma variável do tipo Intent
                     Intent it = new Intent(this, TelaAdm.class);
 
@@ -96,7 +96,7 @@ public class TeladeLogin extends AppCompatActivity {
                 if (loginValido != -1) {
 
 
-                    Toast.makeText(this, "Login realizado por ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Seja bem vindo novamente! ", Toast.LENGTH_SHORT).show();
                     //Declarando uma variável do tipo Intent
                     Intent it = new Intent(this, TelaHub.class);
 
