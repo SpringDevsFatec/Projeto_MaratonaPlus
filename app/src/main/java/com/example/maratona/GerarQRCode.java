@@ -42,7 +42,7 @@ public class  GerarQRCode extends AppCompatActivity {
 
         txtNomeMaratona.setText(nomeMaratona);
 
-        if (!Activity.equals("aberta para Inscrição")){
+        if (!Activity.equals("Aberta para Inscrição")){
             btnGenerateQRCode.setVisibility(View.GONE);
             geraQrCode(qrData);
         }
@@ -71,7 +71,7 @@ public class  GerarQRCode extends AppCompatActivity {
             qrCodeImageView.setImageBitmap(qrBitmap);
 
             MaratonasDAO m = new MaratonasDAO(this);
-            m.updateStatus(maratonaId, "aberta");
+            m.updateStatus(maratonaId, "Aberta");
 
         } catch (WriterException e) {
             e.printStackTrace(); // Tratar exceções

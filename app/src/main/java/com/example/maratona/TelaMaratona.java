@@ -2,8 +2,11 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +19,14 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.maratona.dao.InscricaoDAO;
 import com.example.maratona.dao.MaratonasDAO;
+import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class TelaMaratona extends AppCompatActivity {
@@ -31,7 +36,9 @@ public class TelaMaratona extends AppCompatActivity {
     private int inscreve = 0;
     private Button btnInscrever, btnIniciarCorrida;
     private RadioButton rdbBoleto,rdbCartao, rdbPix ;
-    private TextView txtTituloMaratona, txtDescricaoMaratona, txtlocal, txtDataIncial, txtDataFinal, txtStatus,txtDistancia,txtRegras,txtTipoT, txtClimaEsperado,txtValor, txtIdmaratona, txtEmpresa, txtForma;
+    private TextView txtTituloMaratona, txtDescricaoMaratona, txtlocal, txtDataIncial, txtDataFinal, txtStatus,txtDistancia,txtRegras,txtTipoT, txtClimaEsperado,txtValor, txtIdmaratona, txtEmpresa, txtForma, txtParticipantes;
+    ListView listViewParticipantes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +57,8 @@ public class TelaMaratona extends AppCompatActivity {
         Activity = String.valueOf(intent.getStringExtra("activity"));
 
 
-
+        // Inicializando o ListView
+        listViewParticipantes = findViewById(R.id.listaParticipantes);
         txtTituloMaratona = findViewById(R.id.txtTituloMaratona);
         txtDescricaoMaratona = findViewById(R.id.txtDescricaoMaratona);
         txtlocal = findViewById(R.id.txtlocal);
@@ -65,6 +73,7 @@ public class TelaMaratona extends AppCompatActivity {
         txtIdmaratona = findViewById(R.id.txtIdmaratona);
         txtEmpresa = findViewById(R.id.txtEmpresa);
         txtForma = findViewById(R.id.txtForma);
+        txtParticipantes = findViewById(R.id.txtParticipantes);
         btnInscrever = findViewById(R.id.btnInscrever);
         btnIniciarCorrida = findViewById(R.id.btnIniciarCorrida);
         rdbBoleto = findViewById(R.id.rdbBoleto);
@@ -79,6 +88,7 @@ public class TelaMaratona extends AppCompatActivity {
         Maratonas maratona = dao.readMaratona(maratonaId);
 
         confereStatus(maratona);
+        confereActivity(Activity);
 
         if (maratona == null){
             Toast.makeText(this, "Maratona não encontrada.", Toast.LENGTH_SHORT).show();
@@ -101,22 +111,91 @@ public class TelaMaratona extends AppCompatActivity {
             txtEmpresa.setText("nome da empresa:"+maratona.getNomeCriador());
         }
 
+        /* Adicionando o OnItemClickListener */
+        listViewParticipantes.setOnItemClickListener((parent, view, position, id) -> {
+            Corredores corredorSelecionado = (Corredores) parent.getItemAtPosition(position);
+            //Toast.makeText(this, String.valueOf(maratonaSelecionada.getId()), Toast.LENGTH_SHORT).show();
+            Intent it = new Intent(TelaMaratona.this, EditarUsuario.class);
+            it.putExtra("id", corredorSelecionado.getIdCorredor());
+            it.putExtra("activity", "VisualizarPerfil");
+
+            startActivityForResult(it, 1);
+        });
+
+
     }
 
     private void confereStatus(Maratonas maratonas){
         String status = maratonas.getStatus();
 
-        if (status.equals("aberta para Inscrição")){
+        if (status.equals("Aberta para Inscrição")){
             btnInscrever.setVisibility(View.VISIBLE);
             btnIniciarCorrida.setVisibility(View.GONE);
-        } else if (status.equals("aberta")){
+        } else if (status.equals("Aberta")){
             btnInscrever.setVisibility(View.GONE);
             btnIniciarCorrida.setVisibility(View.VISIBLE);
         }else {
             btnInscrever.setVisibility(View.GONE);
-            btnIniciarCorrida.setVisibility(View.VISIBLE);
+            btnIniciarCorrida.setVisibility(View.GONE);
             Toast.makeText(this, "Evento Já finalizado ou passado o Prazo de Inscrição!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void confereActivity(String Activity){
+        if (Activity.equals("VisualizarAbertas")){
+            txtParticipantes.setText("Lista de Inscritos que talvez você conheça:");
+            carregarCorredoresIncritos();
+        } else if (Activity.equals("VisualizarInscritas")){
+            txtParticipantes.setText("Lista de Inscritos Junto com você nesta Maratona:");
+            carregarCorredoresIncritos();
+        } else {
+            txtParticipantes.setText("Lista de participantes que concluiram junto contigo:");
+            carregarCorredoresConcluidos();
+        }
+
+
+    }
+
+    private void carregarCorredoresIncritos() {
+        InscricaoDAO dao = new InscricaoDAO(this);
+        List<Corredores> listaCorredores = dao.obterCorredoresPorMaratona(maratonaId);
+
+        // Verificar se a lista está preenchida
+        if (listaCorredores == null || listaCorredores.isEmpty()) {
+            Toast.makeText(this, "Nenhuma Corredor Inscrito", Toast.LENGTH_SHORT).show();
+            Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
+        }
+
+        // Criando um ArrayAdapter para mostrar a lista
+        assert listaCorredores != null;
+        ArrayAdapter<Corredores> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                listaCorredores
+        );
+
+        listViewParticipantes.setAdapter(adapter);
+    }
+
+    private void carregarCorredoresConcluidos() {
+        InscricaoDAO dao = new InscricaoDAO(this);
+        List<Corredores> listaCorredores = dao.obterCorredoresConcluidosPorMaratona(maratonaId);
+
+        // Verificar se a lista está preenchida
+        if (listaCorredores == null || listaCorredores.isEmpty()) {
+            Toast.makeText(this, "Nenhum Corredor Concluiu está Maratona", Toast.LENGTH_SHORT).show();
+            Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
+        }
+
+        // Criando um ArrayAdapter para mostrar a lista
+        assert listaCorredores != null;
+        ArrayAdapter<Corredores> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                listaCorredores
+        );
+
+        listViewParticipantes.setAdapter(adapter);
     }
 
 
@@ -187,12 +266,39 @@ public class TelaMaratona extends AppCompatActivity {
 
     public void iniciarMaratona(View view){
 
+        InscricaoDAO idao = new InscricaoDAO(this);
+        int id = idao.getIdInscricao(maratonaId, userId);
+        Inscricao i = new Inscricao();
+
+
+
         Intent intent = new Intent(this, ScanQRCode.class);
         intent.putExtra("maratonaId", maratonaId);
         intent.putExtra("id", userId);
+        intent.putExtra("activity", "Participar");
 
         startActivityForResult(intent, 1);
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+           if (Activity.equals("VisualizarAbertas") || Activity.equals("VisualizarInscritas")){
+                carregarCorredoresIncritos();
+           }else{
+               carregarCorredoresConcluidos();
+            }
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            // Recarrega a lista de alunos após adi cionar
+            if (Activity.equals("VisualizarAbertas") || Activity.equals("VisualizarInscritas")){
+                carregarCorredoresIncritos();
+            }else{
+                carregarCorredoresConcluidos();
+            }
+        }
     }
 }

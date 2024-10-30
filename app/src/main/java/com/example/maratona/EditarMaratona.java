@@ -141,6 +141,7 @@ public class EditarMaratona extends AppCompatActivity {
                 intent.putExtra("activity", "VisualizarCriadas");
 
                 startActivity(intent);
+                finish();
 
         } catch (Exception e) {
             // Log de erro e mensagem ao usuário

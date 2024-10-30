@@ -4,12 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.maratona.model.Participacao;
 import com.example.maratona.util.ConnectionFactory;
 
+
+
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ParticipacaoDAO {
@@ -25,39 +30,39 @@ public class ParticipacaoDAO {
     // Inserir
     public long insert(Participacao participacao) {
         ContentValues values = new ContentValues();
-        values.put("idParticipacao", participacao.getIdParticipacao());
-        values.put("idInscricao", participacao.getIdInscricao());
-        values.put("statusConclusao", participacao.getStatusConclusao());
-        values.put("tempoRegistrado", "0:0:0"); // Armazenar como string
-        values.put("tempoInicio", participacao.getTempoInicio().toString());
-        values.put("tempoFim", "0:0:0");
-        values.put("Passos", participacao.getPassos());
+        values.put("id_participacao", participacao.getIdParticipacao()); // Corrigido
+        values.put("id_inscricao", participacao.getIdInscricao()); // Corrigido
+        values.put("status_conclusao", participacao.getStatusConclusao()); // Corrigido
+        values.put("tempo_registrado", "0:0:0"); // Armazenar como string
+        values.put("tempo_inicio", participacao.getTempoInicio().toString()); // Corrigido
+        values.put("tempo_fim", "0:0:0"); // Corrigido
+        values.put("passos", participacao.getPassos()); // Corrigido
         return banco.insert("participacao", null, values);
     }
 
     // Atualizar
     public void update(Participacao participacao) {
         ContentValues values = new ContentValues();
-        values.put("idInscricao", participacao.getIdInscricao());
-        values.put("statusConclusao", participacao.getStatusConclusao());
-        values.put("tempoRegistrado", participacao.getTempoRegistrado().toString());
-        values.put("tempoInicio", participacao.getTempoInicio().toString());
-        values.put("tempoFim", participacao.getTempoFim().toString());
-        values.put("Passos", participacao.getPassos());
+        values.put("id_inscricao", participacao.getIdInscricao());
+        values.put("status_conclusao", participacao.getStatusConclusao());
+        values.put("tempo_registrado", participacao.getTempoRegistrado().toString());
+        values.put("tempo_inicio", participacao.getTempoInicio().toString());
+        values.put("tempo_fim", participacao.getTempoFim().toString());
+        values.put("passos", participacao.getPassos());
         String[] args = {String.valueOf(participacao.getIdParticipacao())};
-        banco.update("participacao", values, "idParticipacao=?", args);
+        banco.update("participacao", values, "id_participacao=?", args);
     }
 
     // Deletar
     public void delete(Participacao participacao) {
         String[] args = {String.valueOf(participacao.getIdParticipacao())};
-        banco.delete("participacao", "idParticipacao=?", args);
+        banco.delete("participacao", "id_participacao=?", args);
     }
 
     // Ler uma Participacao por ID
     public Participacao readParticipacao(int id) {
         String[] args = {String.valueOf(id)};
-        Cursor cursor = banco.rawQuery("SELECT * FROM participacao WHERE idParticipacao = ?", args);
+        Cursor cursor = banco.rawQuery("SELECT * FROM participacao WHERE id_participacao = ?", args); // Corrigido
 
         Participacao participacao = new Participacao();
         if (cursor.moveToFirst()) {
@@ -72,6 +77,55 @@ public class ParticipacaoDAO {
         cursor.close();
         return participacao;
     }
+
+    // Ler apenas o tempo (horas, minutos, segundos) de uma Participação por ID
+    public long readTimeInicialParticipacao(int id) {
+        String[] args = {String.valueOf(id)};
+        Cursor cursor = banco.rawQuery("SELECT tempo_inicio FROM participacao WHERE id_participacao = ?", args); // Corrigido
+
+        long timeInicial = -1;
+        if (cursor.moveToFirst()) {
+            // Verificar se a coluna "tempo_inicio" existe
+            int columnIndex = cursor.getColumnIndex("tempo_inicio");
+            if (columnIndex == -1) {
+                Log.e("DB_ERROR", "A coluna 'tempo_inicio' não foi encontrada.");
+                return timeInicial; // Ou trate o erro de outra forma, como lançar uma exceção
+            }
+
+            // Recupera o valor de tempo_inicio como String
+            String dataInicioStr = cursor.getString(columnIndex);
+
+            // Define o formato para pegar apenas o tempo (HH:mm:ss)
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+
+            try {
+                // Converte a string de tempo em um objeto Date
+                Date timeInicio = timeFormat.parse(dataInicioStr);
+
+                // Converte o tempo em milissegundos (desde meia-noite)
+                timeInicial = timeInicio.getTime();
+            } catch (Exception e) {
+                e.printStackTrace(); // Trate a exceção de parsing, se necessário
+            }
+        }
+
+        cursor.close();
+        return timeInicial;
+    }
+
+
+    //atualiza status
+    public void updateStatus(Participacao p ) {
+        ContentValues values = new ContentValues();
+        values.put("status_conclusao", p.getStatusConclusao());
+        values.put("tempo_fim", String.valueOf(p.getTempoFim()));
+        values.put("tempo_registrado", String.valueOf(p.getTempoRegistrado()));
+        String[] args = {String.valueOf(p.getIdParticipacao())};
+
+        // Atualiza apenas o campo status da maratona com o id fornecido
+        banco.update("participacao", values, "id_participacao=?", args);
+    }
+
 
     // Obter todas as participações
     public List<Participacao> obterTodas() {

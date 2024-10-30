@@ -119,6 +119,7 @@
                 android:layout_height="65dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#A3E635"
+                android:onClick="FecharMaratona"
                 android:text="Encerrar Maratona"
                 android:visibility="gone"/>
 
@@ -126,6 +127,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="186dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtParticipantes2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="lista de Participantes" />
+
+                <ListView
+                    android:id="@+id/listaParticipantes2"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp" />
 
             </LinearLayout>
 
@@ -135,6 +147,7 @@
                 android:layout_height="65dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#A3E635"
+                android:onClick="VisualizarCorredoresConcluidos"
                 android:visibility="gone"
                 android:text="Concluir Vencedores" />
 
@@ -144,6 +157,7 @@
                 android:layout_height="65dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#A3E635"
+                android:onClick="VisualizarCorredoresInscritos"
                 android:text="Mostrar Inscritos na Maratona" />
 
             <Button

@@ -122,4 +122,6 @@ public class CorredoresDAO {
         cursor.close(); // Não se esqueça de fechar o cursor para liberar recursos
         return idCorredor; // Retorna o id da empresa ou -1 se não encontrar
     }
+
+
 }

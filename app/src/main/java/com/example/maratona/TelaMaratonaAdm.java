@@ -2,8 +2,11 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,19 +17,22 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.maratona.dao.InscricaoDAO;
 import com.example.maratona.dao.MaratonasDAO;
+import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Maratonas;
 
+import java.util.List;
 import java.util.Objects;
 
 public class TelaMaratonaAdm extends AppCompatActivity {
 
     private String Activity,Status,nomeMaratona;
-    private int userId,maratonaId;
+    private int userId,maratonaId, click;
     //private int inscreve = 0;
     private Button btnIniciarMaratona, btnEncerrar, btnAtualizarMaratona, btnGerarVencedores, btnMostrarInscritos;
-    private TextView txtTituloMaratona, txtDescricaoMaratona, txtlocal, txtDataIncial, txtDataFinal, txtStatus,txtDistancia,txtRegras,txtTipoT, txtClimaEsperado,txtValor, txtIdmaratona, txtEmpresa, txtForma;
-
+    private TextView txtParticipantes, txtTituloMaratona, txtDescricaoMaratona, txtlocal, txtDataIncial, txtDataFinal, txtStatus,txtDistancia,txtRegras,txtTipoT, txtClimaEsperado,txtValor, txtIdmaratona, txtEmpresa, txtForma;
+    ListView listViewParticipantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,8 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         Activity = String.valueOf(intent.getStringExtra("activity"));
 
 
-
+        listViewParticipantes = findViewById(R.id.listaParticipantes2);
+        txtParticipantes = findViewById(R.id.txtParticipantes2);
         txtTituloMaratona = findViewById(R.id.txtTituloMaratona);
         txtDescricaoMaratona = findViewById(R.id.txtDescricaoMaratona);
         txtlocal = findViewById(R.id.txtlocal);
@@ -99,24 +106,35 @@ public class TelaMaratonaAdm extends AppCompatActivity {
     }
     private void confereStatus(String maratonas){
 
-        if (maratonas.equals("aberta para Inscrição")){
+        if (maratonas.equals("Aberta para Inscrição")){
             btnIniciarMaratona.setVisibility(View.VISIBLE);
             btnMostrarInscritos.setVisibility(View.VISIBLE);
             btnGerarVencedores.setVisibility(View.GONE);
             btnEncerrar.setVisibility(View.GONE);
-        } else if (maratonas.equals("aberta")){
+        } else if (maratonas.equals("Aberta")){
             btnIniciarMaratona.setVisibility(View.VISIBLE);
             btnIniciarMaratona.setText("Exibir QrCode");
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.VISIBLE);
-        }else if(maratonas.equals("Concluida")){
+        }else if(maratonas.equals("Finalizada")){
             btnIniciarMaratona.setVisibility(View.GONE);
             btnMostrarInscritos.setVisibility(View.GONE);
             btnGerarVencedores.setVisibility(View.VISIBLE);
             btnEncerrar.setVisibility(View.GONE);
             btnAtualizarMaratona.setVisibility(View.GONE);
         }
+
+        /* Adicionando o OnItemClickListener */
+        listViewParticipantes.setOnItemClickListener((parent, view, position, id) -> {
+            Corredores corredorSelecionado = (Corredores) parent.getItemAtPosition(position);
+            //Toast.makeText(this, String.valueOf(maratonaSelecionada.getId()), Toast.LENGTH_SHORT).show();
+            Intent it = new Intent(TelaMaratonaAdm .this, EditarUsuario.class);
+            it.putExtra("id", corredorSelecionado.getIdCorredor());
+            it.putExtra("activity", "VisualizarPerfil");
+
+            startActivityForResult(it, 1);
+        });
     }
 
     public void IniciaMaratona(View view){
@@ -130,6 +148,60 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         finish();
     }
 
+    public void VisualizarCorredoresInscritos(View view){
+
+        if (click == 1){
+            Toast.makeText(this, "já exibido na tela os Inscritos.", Toast.LENGTH_SHORT).show();
+        }else{
+        InscricaoDAO dao = new InscricaoDAO(this);
+        List<Corredores> listaCorredores = dao.obterCorredoresPorMaratona(maratonaId);
+
+        // Verificar se a lista está preenchida
+        if (listaCorredores == null || listaCorredores.isEmpty()) {
+            Toast.makeText(this, "Nenhuma Corredor Inscrito", Toast.LENGTH_SHORT).show();
+            Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
+        }
+
+        // Criando um ArrayAdapter para mostrar a lista
+        assert listaCorredores != null;
+        ArrayAdapter<Corredores> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_list_item_1,
+                listaCorredores
+        );
+
+        listViewParticipantes.setAdapter(adapter);
+        }
+        click = 1;
+    }
+
+    public void VisualizarCorredoresConcluidos(View view){
+
+        if (click == 1){
+            Toast.makeText(this, "já exibido na tela os ganhadores.", Toast.LENGTH_SHORT).show();
+        }else{
+            InscricaoDAO dao = new InscricaoDAO(this);
+            List<Corredores> listaCorredores = dao.obterCorredoresConcluidosPorMaratona(maratonaId);
+
+            // Verificar se a lista está preenchida
+            if (listaCorredores == null || listaCorredores.isEmpty()) {
+                Toast.makeText(this, "Nenhum Corredor Concluiu está Maratona", Toast.LENGTH_SHORT).show();
+                Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
+            }
+
+            // Criando um ArrayAdapter para mostrar a lista
+            assert listaCorredores != null;
+            ArrayAdapter<Corredores> adapter = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_list_item_1,
+                    listaCorredores
+            );
+
+            listViewParticipantes.setAdapter(adapter);
+        }
+        click = 1;
+    }
+
     public void EditarMaratona(View view){
 
         Intent intent = new Intent(this, EditarMaratona.class);
@@ -139,5 +211,13 @@ public class TelaMaratonaAdm extends AppCompatActivity {
 
         startActivity(intent);
         finish();
+    }
+
+    public void FecharMaratona(View view){
+
+
+        MaratonasDAO m = new MaratonasDAO(this);
+        m.updateStatus(maratonaId, "Finalizado");
+        Toast.makeText(this, "Maratona Finalizada com Suceso.", Toast.LENGTH_SHORT).show();
     }
 }
