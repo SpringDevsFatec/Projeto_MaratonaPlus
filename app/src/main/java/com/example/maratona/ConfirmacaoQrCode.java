@@ -24,7 +24,6 @@ public class ConfirmacaoQrCode extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() != null) {
-                // Valida o conteúdo escaneado
                 if (result.getContents().equals("Confirmado na corrida")) {
                     // Redireciona para a tela de confirmação
                     Intent intent = new Intent(this, ConfirmacaoQrCode.class);

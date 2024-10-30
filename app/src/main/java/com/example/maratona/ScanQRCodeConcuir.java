@@ -58,7 +58,7 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
             // Se a permissão não foi concedida, solicitar permissão
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
         } else {
-            FinalizarLeituraQRCode();  // Iniciar leitura do QR Code se a permissão já foi concedida
+            FinalizarLeituraQRCode();
         }
 
     }
@@ -72,33 +72,30 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
 
-                        // adicona participação e muda status da inscrição
+
                         ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCodeConcuir.this);
                         int id = pdao.getIdParticipacao(inscricaoId);
 
                         // Buscar tempo inicial
                         long time_inicial = pdao.readTimeInicialParticipacao(id);
 
-                        // Se o tempo inicial foi encontrado (diferente de -1)
+
                         if (time_inicial != -1) {
-                            // Obter o tempo atual em milissegundos
+
                             long time_atual = System.currentTimeMillis();
 
-                            // Calcular a diferença entre o tempo atual e o tempo inicial
+
                             long tempo_registrado_ms = time_atual - time_inicial;
 
-                            // Criar objeto Participacao e atualizar os tempos
+
                             Participacao p = new Participacao();
                             p.setIdParticipacao(id);
                             p.setStatusConclusao("Desativado");
 
-                            // Definir o tempo final como o tempo atual
-                            p.setTempoFim(new Time(time_atual));  // Converte de milissegundos para Time
 
-                            // Definir o tempo registrado como a diferença
+                            p.setTempoFim(new Time(time_atual));
                             p.setTempoRegistrado(new Time(tempo_registrado_ms));  // Converte de milissegundos para Time
 
-                            // Atualizar o status da participação no banco
                             pdao.updateStatus(p);
                         }else{
                             Toast.makeText(ScanQRCodeConcuir.this, "Tempo errado!", Toast.LENGTH_SHORT).show();
@@ -115,9 +112,9 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                         Intent intent;
                         intent = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
 
-                        //intent.putExtra("maratonaId", maratonaId);
+
                         intent.putExtra("id", userId);
-                        //intent.putExtra("inscricaoId", id);
+
 
                         //  startActivityForResult(intent, 1);
                         startActivityForResult(intent,2);

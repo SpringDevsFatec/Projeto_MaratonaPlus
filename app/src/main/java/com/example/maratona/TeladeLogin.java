@@ -123,7 +123,6 @@ public class TeladeLogin extends AppCompatActivity {
         //Declarando uma variável do tipo Intent
         Intent it = new Intent(this, CadastroUsuario.class);
 
-        //Iniciando a Tela desejada (tela 2)
         startActivity(it);
     }
 }

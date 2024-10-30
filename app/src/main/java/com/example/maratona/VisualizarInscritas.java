@@ -40,11 +40,11 @@ public class VisualizarInscritas extends AppCompatActivity {
 
         carregarMaratonasConcluidas();
 
-        /* Adicionando o OnItemClickListener */
+
         listViewInscritas.setOnItemClickListener((parent, view, position, id) -> {
             Maratonas maratonaSelecionada = (Maratonas) parent.getItemAtPosition(position);
 
-            // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
+
             Intent it = new Intent(VisualizarInscritas.this, TelaMaratona.class);
             it.putExtra("maratonaId", maratonaSelecionada.getId());
             it.putExtra("id", userId);
@@ -71,12 +71,12 @@ public class VisualizarInscritas extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
+
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos
+
             carregarMaratonasConcluidas();
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos após adicionar
+
             carregarMaratonasConcluidas();
         }
     }

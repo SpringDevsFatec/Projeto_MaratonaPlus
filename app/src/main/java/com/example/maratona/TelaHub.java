@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 public class TelaHub extends AppCompatActivity {
 
     private int userId;
-    private TextView idid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,7 @@ public class TelaHub extends AppCompatActivity {
         // Log para verificar se o userId foi recebido corretamente
         Log.d("TelaHub", "Received userId: " + userId);
 
-        // teste de chegada dos Id's
-        //idid = findViewById(R.id.idid);
-        //idid.setText(String.valueOf(userId));
+
     }
 
     public void Editar_Usuario(View view) {

@@ -26,7 +26,7 @@ public class TelaParticipando extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        // Recebendo os dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("userId", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
@@ -45,5 +45,6 @@ public class TelaParticipando extends AppCompatActivity {
                 finish();
             }
         });
+        // Area esperado para o tema livre
     }
 }

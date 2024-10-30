@@ -23,11 +23,9 @@ import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Objects;
+
 
 public class TelaMaratona extends AppCompatActivity {
 
@@ -51,6 +49,7 @@ public class TelaMaratona extends AppCompatActivity {
             return insets;
         });
 
+        // Recebendo os dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
@@ -285,7 +284,6 @@ public class TelaMaratona extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
         if (requestCode == 1 && resultCode == RESULT_OK) {
            if (Activity.equals("VisualizarAbertas") || Activity.equals("VisualizarInscritas")){
                 carregarCorredoresIncritos();
@@ -293,7 +291,6 @@ public class TelaMaratona extends AppCompatActivity {
                carregarCorredoresConcluidos();
             }
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos após adi cionar
             if (Activity.equals("VisualizarAbertas") || Activity.equals("VisualizarInscritas")){
                 carregarCorredoresIncritos();
             }else{

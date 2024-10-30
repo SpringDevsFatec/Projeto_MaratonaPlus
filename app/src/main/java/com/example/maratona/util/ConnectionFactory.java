@@ -100,7 +100,7 @@ public class ConnectionFactory extends SQLiteOpenHelper{
                 // maratona da empresa rd@gmail.com
                 + "(2, 'Maratona da Independência', 'Brasília, DF', '2024-09-07','2024-10-07', '42.195', 'Aberta', 'Celebre a história do Brasil com a Maratona da Independência','Uso obrigatório de chip.', 120.00, 'Asfalto', 'Quente'), "
                 // maratona da empresa vm@gmail.com
-                + "(3, 'Corrida da Primavera', 'Curitiba, PR', '2024-09-21','2024-10-21', '10', 'Aberta para Inscrição', 'A Corrida da Primavera é um evento vibrante e cheio de cores que marca a chegada da estação das flores. ', 'Uso de tênis adequado obrigatório.', 80.00, 'Trilha', 'Fresco'), "
+                + "(3, 'Corrida da Primavera', 'Curitiba, PR', '2024-09-21','2024-10-21', '10', 'Aber ta para Inscrição', 'A Corrida da Primavera é um evento vibrante e cheio de cores que marca a chegada da estação das flores. ', 'Uso de tênis adequado obrigatório.', 80.00, 'Trilha', 'Fresco'), "
                 // maratona da empresa er@gmail.com
                 + "(4, 'Desafio da Montanha', 'Campos do Jordão, SP', '2023-12-15','2024-01-15', '21', 'Finalizada', 'Para os que buscam aventura e superação', 'Uso de roupas térmicas.', 200.00, 'Montanha', 'Frio'), "
                 // maratona da empresa eb@gmail.com

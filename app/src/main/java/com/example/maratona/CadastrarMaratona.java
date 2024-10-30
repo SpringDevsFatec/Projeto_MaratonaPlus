@@ -63,12 +63,10 @@ public class CadastrarMaratona extends AppCompatActivity {
                 return;
             }
 
-            // Criação de objeto Maratona
             Maratonas m = new Maratonas();
             m.setNome(nome);
             m.setCriador(userId);
 
-            // Validação e conversão de datas
                 m.setData_inicio(edtData_I.getText().toString());
                 m.setData_final(edtData_F.getText().toString());
 
@@ -78,7 +76,7 @@ public class CadastrarMaratona extends AppCompatActivity {
             m.setDistancia(edtDistancia.getText().toString());
             m.setDescricao(descricao);
 
-            // Validação e conversão do limite de participantes
+
             try {
                 m.setLimite_participantes(Integer.parseInt(edtLimite_p.getText().toString()));
             } catch (NumberFormatException e) {
@@ -88,7 +86,6 @@ public class CadastrarMaratona extends AppCompatActivity {
 
             m.setRegras(edtRegras.getText().toString());
 
-            // Validação e conversão do valor
             try {
                 m.setValor(Float.parseFloat(edtValor.getText().toString()));
             } catch (NumberFormatException e) {
@@ -99,21 +96,18 @@ public class CadastrarMaratona extends AppCompatActivity {
             m.setTipo_terreno(edtTipoTerreno.getText().toString());
             m.setClima_esperado(edtClimaEsperado.getText().toString());
 
-            // Inserção no banco de dados
             MaratonasDAO maratonadao = new MaratonasDAO(this);
             long id = maratonadao.insert(m);
 
-            // Confirmação e Log de sucesso
-            Toast.makeText(getApplicationContext(), "Maratona inserida com sucesso com o ID " + id, Toast.LENGTH_LONG).show();
-            Log.d("CadastrarMaratona", "Maratona inserida com ID: " + id);
 
-            // Finaliza a atividade
+            Toast.makeText(getApplicationContext(), "Maratona inserida com sucesso com o ID " + id, Toast.LENGTH_LONG).show();
+
+
             setResult(RESULT_OK);
             finish();
 
         } catch (Exception e) {
-            // Log de erro e mensagem ao usuário
-            Log.e("CadastrarMaratona", "Erro ao cadastrar maratona", e);
+
             Toast.makeText(getApplicationContext(), "Erro ao cadastrar maratona: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }

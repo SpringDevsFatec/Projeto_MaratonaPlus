@@ -52,7 +52,6 @@ public class TelaAdm extends AppCompatActivity {
                 userId
         );
 
-        //Iniciando a Tela desejada (tela 2)
         startActivity(it);
     }
 

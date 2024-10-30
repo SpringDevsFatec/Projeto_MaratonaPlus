@@ -74,7 +74,7 @@ public class  GerarQRCode extends AppCompatActivity {
             m.updateStatus(maratonaId, "Aberta");
 
         } catch (WriterException e) {
-            e.printStackTrace(); // Tratar exceções
+            e.printStackTrace();
         }
     }
 }

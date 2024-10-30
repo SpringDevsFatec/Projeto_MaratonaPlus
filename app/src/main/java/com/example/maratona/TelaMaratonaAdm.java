@@ -44,6 +44,7 @@ public class TelaMaratonaAdm extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        // Recebendo os dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);

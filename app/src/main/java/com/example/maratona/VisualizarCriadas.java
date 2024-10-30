@@ -21,7 +21,6 @@ public class VisualizarCriadas extends AppCompatActivity {
 
     ListView listViewCriadas;
     private int userId;
-    private TextView idid2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +34,6 @@ public class VisualizarCriadas extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
-       // idid2 = findViewById(R.id.idid2);
-       // idid2.setText(String.valueOf(userId));
-        // Inicializando o ListView
         listViewCriadas = findViewById(R.id.listabertas);
 
         carregarMaratonasCriadas();
@@ -46,7 +42,7 @@ public class VisualizarCriadas extends AppCompatActivity {
         listViewCriadas.setOnItemClickListener((parent, view, position, id) -> {
             Maratonas maratonaSelecionada = (Maratonas) parent.getItemAtPosition(position);
 
-            // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
+
             Intent it = new Intent(VisualizarCriadas.this, TelaMaratonaAdm.class);
             it.putExtra("maratonaId", maratonaSelecionada.getId());
             it.putExtra("id", userId);
@@ -74,10 +70,10 @@ public class VisualizarCriadas extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos
+
             carregarMaratonasCriadas();
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos após adicionar
+
             carregarMaratonasCriadas();
         }
     }

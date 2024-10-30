@@ -121,7 +121,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
 
             setResult(RESULT_OK);
-            Log.d("bbbb","bbbbb");
+
             //Declarando uma variável do tipo Intent
 
 

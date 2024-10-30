@@ -95,7 +95,7 @@ public class EditarMaratona extends AppCompatActivity {
                 return;
             }
 
-            // Criação de objeto Maratona
+
             Maratonas m = new Maratonas();
             m.setId(Integer.parseInt(edtId.getText().toString()));
             m.setNome(nome);
@@ -123,18 +123,16 @@ public class EditarMaratona extends AppCompatActivity {
             m.setClima_esperado(edtClimaEsperado.getText().toString());
 
             try{
-            // Inserção no banco de dados
             MaratonasDAO maratonadao = new MaratonasDAO(this);
             maratonadao.update(m);
 
-                // Confirmação e Log de sucesso
                 Toast.makeText(getApplicationContext(), "Maratona Atualizada com sucesso " , Toast.LENGTH_LONG).show();
-                Log.d("CadastrarMaratona", "Maratona Atualizada com sucesso " );
 
-            // Finaliza a atividade
+
+
             setResult(RESULT_OK);
 
-            // volta para tela de Adm com dados atualizados
+
             Intent intent = new Intent(this, TelaMaratonaAdm.class);
                 intent.putExtra("maratonaId", maratonaId);
                 intent.putExtra("id", userId);
@@ -144,8 +142,7 @@ public class EditarMaratona extends AppCompatActivity {
                 finish();
 
         } catch (Exception e) {
-            // Log de erro e mensagem ao usuário
-            Log.e("CadastrarMaratona", "Erro ao cadastrar maratona", e);
+
             Toast.makeText(getApplicationContext(), "Erro ao cadastrar maratona: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 

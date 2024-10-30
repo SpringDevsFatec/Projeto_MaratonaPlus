@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
             //Declarando uma variável do tipo Intent
             Intent it = new Intent(this, TeladeLogin.class);
 
-            //Iniciando a Tela desejada (tela 2)
             startActivity(it);
         }
     }

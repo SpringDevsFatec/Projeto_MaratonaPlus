@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,7 +24,8 @@ public class EditarUsuario extends AppCompatActivity {
     private String Activity;
     private int userId;
     private Button btnAtualizarCorredor;
-    private EditText edtPerfil, edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
+    private EditText  edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
+    private TextView edtPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +47,7 @@ public class EditarUsuario extends AppCompatActivity {
 
 
 
-        // Log para verificar se o userId foi recebido corretamente
-        Log.d("EditarUsuario", "Received userId: " + userId);
 
-        // Inicializar campos de entrada
         edtPerfil = findViewById(R.id.edtPerfil);
         edtId = findViewById(R.id.edtId);
         edtNome = findViewById(R.id.edtNome);
@@ -60,7 +59,7 @@ public class EditarUsuario extends AppCompatActivity {
         edtPaisOrigem = findViewById(R.id.edtPaisOrigem);
         btnAtualizarCorredor = findViewById(R.id.btnAtualizarCorredor);
 
-        // Buscar dados do usuário
+
         CorredoresDAO dao = new CorredoresDAO(this);
         Corredores corredor = dao.read(userId);
 
@@ -70,8 +69,7 @@ public class EditarUsuario extends AppCompatActivity {
             Toast.makeText(this, "Corredor não encontrado.", Toast.LENGTH_SHORT).show();
             finish();
         } else {
-            // Carregar dados nos campos de entrada
-            Log.d("EditarUsuario", "Corredor encontrado: " + corredor.getNome());
+
             edtId.setText(String.valueOf(corredor.getIdCorredor()));
             edtNome.setText(corredor.getNome());
             edtTelefone.setText(corredor.getTelefone());
@@ -106,12 +104,10 @@ public class EditarUsuario extends AppCompatActivity {
         }
 
 
-        // Configurar ação do botão de atualização
         btnAtualizarCorredor.setOnClickListener(this::AtualizarCorredor);
     }
 
     public void AtualizarCorredor(View view) {
-        // Obter valores dos campos
         String nome = edtNome.getText().toString();
         String telefone = edtTelefone.getText().toString();
         String email = edtEmail.getText().toString();
@@ -126,7 +122,6 @@ public class EditarUsuario extends AppCompatActivity {
             return;
         }
 
-        // Criar objeto Corredores com dados atualizados
         Corredores corredorAtualizado = new Corredores();
         corredorAtualizado.setIdCorredor(userId);
         corredorAtualizado.setNome(nome);
@@ -138,18 +133,14 @@ public class EditarUsuario extends AppCompatActivity {
         corredorAtualizado.setPaisOrigem(paisOrigem);
 
         try {
-            // Atualizar no banco de dados
             CorredoresDAO dao = new CorredoresDAO(this);
             dao.update(corredorAtualizado);
 
-            // Log de sucesso e mensagem de confirmação
-            Log.d("EditarUsuario", "Dados do corredor atualizados com sucesso: " + userId);
             Toast.makeText(this, "Dados atualizados com sucesso!", Toast.LENGTH_SHORT).show();
 
-            // Finalizar atividade e voltar para tela anterior
+
             finish();
         } catch (Exception e) {
-            Log.e("EditarUsuario", "Erro ao atualizar dados do corredor: " + e.getMessage());
             Toast.makeText(this, "Erro ao atualizar os dados.", Toast.LENGTH_SHORT).show();
         }
     }

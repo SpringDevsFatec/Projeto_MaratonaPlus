@@ -94,7 +94,7 @@ public class ScanQRCode extends AppCompatActivity {
                             intent.putExtra("userId", userId);
                             intent.putExtra("inscricaoId", id);
 
-                            //  startActivityForResult(intent, 1);
+
                             startActivity(intent);
                             finish();
 

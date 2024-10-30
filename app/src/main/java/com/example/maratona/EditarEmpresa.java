@@ -48,7 +48,7 @@ public class EditarEmpresa extends AppCompatActivity {
         edtCnpj = findViewById(R.id.edtCnpj2);
         edtLocal = findViewById(R.id.edtLocal2);
 
-        // Buscar dados do usuário
+
         EmpresasDAO dao = new EmpresasDAO(this);
         Empresas empresa = dao.read(userId);
 
