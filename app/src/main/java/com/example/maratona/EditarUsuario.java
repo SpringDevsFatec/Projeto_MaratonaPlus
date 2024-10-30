@@ -2,6 +2,7 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,9 +20,10 @@ import com.example.maratona.model.Corredores;
 
 public class EditarUsuario extends AppCompatActivity {
 
+    private String Activity;
     private int userId;
     private Button btnAtualizarCorredor;
-    private EditText edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
+    private EditText edtPerfil, edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +41,15 @@ public class EditarUsuario extends AppCompatActivity {
         // Receber dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
+        Activity = String.valueOf(intent.getStringExtra("activity"));
+
+
 
         // Log para verificar se o userId foi recebido corretamente
         Log.d("EditarUsuario", "Received userId: " + userId);
 
         // Inicializar campos de entrada
+        edtPerfil = findViewById(R.id.edtPerfil);
         edtId = findViewById(R.id.edtId);
         edtNome = findViewById(R.id.edtNome);
         edtTelefone = findViewById(R.id.edtTelefone);
@@ -75,6 +81,30 @@ public class EditarUsuario extends AppCompatActivity {
             edtGenero.setText(corredor.getGenero());
             edtPaisOrigem.setText(corredor.getPaisOrigem());
         }
+
+        if (Activity.equals("VisualizarPerfil")) {
+            edtPerfil.setText("Perfil de Usuário");
+            edtId.setInputType(InputType.TYPE_NULL);
+            edtNome.setInputType(InputType.TYPE_NULL);
+            edtTelefone.setInputType(InputType.TYPE_NULL);
+            edtEmail.setInputType(InputType.TYPE_NULL);
+            edtSenha.setInputType(InputType.TYPE_NULL);
+            edtCpf.setInputType(InputType.TYPE_NULL);
+            edtGenero.setInputType(InputType.TYPE_NULL);
+            edtPaisOrigem.setInputType(InputType.TYPE_NULL);
+
+            edtId.setFocusable(false);
+            edtNome.setFocusable(false);
+            edtTelefone.setFocusable(false);
+            edtEmail.setFocusable(false);
+            edtSenha.setFocusable(false);
+            edtCpf.setFocusable(false);
+            edtGenero.setFocusable(false);
+            edtPaisOrigem.setFocusable(false);
+
+            btnAtualizarCorredor.setVisibility(View.GONE);
+        }
+
 
         // Configurar ação do botão de atualização
         btnAtualizarCorredor.setOnClickListener(this::AtualizarCorredor);

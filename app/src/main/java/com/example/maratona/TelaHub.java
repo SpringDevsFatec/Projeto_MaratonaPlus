@@ -44,6 +44,7 @@ public class TelaHub extends AppCompatActivity {
         Log.d("TelaHub", "Sending userId to EditarUsuario: " + userId);  // Log para verificar o ID
         Intent it = new Intent(this, EditarUsuario.class);
         it.putExtra("id", userId);
+        it.putExtra("activity", "EditarPerfil");
         startActivity(it);
     }
 
