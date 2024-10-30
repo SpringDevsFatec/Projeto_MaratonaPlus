@@ -40,7 +40,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#1A1F71"
-                android:hint="Id da Maratona" />
+                android:hint="Id da Maratona"
+                android:inputType="none"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />/>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,9 +58,11 @@
                 android:id="@+id/edtStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:inputType="none"
                 android:backgroundTint="#1A1F71"
-                android:hint="Status" />
+                android:hint="Status"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />/>
 
             <TextView
                 android:layout_width="wrap_content"

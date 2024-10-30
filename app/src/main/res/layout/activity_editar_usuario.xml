@@ -20,17 +20,47 @@
             android:textColor="#1A1F71"
             android:textStyle="bold"
             android:layout_gravity="center" />
+        <!--id-->
 
         <!-- Nome -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="ID do Corredor:" />
+
+        <EditText
+            android:id="@+id/edtId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#1A1F71"
+            android:hint="Id do Corredor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Nome Completo:" />
+
         <EditText
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nome Completo"
             android:backgroundTint="#1A1F71"
-            android:layout_marginTop="20dp" />
+            android:layout_marginTop="10dp" />
 
         <!-- Telefone -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Número de Telefone:" />
+
         <EditText
             android:id="@+id/edtTelefone"
             android:layout_width="match_parent"
@@ -41,6 +71,13 @@
             android:layout_marginTop="10dp" />
 
         <!-- Email -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Email:" />
+
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
@@ -51,6 +88,13 @@
             android:layout_marginTop="10dp" />
 
         <!-- Senha -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Senha:" />
+
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
@@ -63,6 +107,13 @@
         <!-- Data de Nascimento -->
 
         <!-- CPF -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="CPF:" />
+
         <EditText
             android:id="@+id/edtCpf"
             android:layout_width="match_parent"
@@ -75,6 +126,13 @@
         <!-- Endereço -->
 
         <!-- Gênero -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Genêro:" />
+
         <EditText
             android:id="@+id/edtGenero"
             android:layout_width="match_parent"
@@ -86,6 +144,13 @@
         <!-- URL da Foto -->
 
         <!-- País de Origem -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:text="Nacionalidade:" />
+
         <EditText
             android:id="@+id/edtPaisOrigem"
             android:layout_width="match_parent"

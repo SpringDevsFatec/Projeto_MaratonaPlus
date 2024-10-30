@@ -16,6 +16,17 @@
         tools:layout_editor_absoluteX="26dp"
         tools:layout_editor_absoluteY="16dp">
 
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="false"
+            android:layout_gravity="right"
+            android:baselineAlignBottom="false"
+            android:src="@drawable/icone"
+            android:textAlignment="textEnd" />
+
         <TextView
             android:id="@+id/edtTelaAdm"
             android:layout_width="wrap_content"

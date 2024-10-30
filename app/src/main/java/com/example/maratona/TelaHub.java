@@ -2,6 +2,7 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,49 +27,34 @@ public class TelaHub extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         // Recebendo os dados do Intent
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
-        //teste de chegada dos Id's
-        //idid = findViewById(R.id.idid);
-       // idid.setText(String.valueOf(userId));
+
+        // Log para verificar se o userId foi recebido corretamente
+        Log.d("TelaHub", "Received userId: " + userId);
+
+        // teste de chegada dos Id's
+        idid = findViewById(R.id.idid);
+        idid.setText(String.valueOf(userId));
     }
 
-    public void Maratonas_Abertas(View view) {
-
-        //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, VisualizarAbertas.class);
-        it.putExtra(
-                "id",
-                userId
-        );
-
-        //Iniciando a Tela desejada (tela 2)
+    public void Editar_Usuario(View view) {
+        Log.d("TelaHub", "Sending userId to EditarUsuario: " + userId);  // Log para verificar o ID
+        Intent it = new Intent(this, EditarUsuario.class);
+        it.putExtra("id", userId);
         startActivity(it);
     }
-    public void Maratonas_Concluidas(View view) {
 
-        //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, VisualizarConcluidas.class);
-        it.putExtra(
-                "id",
-                userId
-        );
 
-        //Iniciando a Tela desejada (tela 2)
-        startActivity(it);
-    }
     public void Maratonas_Inscritas(View view) {
-
-        //Declarando uma variável do tipo Intent
+        // Declarando uma variável do tipo Intent
         Intent it = new Intent(this, VisualizarInscritas.class);
-        it.putExtra(
-                "id",
-                userId
-        );
-        //Iniciando a Tela desejada (tela 2)
+        it.putExtra("id", userId);
         startActivity(it);
     }
+
 
     public void voltar(View view){
         finish();
