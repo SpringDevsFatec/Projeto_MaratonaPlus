@@ -58,6 +58,19 @@ public class TelaHub extends AppCompatActivity {
         //Iniciando a Tela desejada (tela 2)
         startActivity(it);
     }
+
+    public void Editar_Usuario(View view) {
+
+        //Declarando uma variável do tipo Intent
+        Intent it = new Intent(this, EditarUsuario.class);
+        it.putExtra(
+                "id",
+                userId
+        );
+
+        //Iniciando a Tela desejada (tela 2)
+        startActivity(it);
+    }
     public void Maratonas_Inscritas(View view) {
 
         //Declarando uma variável do tipo Intent
