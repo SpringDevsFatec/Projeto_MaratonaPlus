@@ -2,8 +2,11 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.maratona.dao.InscricaoDAO;
 import com.example.maratona.dao.MaratonasDAO;
 import com.example.maratona.model.Maratonas;
 
@@ -20,6 +24,8 @@ public class VisualizarConcluidas extends AppCompatActivity {
 
     ListView listViewConcluidas;
     private int userId;
+    private TextView idid2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,8 @@ public class VisualizarConcluidas extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
+        idid2 = findViewById(R.id.idid2);
+        idid2.setText(String.valueOf(userId));
         // Inicializando o ListView
         listViewConcluidas = findViewById(R.id.listConcluidas);
 
@@ -44,7 +52,8 @@ public class VisualizarConcluidas extends AppCompatActivity {
 
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent it = new Intent(VisualizarConcluidas.this, TelaMaratona.class);
-            it.putExtra("id", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("id", userId);
             it.putExtra("activity", "VisualizarConcluidas");
 
             startActivityForResult(it, 1);
@@ -52,8 +61,8 @@ public class VisualizarConcluidas extends AppCompatActivity {
     }
 
     private void carregarMaratonasConcluidas() {
-        MaratonasDAO dao = new MaratonasDAO(this);
-        List<Maratonas> listaMaratonas = dao.obterMaratonasFechadas();
+        InscricaoDAO dao = new InscricaoDAO(this);
+        List<Maratonas> listaMaratonas = dao.obterMaratonasConcluidasPorCorredor(userId);
 
         // Criando um ArrayAdapter para mostrar a lista
         ArrayAdapter<Maratonas> adapter = new ArrayAdapter<>(
@@ -61,19 +70,21 @@ public class VisualizarConcluidas extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 listaMaratonas
         );
-
+        Log.d("VisualizarConcluidas", "Maratonas encontradas: " + listaMaratonas.size());
+        Toast.makeText(this, "Maratonas encontradas: " + listaMaratonas.size(), Toast.LENGTH_SHORT).show();
         listViewConcluidas.setAdapter(adapter);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Verifica se o resultado é OK e se é a resposta da AlterarExcluirActivity
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos
-            carregarMaratonasConcluidas();
-        } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            // Recarrega a lista de alunos após adicionar
-            carregarMaratonasConcluidas();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 1) {
+                // Recarregar a lista após a TelaMaratona
+                carregarMaratonasConcluidas();
+            } else if (requestCode == 2) {
+                // Recarregar a lista após a ScanQRCodeConcluir
+                carregarMaratonasConcluidas();
+            }
         }
     }
 }

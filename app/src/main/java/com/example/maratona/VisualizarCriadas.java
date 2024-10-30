@@ -35,8 +35,8 @@ public class VisualizarCriadas extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
-        idid2 = findViewById(R.id.idid2);
-        idid2.setText(String.valueOf(userId));
+       // idid2 = findViewById(R.id.idid2);
+       // idid2.setText(String.valueOf(userId));
         // Inicializando o ListView
         listViewCriadas = findViewById(R.id.listabertas);
 

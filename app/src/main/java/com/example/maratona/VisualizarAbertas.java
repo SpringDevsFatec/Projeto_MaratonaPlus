@@ -47,7 +47,6 @@ public class VisualizarAbertas extends AppCompatActivity {
         listViewAbertas.setOnItemClickListener((parent, view, position, id) -> {
             Maratonas maratonaSelecionada = (Maratonas) parent.getItemAtPosition(position);
             //Toast.makeText(this, String.valueOf(maratonaSelecionada.getId()), Toast.LENGTH_SHORT).show();
-            // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent intent = new Intent(VisualizarAbertas.this, TelaMaratona.class);
             intent.putExtra("maratonaId", maratonaSelecionada.getId());
             intent.putExtra("id", userId);
