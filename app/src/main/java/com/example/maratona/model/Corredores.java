@@ -14,8 +14,9 @@ public class Corredores {
     //private String genero;
     //private String urlFoto;
     private String paisOrigem;
+    private String genero;
 
-    public Corredores(int idCorredor, String nome, String telefone, String email, String senha, String cpf, String endereco, String paisOrigem) {
+    public Corredores(int idCorredor, String nome, String telefone, String email, String senha, String cpf, String endereco, String paisOrigem, String genero) {
         this.idCorredor = idCorredor;
         this.nome = nome;
         this.telefone = telefone;
@@ -24,6 +25,7 @@ public class Corredores {
         this.cpf = cpf;
         this.endereco = endereco;
         this.paisOrigem = paisOrigem;
+        this.genero = genero;
     }
 
     public Corredores(int idCorredor) {
@@ -99,4 +101,9 @@ public class Corredores {
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public String getGenero()  {return genero;}
+
+    public void setGenero(String genero)  {this.genero = genero;}
+
 }
