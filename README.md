@@ -1,4 +1,4 @@
-﻿<br id="topo">
+<br id="topo">
 <h1 align="center"> Maratona+</h1>
 
 <p align="center">
@@ -41,6 +41,11 @@ Os corredores e organizadores enfrentam desafios na gestão de inscrições e no
 - **QR Code para Acesso**: Geração de QR Codes únicos para cada corredor, facilitando o acesso às maratonas.
 - **Gerenciamento de Inscrições**: O administrador pode visualizar e gerenciar inscrições, enquanto os corredores podem se inscrever, participar e concluir maratonas.
 - **Visualização de Maratonas**: Corredores poderão visualizar maratonas passadas e futuras, facilitando o planejamento de participação.
+- **Cronômetro**: Contagem do tempo de cada corrida, fornecendo dados em tempo real para os corredores.
+-   **Histórico de Corridas**: Registro das corridas já realizadas, permitindo aos corredores visualizar suas participações passadas.
+-   **Contagem de Passos por Minuto**: Acompanhar o ritmo do corredor durante a corrida.
+-   **Ranqueamento de Posição**: Exibição das posições dos corredores em tempo real durante o evento.
+-   **Distribuição de Medalhas Digitais**: Conquista de medalhas digitais ao concluir maratonas, que podem ser visualizadas e compartilhadas.
  
 → [Voltar ao topo](#topo)
 
@@ -53,25 +58,36 @@ As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na 
 
 
 Geral: 
-- [GitHub](https://github.com/): Versionamento e documentação
-- [AndroidStudio](https://developer.android.com/): Codificação
+- [GitHub](https://github.com/): Versionamento e documentação.
+- [AndroidStudio](https://developer.android.com/): Codificação.
 - [Discord](https://discord.com/): Comunicação e reuniões.
+- [VSCode](https://code.visualstudio.com/): Desenvolvimento de Front-End e Back-End.
+- [IntelliJ IDEA](https://www.jetbrains.com/pt-br/idea/): Desenvolvimento Back-End (Spring).
+- [ZXing](https://zxing.org/w/decode.jspx): Leitura e geração de QRCode.
 
 Front-End:  
 
-- [XML Layouts](https://developer.android.com/develop/ui/views/layout/declaring-layout?hl=pt-br): Estilização do site
-- [Figma](http://www.figma.com): Prototipagem
+- [XML Layouts](https://developer.android.com/develop/ui/views/layout/declaring-layout?hl=pt-br): Estilização do site.
+- [Figma](http://www.figma.com): Prototipagem.
+- [HTML](https://developer.mozilla.org/pt-BR/docs/Web/HTML): Estrutura e Design do Site.
+- [CSS](https://developer.mozilla.org/pt-BR/docs/Web/CSS): Estrutura e Design do Site.
+- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript): Estrutura e Design do Site.
+
 
  Back-End:  
 
 - [Java](https://www.java.com/pt-BR/): Comunicação com Banco de dados e manipulação de informações. 
 - [JSON](https://www.php.net/manual/en/book.json.php): Estruturação de dados.
+- [Spring Boot](https://spring.io/projects/spring-boot): Desenvolvimento do back-end, integração com APIs e gerenciamento de dados.
+
 
 Banco de Dados: 
-
-- [SQLite](https://www.sqlite.org/): Banco de dados nativo do Android para armazenamento local.
 - [MySql](https://www.mysql.com/downloads/): Criação de tabelas em banco de dados. 
-- [BrModelo](https://www.brmodeloweb.com/lang/pt-br/index.html): Diagrama de banco de dados. 
+- [BrModelo](https://www.brmodeloweb.com/lang/pt-br/index.html): Hospedagem e infraestrutura do sistema.
+
+ Infraestrutura: 
+ - [AWS (Amazon Web Services)](https://aws.amazon.com/pt/): Hospedagem da página Web.
+
 
  Engenharia de Software:  
 
