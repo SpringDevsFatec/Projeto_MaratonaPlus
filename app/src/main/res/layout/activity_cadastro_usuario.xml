@@ -18,14 +18,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Cadastro "
-            android:textColor="#1A1F71"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Área de Cadastro "
+            android:textColor="#000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:onClick="Troca"
             android:orientation="horizontal">
 
@@ -34,18 +36,20 @@
                 android:layout_width="151dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="25dp"
+                android:fontFamily="@font/raleway_medium"
                 android:onClick="TrocaAdm"
                 android:text="Empresa"
-                android:textColor="#A3E635"
+                android:textColor="#000"
                 android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/rdbRunner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_medium"
                 android:onClick="TrocaCorredor"
                 android:text="Corredor"
-                android:textColor="#A3E635"
+                android:textColor="#000"
                 android:textStyle="bold" />
         </RadioGroup>
 
@@ -54,39 +58,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:hint="Nome Completo" />
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="E-mail"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp" />
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Senha"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtCpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Cpf"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtCnpj"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:padding="12dp"
             android:hint="Cnpj"
             android:inputType="number"
             android:visibility="gone" />
@@ -95,35 +110,44 @@
             android:id="@+id/edtOrigem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Pais de Origem"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Telefone"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtEndereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Endereco"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
 
         <Button
             android:id="@+id/btnCadastrarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
+            android:textSize="20sp"
+            android:padding="12dp"
             android:onClick="Cadastrar"
             android:text="Cadastrar"
             android:textColor="#FFFFFF" />
