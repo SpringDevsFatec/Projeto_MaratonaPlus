@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_edit_text"
+        android:background="@drawable/rounded_edit_text_maratona"
         android:fontFamily="@font/raleway_medium"
         android:hint="E-mail"
         android:inputType="textEmailAddress" />
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_edit_text"
+        android:background="@drawable/rounded_edit_text_maratona"
         android:fontFamily="@font/raleway_medium"
         android:hint="Senha"
         android:inputType="textPassword"
@@ -74,17 +74,17 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:padding="12dp"
         android:background="@drawable/rounded_edit_text"
         android:backgroundTint="#A3E635"
         android:capitalize="none"
         android:fontFamily="@font/raleway_extrabold"
         android:onClick="Logar"
-        android:padding="12dp"
         android:text="Entrar"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvCadastrar"
