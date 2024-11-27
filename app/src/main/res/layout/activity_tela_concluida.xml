@@ -41,6 +41,7 @@
             android:backgroundTint="#A3E635"
             android:capitalize="none"
             android:fontFamily="@font/raleway_extrabold"
+            android:onClick="ScanQrcode"
             android:padding="12dp"
             android:text="🥇 Escanear para sair 🥇"
             android:textSize="20sp"

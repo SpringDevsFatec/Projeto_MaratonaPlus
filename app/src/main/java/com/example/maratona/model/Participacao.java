@@ -9,7 +9,7 @@ public class Participacao {
     private int idParticipacao;
     private int idInscricao;
     private String statusConclusao;
-    private Time tempoRegistrado;
+    private String tempoRegistrado;
     private Time tempoInicio;
     private Time tempoFim;
     private int Passos;
@@ -21,7 +21,7 @@ public class Participacao {
         this.idParticipacao = idParticipacao;
     }
 
-    public Participacao(int idParticipacao, int idInscricao, String statusConclusao, Time tempoRegistrado, Time tempoFim, Time tempoInicio, int passos) {
+    public Participacao(int idParticipacao, int idInscricao, String statusConclusao, String tempoRegistrado, Time tempoFim, Time tempoInicio, int passos) {
         this.idParticipacao = idParticipacao;
         this.idInscricao = idInscricao;
         this.statusConclusao = statusConclusao;
@@ -47,11 +47,11 @@ public class Participacao {
         this.idInscricao = idInscricao;
     }
 
-    public Time getTempoRegistrado() {
+    public String getTempoRegistrado() {
         return tempoRegistrado;
     }
 
-    public void setTempoRegistrado(Time tempoRegistrado) {
+    public void setTempoRegistrado(String tempoRegistrado) {
         this.tempoRegistrado = tempoRegistrado;
     }
 

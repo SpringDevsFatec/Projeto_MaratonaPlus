@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ScanQRCodeConcuir extends AppCompatActivity {
 
-    private int userId,maratonaId, inscricaoId;
+    private int userId,maratonaId, distanciaMaratona, idinscricao, idParticipacao;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -47,7 +47,9 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
-        inscricaoId = intent.getIntExtra("inscricaoId", -1);
+        distanciaMaratona = intent.getIntExtra("distancia", -1);
+        idinscricao = intent.getIntExtra("inscricaoId", -1);
+        idParticipacao = intent.getIntExtra("participacaoId", -1);
 
 
 
@@ -71,58 +73,24 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                 if (result != null) {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
+                        Intent it;
+                        it = new Intent(ScanQRCodeConcuir.this, TelaResultados.class);
+                        it.putExtra("maratonaId", maratonaId);
+                        it.putExtra("id", userId);
+                        it.putExtra("inscricaoId", idinscricao);
+                        it.putExtra("participacaoId", idParticipacao);
+                        startActivity(it);
 
-
-                        ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCodeConcuir.this);
-                        int id = pdao.getIdParticipacao(inscricaoId);
-
-                        // Buscar tempo inicial
-                        long time_inicial = pdao.readTimeInicialParticipacao(id);
-
-
-                        if (time_inicial != -1) {
-
-                            long time_atual = System.currentTimeMillis();
-
-
-                            long tempo_registrado_ms = time_atual - time_inicial;
-
-
-                            Participacao p = new Participacao();
-                            p.setIdParticipacao(id);
-                            p.setStatusConclusao("Desativado");
-
-
-                            p.setTempoFim(new Time(time_atual));
-                            p.setTempoRegistrado(new Time(tempo_registrado_ms));  // Converte de milissegundos para Time
-
-                            pdao.updateStatus(p);
                         }else{
                             Toast.makeText(ScanQRCodeConcuir.this, "Tempo errado!", Toast.LENGTH_SHORT).show();
 
                             return ;
                         }
 
-                        InscricaoDAO idao = new InscricaoDAO(ScanQRCodeConcuir.this);
-
-
-                        idao.updateStatus(inscricaoId,"Concluido");
-                        Toast.makeText(ScanQRCodeConcuir.this, "Participação Finalizada, Parabens!", Toast.LENGTH_SHORT).show();
-                        // Vai para a tela de Participando
-                        Intent intent;
-                        intent = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
-
-
-                        intent.putExtra("id", userId);
-
-
-                        //  startActivityForResult(intent, 1);
-                        startActivityForResult(intent,2);
-                        finish();
 
 
 
-                }
+
             }}
 
             @Override

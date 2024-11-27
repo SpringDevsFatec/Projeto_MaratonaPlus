@@ -5,6 +5,7 @@ import static com.example.maratona.util.ConnectionFactory.FormConnect;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.maratona.model.Maratonas;
+import com.example.maratona.service.GetRequestMaratonaAndamento;
 import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -92,7 +93,27 @@ public class MaratonasDAO {
         banco.delete("maratona", "id_maratona=?", args);
     }
 
-    public Maratonas read(int id) {
+
+    public String confereMaratona(int id) {
+        try {
+            // Faz a solicitação para obter o JSON correspondente ao ID
+            GetRequestMaratonaAndamento findByIdRequest = new GetRequestMaratonaAndamento();
+            String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
+
+            if (jsonString != null && !jsonString.isEmpty()) {
+                // Retorna diretamente a string JSON recebida
+                return jsonString;
+            } else {
+                System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
+                return "Erro: Resposta vazia ou nula";
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            return "Erro: Problema na execução da requisição";
+        }
+    }
+
+    public Maratonas readMaratona(int id) {
         Maratonas maratona = null;
 
         if ("Online".equals(FormConnect)) {

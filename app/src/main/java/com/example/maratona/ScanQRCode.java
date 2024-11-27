@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ScanQRCode extends AppCompatActivity {
 
-    private int userId,maratonaId;
+    private int userId,maratonaId, distanciaMaratona;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -47,6 +47,7 @@ public class ScanQRCode extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
+        distanciaMaratona = intent.getIntExtra("distancia", -1);
 
 
         barcodeScannerView = findViewById(R.id.barcodeScanner);
@@ -77,22 +78,21 @@ public class ScanQRCode extends AppCompatActivity {
 
                             Participacao p = new Participacao();
                             p.setIdInscricao(id);
-                            p.setStatusConclusao("Ativo");
-                            p.setPassos(0);
-                            p.setTempoInicio(Time.valueOf(String.valueOf(new Time(System.currentTimeMillis()))));
 
                             ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCode.this);
                             Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
 
-                            pdao.insert(p);
+                            long idParticipacao = pdao.insertParticipacao(p);
 
                             // Vai para a tela de Participando
                             Intent intent;
-                            intent = new Intent(ScanQRCode.this, TelaParticipando.class);
+                            intent = new Intent(ScanQRCode.this, Cronometro.class);
 
                             intent.putExtra("maratonaId", maratonaId);
                             intent.putExtra("userId", userId);
+                            intent.putExtra("distancia", distanciaMaratona);
                             intent.putExtra("inscricaoId", id);
+                            intent.putExtra("participacaoId", idParticipacao);
 
 
                             startActivity(intent);

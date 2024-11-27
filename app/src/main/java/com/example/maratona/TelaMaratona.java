@@ -30,7 +30,7 @@ import java.util.List;
 public class TelaMaratona extends AppCompatActivity {
 
     private String Activity;
-    private int userId,maratonaId;
+    private int userId,maratonaId, distancia;
     private int inscreve = 0;
     private Button btnInscrever, btnIniciarCorrida;
     private RadioButton rdbBoleto,rdbCartao, rdbPix ;
@@ -85,6 +85,7 @@ public class TelaMaratona extends AppCompatActivity {
 
         MaratonasDAO dao = new MaratonasDAO(this);
         Maratonas maratona = dao.readMaratona(maratonaId);
+        distancia = Integer.parseInt(maratona.getDistancia());
 
         confereStatus(maratona);
         confereActivity(Activity);
@@ -274,6 +275,7 @@ public class TelaMaratona extends AppCompatActivity {
         Intent intent = new Intent(this, ScanQRCode.class);
         intent.putExtra("maratonaId", maratonaId);
         intent.putExtra("id", userId);
+        intent.putExtra("distancia", distancia);
         intent.putExtra("activity", "Participar");
 
         startActivityForResult(intent, 1);
