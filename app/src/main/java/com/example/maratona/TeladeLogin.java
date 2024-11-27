@@ -3,6 +3,7 @@ package com.example.maratona;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -66,7 +67,7 @@ public class TeladeLogin extends AppCompatActivity {
 
                 EmpresasDAO empresaDAO = new EmpresasDAO(this);
                 int loginValido = empresaDAO.verificarLoginEmpresaId(email, senha);
-
+                Log.i("UserId",String.valueOf(loginValido));
                 if (loginValido != -1) {
 
 

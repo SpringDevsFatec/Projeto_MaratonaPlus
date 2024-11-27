@@ -1,16 +1,29 @@
 package com.example.maratona.dao;
 
+import static com.example.maratona.util.ConnectionFactory.FormConnect;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Empresas;
+import com.example.maratona.service.InsertRequestCorredor;
+import com.example.maratona.service.InsertRequestEmpresa;
+import com.example.maratona.service.InsertRequestEmpresaLogin;
 import com.example.maratona.util.ConnectionFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class EmpresasDAO {
 
@@ -24,17 +37,43 @@ public class EmpresasDAO {
 
     // Inserir
     public long insert(Empresas empresa) {
-        ContentValues values = new ContentValues();
-        values.put("nome", empresa.getNome());
-        values.put("telefone", empresa.getTelefone());
-        values.put("email", empresa.getEmail());
-        values.put("usuario", empresa.getUsuario());
-        values.put("senha", empresa.getSenha());
-        values.put("cnpj", empresa.getCnpj());
-        values.put("local", empresa.getLocal());
-        values.put("url_logo", empresa.getUrlLogo());
-        values.put("data_criacao", String.valueOf(empresa.getDataCriacao())); // Se estiver usando Timestamp
-        return banco.insert("empresa", null, values);
+        if ("Online".equals(FormConnect)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            try {
+                String jsonUser = objectMapper.writeValueAsString(empresa);
+
+                InsertRequestEmpresa insertRequest = new InsertRequestEmpresa();
+                String jsonString = insertRequest.execute(jsonUser).get();
+                Log.i("jsonInsert", jsonString);
+                Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
+                Empresas empresaRetornado = objectMapper.readValue(jsonString, Empresas.class);
+
+                // Retorna o ID do corredor inserido
+                return empresaRetornado.getIdEmpresa();
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a inserção online.", e);
+            } catch (JsonProcessingException e) {
+                // Lida com erros de serialização/deserialização JSON
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao processar JSON.", e);
+            }
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("nome", empresa.getNome());
+            values.put("telefone", empresa.getTelefone());
+            values.put("email", empresa.getEmail());
+            values.put("usuario", empresa.getUsuario());
+            values.put("senha", empresa.getSenha());
+            values.put("cnpj", empresa.getCnpj());
+            values.put("local", empresa.getLocal());
+            values.put("url_logo", empresa.getUrlLogo());
+            values.put("data_criacao", String.valueOf(empresa.getDataCriacao())); // Se estiver usando Timestamp
+            return banco.insert("empresa", null, values);
+
+        }
     }
 
     // Atualizar
@@ -112,22 +151,54 @@ public class EmpresasDAO {
         return existe;
     }
 
-    // Verificar login da empresa e retornar o id_empresa
     public int verificarLoginEmpresaId(String email, String senha) {
-        String[] columns = {"id_empresa"};  // Coluna que queremos obter
-        String selection = "email = ? AND senha = ?";
-        String[] selectionArgs = {email, senha};
+        if ("Online".equals(FormConnect)) {
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        Cursor cursor = banco.query("empresa", columns, selection, selectionArgs, null, null, null);
+            try {
+                // Cria o objeto com email e senha
+                Empresas e = new Empresas();
+                e.setEmail(email);
+                e.setSenha(senha);
 
-        // Se o cursor tiver algum resultado, significa que a combinação de email e senha existe
-        int idEmpresa = -1; // Valor padrão para indicar falha
-        if (cursor.moveToFirst()) {
-            idEmpresa = cursor.getInt(0);  // Obtém o id_empresa da primeira (e única) linha
+                // Converte para JSON
+                String jsonUser = objectMapper.writeValueAsString(e);
+
+                // Faz a requisição e obtém a resposta
+                InsertRequestEmpresaLogin insertRequest = new InsertRequestEmpresaLogin();
+                String jsonString = insertRequest.execute(jsonUser).get();
+
+                // Converte diretamente o JSON (número) para um inteiro
+                return objectMapper.readValue(jsonString, Integer.class);
+            } catch (ExecutionException | InterruptedException | JsonProcessingException ex) {
+                ex.printStackTrace(); // Log da exceção
+                Log.i("erro", "erro na chegada dos json");
+                return -1; // Retorna -1 em caso de falha
+            }
+        } else {
+            String[] columns = {"id_empresa"}; // Coluna que queremos obter
+            String selection = "email = ? AND senha = ?";
+            String[] selectionArgs = {email, senha};
+
+            Cursor cursor = null;
+            try {
+                cursor = banco.query("empresa", columns, selection, selectionArgs, null, null, null);
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    return cursor.getInt(0); // Retorna o id_empresa
+                }
+                return -1; // Retorna -1 se não encontrar
+            } catch (Exception ex) {
+                ex.printStackTrace(); // Log da exceção
+                return -1;
+            } finally {
+                if (cursor != null) {
+                    cursor.close(); // Fecha o cursor
+                }
+            }
         }
-        cursor.close(); // Não se esqueça de fechar o cursor para liberar recursos
-        return idEmpresa; // Retorna o id da empresa ou -1 se não encontrar
     }
+
 
 
 }

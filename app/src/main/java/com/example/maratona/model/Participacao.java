@@ -1,7 +1,9 @@
 package com.example.maratona.model;
 
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Time;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Participacao {
 
     private int idParticipacao;

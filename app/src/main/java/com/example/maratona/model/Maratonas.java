@@ -1,7 +1,9 @@
 package com.example.maratona.model;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Date;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Maratonas {
 
 
