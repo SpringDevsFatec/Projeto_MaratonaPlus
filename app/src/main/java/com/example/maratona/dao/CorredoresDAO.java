@@ -9,8 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.maratona.model.Corredores;
+import com.example.maratona.service.GetRequestCorredorId;
 import com.example.maratona.service.InsertRequestCorredor;
 import com.example.maratona.service.InsertRequestCorredorLogin;
+import com.example.maratona.service.UpdateRequestCorredorAtualizar;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -70,19 +72,42 @@ public class CorredoresDAO {
         }
     }
 
-    // Atualizar dados do corredor
     public void update(Corredores corredor) {
-        ContentValues values = new ContentValues();
-        values.put("nome", corredor.getNome());
-        values.put("telefone", corredor.getTelefone());
-        values.put("email", corredor.getEmail());
-        values.put("senha", corredor.getSenha());
-        values.put("cpf", corredor.getCpf());
-        values.put("endereco", corredor.getEndereco());
-        values.put("pais_origem", corredor.getPaisOrigem());
-        String[] args = {String.valueOf(corredor.getIdCorredor())};
-        banco.update("corredor", values, "id_corredor=?", args);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON do objeto Corredores
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(corredor);
+
+                // Envia os dados para o servidor usando um PUT
+                UpdateRequestCorredorAtualizar updateRequest = new UpdateRequestCorredorAtualizar();
+                String response = updateRequest.execute(String.valueOf(corredor.getIdCorredor()), jsonString).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar corredor com ID " + corredor.getIdCorredor());
+                } else {
+                    System.out.println("Corredor atualizado com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao serializar o objeto Corredores para JSON", e);
+            }
+        } else {
+            // Atualização local no banco de dados SQLite
+            ContentValues values = new ContentValues();
+            values.put("nome", corredor.getNome());
+            values.put("telefone", corredor.getTelefone());
+            values.put("email", corredor.getEmail());
+            values.put("senha", corredor.getSenha());
+            values.put("cpf", corredor.getCpf());
+            values.put("endereco", corredor.getEndereco());
+            values.put("pais_origem", corredor.getPaisOrigem());
+            String[] args = {String.valueOf(corredor.getIdCorredor())};
+            banco.update("corredor", values, "id_corredor=?", args);
+        }
     }
+
 
     // Deletar um corredor
     public void delete(Corredores corredor) {
@@ -111,25 +136,65 @@ public class CorredoresDAO {
         return corredores;
     }
 
-    // Ler um corredor pelo ID
     public Corredores read(int id) {
-        String[] args = {String.valueOf(id)};
-        Cursor cursor = banco.query("corredor", new String[]{"id_corredor", "nome", "telefone", "email", "senha", "cpf", "endereco", "pais_origem"},
-                "id_corredor=?", args, null, null, null);
-        Corredores corredor = new Corredores();
-        if (cursor.moveToFirst()) {
-            corredor.setIdCorredor(cursor.getInt(0));
-            corredor.setNome(cursor.getString(1));
-            corredor.setTelefone(cursor.getString(2));
-            corredor.setEmail(cursor.getString(3));
-            corredor.setSenha(cursor.getString(4));
-            corredor.setCpf(cursor.getString(5));
-            corredor.setEndereco(cursor.getString(6));
-            corredor.setPaisOrigem(cursor.getString(7));
+        Corredores corredor = null;
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Faz a solicitação para obter o JSON correspondente ao ID
+                GetRequestCorredorId findByIdRequest = new GetRequestCorredorId();
+                String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
+
+                if (jsonString != null && !jsonString.isEmpty()) {
+                    // Desserializa o JSON diretamente para um objeto Corredores
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    corredor = objectMapper.readValue(jsonString, Corredores.class);
+                } else {
+                    System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao desserializar o JSON", e);
+            }
+        } else {
+            String[] args = {String.valueOf(id)};
+            Cursor cursor = null;
+            try {
+                cursor = banco.query(
+                        "corredor",
+                        new String[]{
+                                "id_corredor", "nome", "telefone", "email", "senha",
+                                "cpf", "endereco", "pais_origem"
+                        },
+                        "id_corredor=?",
+                        args,
+                        null, null, null
+                );
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    corredor = new Corredores();
+                    corredor.setIdCorredor(cursor.getInt(0));
+                    corredor.setNome(cursor.getString(1));
+                    corredor.setTelefone(cursor.getString(2));
+                    corredor.setEmail(cursor.getString(3));
+                    corredor.setSenha(cursor.getString(4));
+                    corredor.setCpf(cursor.getString(5));
+                    corredor.setEndereco(cursor.getString(6));
+                    corredor.setPaisOrigem(cursor.getString(7));
+                } else {
+                    System.err.println("Erro: Nenhum corredor encontrado para o ID " + id);
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
         }
-        cursor.close(); // Não se esqueça de fechar o cursor
+
         return corredor;
     }
+
 
     // Verificar se um corredor existe pelo email e senha
     public boolean verificarLoginCorredor(String email, String senha) {

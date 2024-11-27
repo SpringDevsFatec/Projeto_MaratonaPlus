@@ -1,14 +1,21 @@
 package com.example.maratona.dao;
 
+import static com.example.maratona.util.ConnectionFactory.FormConnect;
+
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.maratona.model.Maratonas;
+import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.util.ConnectionFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MaratonasDAO {
 
@@ -85,34 +92,71 @@ public class MaratonasDAO {
         banco.delete("maratona", "id_maratona=?", args);
     }
 
-    public Maratonas readMaratona(int id) {
-        String[] args = {String.valueOf(id)};
-        // Usando JOIN para buscar o nome da empresa (criador) na tabela empresa
-        Cursor cursor = banco.rawQuery(
-                "SELECT m.id_maratona, e.nome AS nome_criador, m.Nome, m.local, m.data_inicio, m.data_final, m.status, m.distancia, m.descricao, m.limite_participantes, m.regras, m.valor, m.tipo_terreno, m.clima_esperado " +
-                        "FROM maratona m " +
-                        "JOIN empresa e ON m.criador = e.id_empresa " +
-                        "WHERE m.id_maratona = ?", args);
+    public Maratonas read(int id) {
+        Maratonas maratona = null;
 
-        Maratonas maratona = new Maratonas();
-        if (cursor.moveToFirst()) {
-            maratona.setId(cursor.getInt(0));
-            maratona.setNomeCriador(cursor.getString(1)); // Nome da empresa (criador)
-            maratona.setNome(cursor.getString(2));
-            maratona.setLocal(cursor.getString(3));
-            maratona.setData_inicio(cursor.getString(4));
-            maratona.setData_final(cursor.getString(5));
-            maratona.setStatus(cursor.getString(6));
-            maratona.setDistancia(cursor.getString(7));
-            maratona.setDescricao(cursor.getString(8));
-            maratona.setLimite_participantes(cursor.getInt(9));
-            maratona.setRegras(cursor.getString(10));
-            maratona.setValor(cursor.getFloat(11));
-            maratona.setTipo_terreno(cursor.getString(12));
-            maratona.setClima_esperado(cursor.getString(13));
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Faz a solicitação para obter o JSON correspondente ao ID
+                GetRequestMaratonaId findByIdRequest = new GetRequestMaratonaId();
+                String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
+
+                if (jsonString != null && !jsonString.isEmpty()) {
+                    // Desserializa o JSON diretamente para um objeto Maratonas
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    maratona = objectMapper.readValue(jsonString, Maratonas.class);
+                } else {
+                    System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao desserializar o JSON", e);
+            }
+        } else {
+            String[] args = {String.valueOf(id)};
+            Cursor cursor = null;
+            try {
+                // Consulta SQL para buscar os detalhes da maratona e o nome do criador
+                cursor = banco.rawQuery(
+                        "SELECT m.id_maratona, e.nome AS nome_criador, m.Nome, m.local, m.data_inicio, " +
+                                "m.data_final, m.status, m.distancia, m.descricao, m.limite_participantes, " +
+                                "m.regras, m.valor, m.tipo_terreno, m.clima_esperado " +
+                                "FROM maratona m " +
+                                "JOIN empresa e ON m.criador = e.id_empresa " +
+                                "WHERE m.id_maratona = ?",
+                        args
+                );
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    maratona = new Maratonas();
+                    maratona.setId(cursor.getInt(0));
+                    maratona.setNomeCriador(cursor.getString(1)); // Nome da empresa criadora
+                    maratona.setNome(cursor.getString(2));
+                    maratona.setLocal(cursor.getString(3));
+                    maratona.setData_inicio(cursor.getString(4));
+                    maratona.setData_final(cursor.getString(5));
+                    maratona.setStatus(cursor.getString(6));
+                    maratona.setDistancia(cursor.getString(7));
+                    maratona.setDescricao(cursor.getString(8));
+                    maratona.setLimite_participantes(cursor.getInt(9));
+                    maratona.setRegras(cursor.getString(10));
+                    maratona.setValor(cursor.getFloat(11));
+                    maratona.setTipo_terreno(cursor.getString(12));
+                    maratona.setClima_esperado(cursor.getString(13));
+                } else {
+                    System.err.println("Erro: Nenhuma maratona encontrada para o ID " + id);
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
         }
+
         return maratona;
     }
+
 
 
     // Obter todas as maratonas

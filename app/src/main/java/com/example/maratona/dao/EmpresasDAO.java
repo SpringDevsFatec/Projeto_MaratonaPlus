@@ -10,9 +10,11 @@ import android.util.Log;
 
 import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Empresas;
+import com.example.maratona.service.GetRequestEmpresaId;
 import com.example.maratona.service.InsertRequestCorredor;
 import com.example.maratona.service.InsertRequestEmpresa;
 import com.example.maratona.service.InsertRequestEmpresaLogin;
+import com.example.maratona.service.UpdateRequestEmpresa;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -76,20 +78,44 @@ public class EmpresasDAO {
         }
     }
 
-    // Atualizar
     public void update(Empresas empresa) {
-        ContentValues values = new ContentValues();
-        values.put("nome", empresa.getNome());
-        values.put("telefone", empresa.getTelefone());
-        values.put("email", empresa.getEmail());
-        values.put("usuario", empresa.getUsuario());
-        values.put("senha", empresa.getSenha());
-        values.put("cnpj", empresa.getCnpj());
-        values.put("local", empresa.getLocal());
-        //values.put("url_logo", empresa.getUrlLogo());
-        String[] args = {String.valueOf(empresa.getIdEmpresa())};
-        banco.update("empresa", values, "id_empresa=?", args);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON do objeto Empresas
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(empresa);
+
+                // Envia os dados para o servidor usando um PUT
+                UpdateRequestEmpresa updateRequest = new UpdateRequestEmpresa();
+                String response = updateRequest.execute(String.valueOf(empresa.getIdEmpresa()),jsonString).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar empresa com ID " + empresa.getIdEmpresa());
+                } else {
+                    System.out.println("Empresa atualizada com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao serializar o objeto Empresas para JSON", e);
+            }
+        } else {
+            // Atualização local no banco de dados SQLite
+            ContentValues values = new ContentValues();
+            values.put("nome", empresa.getNome());
+            values.put("telefone", empresa.getTelefone());
+            values.put("email", empresa.getEmail());
+            values.put("usuario", empresa.getUsuario());
+            values.put("senha", empresa.getSenha());
+            values.put("cnpj", empresa.getCnpj());
+            values.put("local", empresa.getLocal());
+            // Caso deseje atualizar a URL do logo, descomente a linha abaixo:
+            // values.put("url_logo", empresa.getUrlLogo());
+            String[] args = {String.valueOf(empresa.getIdEmpresa())};
+            banco.update("empresa", values, "id_empresa=?", args);
+        }
     }
+
 
     // Deletar
     public void delete(Empresas empresa) {
@@ -118,25 +144,67 @@ public class EmpresasDAO {
         return empresas;
     }
 
-    // Ler uma empresa pelo ID
     public Empresas read(int id) {
-        String[] args = {String.valueOf(id)};
-        Cursor cursor = banco.query("empresa", new String[]{"id_empresa", "nome", "telefone", "email", "usuario", "cnpj", "local", "url_logo", "senha"},
-                "id_empresa=?", args, null, null, null);
-        Empresas empresa = new Empresas();
-        if (cursor.moveToFirst()) {
-            empresa.setIdEmpresa(cursor.getInt(0));
-            empresa.setNome(cursor.getString(1));
-            empresa.setTelefone(cursor.getString(2));
-            empresa.setEmail(cursor.getString(3));
-            empresa.setUsuario(cursor.getString(4));
-            empresa.setCnpj(cursor.getString(5));
-            empresa.setLocal(cursor.getString(6));
-            empresa.setUrlLogo(cursor.getString(7));
-            empresa.setSenha(cursor.getString(8));
+        Empresas empresa = null;
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Faz a solicitação para obter o JSON correspondente ao ID
+                GetRequestEmpresaId findByIdRequest = new GetRequestEmpresaId();
+                String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
+
+                if (jsonString != null && !jsonString.isEmpty()) {
+                    // Desserializa o JSON diretamente para um objeto Empresas
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    empresa = objectMapper.readValue(jsonString, Empresas.class);
+                } else {
+                    System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao desserializar o JSON", e);
+            }
+        } else {
+            String[] args = {String.valueOf(id)};
+            Cursor cursor = null;
+            try {
+                cursor = banco.query(
+                        "empresa",
+                        new String[]{
+                                "id_empresa", "nome", "telefone", "email", "usuario",
+                                "cnpj", "local", "url_logo", "senha"
+                        },
+                        "id_empresa=?",
+                        args,
+                        null, null, null
+                );
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    empresa = new Empresas();
+                    empresa.setIdEmpresa(cursor.getInt(0));
+                    empresa.setNome(cursor.getString(1));
+                    empresa.setTelefone(cursor.getString(2));
+                    empresa.setEmail(cursor.getString(3));
+                    empresa.setUsuario(cursor.getString(4));
+                    empresa.setCnpj(cursor.getString(5));
+                    empresa.setLocal(cursor.getString(6));
+                    empresa.setUrlLogo(cursor.getString(7));
+                    empresa.setSenha(cursor.getString(8));
+                } else {
+                    System.err.println("Erro: Nenhuma empresa encontrada para o ID " + id);
+                }
+            } finally {
+                if (cursor != null) {
+                    cursor.close();
+                }
+            }
         }
+
         return empresa;
     }
+
+
 
     public boolean verificarLoginEmpresa(String email, String senha) {
         String[] columns = {"id_empresa"};  // Você pode escolher retornar mais colunas se necessário
