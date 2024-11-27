@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/ImgBackground"
     tools:context=".TelaParticipando">
 
     <LinearLayout
@@ -19,34 +20,33 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:background="#A3E635"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textAlignment="center"
+            android:textColor="@color/escura"
+            android:textSize="18sp"
             android:text="Você está participando dessa maratona"
-            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColorLink="#000000"
-            android:textSize="22sp"
             android:textStyle="normal" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageView4"
             android:layout_width="match_parent"
-            android:layout_height="406dp"
-            app:srcCompat="@drawable/maratona_cartoon" />
+            android:layout_height="198dp"
+            app:srcCompat="@drawable/logo" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
             android:backgroundTint="#A3E635"
+            android:padding="12dp"
             android:text="Concluir Maratona"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="187dp"
-            app:srcCompat="@drawable/logo" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

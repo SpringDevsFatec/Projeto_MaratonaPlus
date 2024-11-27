@@ -17,8 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/raleway_bold"
             android:text="Editar Dados da Empresa"
-            android:textColor="#1A1F71"
+            android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -27,6 +28,9 @@
             android:id="@+id/txtNomeEmpresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Nome da Empresa:" />
 
         <EditText
@@ -34,22 +38,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
-            android:hint="Nome da Empresa" />
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="Nome da Empresa"
+            android:padding="12dp" />
 
         <!-- Telefone -->
         <TextView
             android:id="@+id/txtTelefone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Telefone:" />
 
         <EditText
             android:id="@+id/edtTelefone2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="Telefone"
             android:inputType="phone" />
 
@@ -58,14 +69,19 @@
             android:id="@+id/txtEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="E-mail:" />
 
         <EditText
             android:id="@+id/edtEmail2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="E-mail"
             android:inputType="textEmailAddress" />
 
@@ -74,14 +90,19 @@
             android:id="@+id/txtUsuario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Usuário:" />
 
         <EditText
             android:id="@+id/edtUsuario2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="Usuário" />
 
         <!-- Senha -->
@@ -89,14 +110,19 @@
             android:id="@+id/txtSenha2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Senha:" />
 
         <EditText
             android:id="@+id/edtSenha2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="Senha"
             android:inputType="textPassword" />
 
@@ -105,14 +131,19 @@
             android:id="@+id/txtCnpj"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="CNPJ:" />
 
         <EditText
             android:id="@+id/edtCnpj2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="CNPJ"
             android:inputType="number" />
 
@@ -121,14 +152,19 @@
             android:id="@+id/txtLocal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Localização:" />
 
         <EditText
             android:id="@+id/edtLocal2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_edit_text_adm"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="#1A1F71"
             android:hint="Localização" />
 
 

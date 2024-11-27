@@ -19,9 +19,11 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#A3E635"
             android:text="Escaneie o Código para concluir"
+            android:layout_height="36dp"
+            android:background="#A3E635"
+            android:fontFamily="@font/raleway_extrabold"
+            android:textColor="@color/escura"
             android:textAlignment="center"
             android:textSize="24sp" />
 
@@ -34,12 +36,15 @@
         <Button
             android:id="@+id/btnParticipar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
             android:text="Concluir"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_height="65dp"
+            android:padding="12dp"
+            android:background="@drawable/rounded_edit_text"
+            android:backgroundTint="#A3E635" />
 
         <ImageView
             android:id="@+id/ImgLogo"

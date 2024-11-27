@@ -25,6 +25,8 @@
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
                 android:hint="Nome da Maratona"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -34,79 +36,139 @@
                 android:layout_height="47dp"
                 android:layout_marginTop="8dp"
                 android:hint="Informações sobre a maratona..."
+                android:textColorHint="#B1B1B1"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/txtlocal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="local" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Local: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtDataIncial"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Data de Inicio" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Data de Inicio: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtDataFinal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Data de final" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Data de final: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Status" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Status: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtDistancia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Distancia" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Distancia: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtRegras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Regras" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Regras: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtTipoT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tipo de terreno" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Tipo de terreno: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtClimaEsperado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Clima Esperado" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Clima Esperado: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtValor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Valor" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Valor: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtIdmaratona"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Id Maratona" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Id Maratona: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/txtEmpresa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Criadora" />
+                android:layout_marginTop="2dp"
+                android:background="@drawable/rounded_edit_text_maratona"
+                android:fontFamily="@font/raleway_medium"
+                android:hint="Criadora: "
+                android:padding="5dp"
+                android:textColorHint="#000000" />
 
             <Button
                 android:id="@+id/btnIniciarMaratona"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginTop="20dp"
+                android:layout_height="65dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
                 android:backgroundTint="#A3E635"
                 android:text="Iniciar Maratona"
                 android:visibility="visible"
@@ -125,7 +187,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="186dp"
+                android:layout_height="297dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -156,15 +218,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#A3E635"
+                android:backgroundTint="#505050"
                 android:onClick="VisualizarCorredoresInscritos"
-                android:text="Mostrar Inscritos na Maratona" />
+                android:padding="12dp"
+                android:text="Mostrar Inscritos na Maratona"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnAtualizarMaratona"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginTop="20dp"
+                android:layout_height="65dp"
+                android:padding="12dp"
                 android:onClick="EditarMaratona"
                 android:backgroundTint="#8D8D8D"
                 android:text="Atualizar Maratona" />

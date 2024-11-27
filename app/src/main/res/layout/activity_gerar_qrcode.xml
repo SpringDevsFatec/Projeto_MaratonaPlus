@@ -22,11 +22,12 @@
         android:id="@+id/txtGerar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:text="@string/generate_qr_code"
-        android:textColor="#1A1F71"
+        android:layout_gravity="center"
         android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/raleway_bold"
+        android:textColor="#000" />
 
     <!-- Aqui será exibido o QR Code -->
     <ImageView
@@ -39,8 +40,12 @@
     <Button
         android:id="@+id/btnGenerateQRCode"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_edit_text"
         android:backgroundTint="#A3E635"
         android:text="@string/generate_qr_code"
         android:textColor="#FFFFFF" />

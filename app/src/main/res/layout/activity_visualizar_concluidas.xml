@@ -16,30 +16,60 @@
         tools:layout_editor_absoluteY="1dp">
 
         <TextView
-            android:id="@+id/idid2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#A3E635"
-            android:text="Maratonas Concluídas"
+            android:fontFamily="@font/raleway_extrabold"
             android:textAlignment="center"
-            android:textColor="@color/branco"
-            android:textSize="24sp" />
+            android:textColor="@color/escura"
+            android:textSize="24sp"
+            android:text="Maratonas Concluídas" />
 
         <ImageView
-            android:id="@+id/imgConcluidas"
+            android:id="@+id/imageView4"
             android:layout_width="match_parent"
-            android:layout_height="228dp"
-            app:srcCompat="@drawable/maratona_cartoon" />
+            android:layout_height="198dp"
+            app:srcCompat="@drawable/logo" />
 
-        <ListView
-            android:id="@+id/listConcluidas"
+
+        <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="260dp" />
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Título da Lista -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Maratonas Concluídas"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"
+                    android:textColor="@color/black" />
+
+                <!-- ListView -->
+                <ListView
+                    android:id="@+id/listConcluidas"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:divider="@color/light_gray"
+                    android:dividerHeight="1dp"
+                    android:background="@color/white"
+                    android:padding="8dp"
+                    android:scrollbars="none" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
 
         <ImageView
             android:id="@+id/logoConcluidas"
@@ -47,6 +77,11 @@
             android:layout_height="148dp"
             android:visibility="gone"
             app:srcCompat="@drawable/logomaratona" />
+
+        <TextView
+            android:id="@+id/idid2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wppa">
+    android:background="@drawable/fundo">
 
     <!-- Contêiner centralizado com fundo #F2F2F2 -->
     <LinearLayout
@@ -14,7 +14,8 @@
         android:elevation="8dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        >
 
         <!-- Logo do app -->
 
@@ -29,7 +30,7 @@
             android:id="@+id/txtView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_black"
+            android:fontFamily="@font/raleway_extrabold"
             android:text="Maratona+"
             android:textAlignment="center"
             android:textColor="#000000"
@@ -40,11 +41,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
             android:backgroundTint="#A3E635"
+            android:fontFamily="@font/roboto_black"
             android:onClick="Iniciar"
             android:text="Avançar"
             android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 

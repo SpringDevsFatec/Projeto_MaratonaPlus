@@ -14,45 +14,53 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/edtPerfil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:id="@+id/edtPerfil"
-            android:text="Editar Dados do Corredor"
-            android:textColor="#1A1F71"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:fontFamily="@font/raleway_bold"
+            android:text="Editar Dados do Corredor"
+            android:textColor="#000000" />
         <!--id-->
 
         <!-- Nome -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="ID do Corredor:" />
 
         <EditText
             android:id="@+id/edtId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
+            android:layout_marginTop="5dp"
             android:hint="Id do Corredor" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Nome Completo:" />
 
         <EditText
             android:id="@+id/edtNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
+            android:layout_marginTop="5dp"
             android:hint="Nome Completo" />
 
         <!-- Telefone -->
@@ -60,15 +68,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Número de Telefone:" />
 
         <EditText
             android:id="@+id/edtTelefone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:hint="Telefone"
             android:inputType="phone" />
 
@@ -77,15 +88,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Email:" />
 
         <EditText
             android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
+            android:layout_marginTop="5dp"
             android:hint="E-mail"
             android:inputType="textEmailAddress" />
 
@@ -94,16 +108,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Senha:" />
 
         <EditText
             android:id="@+id/edtSenha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
             android:hint="Senha"
+            android:layout_marginTop="5dp"
             android:inputType="textPassword" />
 
         <!-- Data de Nascimento -->
@@ -113,15 +130,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="CPF:" />
 
         <EditText
             android:id="@+id/edtCpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
+            android:layout_marginTop="5dp"
             android:hint="CPF"
             android:inputType="number" />
 
@@ -132,15 +152,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Genêro:" />
 
         <EditText
             android:id="@+id/edtGenero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="12dp"
+            android:layout_marginTop="5dp"
             android:hint="Gênero" />
 
         <!-- URL da Foto -->
@@ -150,15 +173,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/raleway_bold"
             android:text="Nacionalidade:" />
 
         <EditText
             android:id="@+id/edtPaisOrigem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_medium"
+            android:layout_marginTop="5dp"
+            android:padding="12dp"
             android:hint="País de Origem" />
 
         <!-- Botão Atualizar -->
@@ -167,7 +193,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#1A1F71"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
+            android:textSize="20sp"
+            android:padding="12dp"
             android:text="Atualizar"
             android:textColor="#FFFFFF" />
 

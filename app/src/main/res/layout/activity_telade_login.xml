@@ -17,47 +17,71 @@
         android:id="@+id/edtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="12dp"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#1A1F71"
+        android:background="@drawable/rounded_edit_text_maratona"
+        android:fontFamily="@font/raleway_medium"
         android:hint="E-mail"
         android:inputType="textEmailAddress" />
+
 
     <EditText
         android:id="@+id/edtSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="#1A1F71"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_edit_text_maratona"
+        android:fontFamily="@font/raleway_medium"
         android:hint="Senha"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:padding="12dp" />
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp">
 
         <RadioButton
             android:id="@+id/rdbEmpresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
+            android:layout_marginEnd="16dp"
+            android:buttonTint="#A3E635"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="8dp"
             android:text="Empresa"
-            android:textColor="#A3E635" />
+            android:textColor="#A3E635"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/rdbRunner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="#A3E635"
+            android:fontFamily="@font/raleway_medium"
+            android:padding="8dp"
             android:text="Corredor"
-            android:textColor="#A3E635" />
+            android:textColor="#A3E635"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </RadioGroup>
+
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:padding="12dp"
+        android:background="@drawable/rounded_edit_text"
         android:backgroundTint="#A3E635"
+        android:capitalize="none"
+        android:fontFamily="@font/raleway_extrabold"
         android:onClick="Logar"
         android:text="Entrar"
         android:textColor="#FFFFFF" />
@@ -67,10 +91,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/raleway_medium"
         android:onClick="Tela_Cadastrar"
         android:text="Não tem conta? Cadastre-se"
-        android:textColor="#A3E635"
-        android:textStyle="bold" />
+        android:textColor="#898989" />
+
 
     <TextView
         android:id="@+id/tvCadastrarEmpresa"

@@ -17,8 +17,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:fontFamily="@font/raleway_bold"
             android:text="Cadastrar Maratona "
-            android:textColor="#1A1F71"
+            android:textColor="#000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -27,102 +28,132 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#1A1F71"
-            android:hint="Nome Completo" />
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="Nome Completo"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtEndereco"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#1A1F71"
-            android:hint="Endereco" />
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
+            android:hint="Endereco"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtData_I"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Data inicial"
-            android:backgroundTint="#1A1F71"
-            android:layout_marginTop="10dp"
-            android:inputType="text|date" />
+            android:inputType="text|date"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtData_F"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Data Final"
-            android:inputType="text|date" />
+            android:inputType="text|date"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtDistancia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Distancia"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtDescricao"
             android:layout_width="match_parent"
             android:layout_height="62dp"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Descricao"
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtLimite_p"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="limite de Participantes"
-            android:inputType="number" />
+            android:inputType="number"
+            android:padding="12dp" />
 
         <EditText
             android:id="@+id/edtRegras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Regras"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
+
         <EditText
             android:id="@+id/edtValor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Valor"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:padding="12dp" />
+
         <EditText
             android:id="@+id/edtTipoTerreno"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Tipo de Terreno"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
+
         <EditText
             android:id="@+id/edtClimaEsperado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="#1A1F71"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:fontFamily="@font/raleway_medium"
             android:hint="Clima Esperado"
-            android:inputType="text" />
+            android:inputType="text"
+            android:padding="12dp" />
 
         <Button
             android:id="@+id/btnCadastrarUsuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
+            android:backgroundTint="#000"
+            android:fontFamily="@font/raleway_bold"
             android:onClick="CadastrarMaratonas"
+            android:padding="15dp"
             android:text="Cadastrar"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imgLogo"

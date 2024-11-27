@@ -10,8 +10,8 @@
 
 
     <LinearLayout
-        android:layout_width="361dp"
-        android:layout_height="393dp"
+        android:layout_width="364dp"
+        android:layout_height="442dp"
         android:gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="26dp"
@@ -19,14 +19,14 @@
 
         <ImageView
             android:id="@+id/profileImage"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="83dp"
+            android:layout_height="66dp"
             android:layout_alignParentTop="false"
             android:layout_alignParentEnd="false"
-            android:layout_gravity="right"
+            android:layout_gravity="right|center_horizontal|center_vertical"
             android:baselineAlignBottom="false"
-            android:src="@drawable/icone"
             android:onClick="Editar_Usuario"
+            android:src="@drawable/icone"
             android:textAlignment="textEnd" />
 
         <TextView
@@ -34,8 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Hub de Usuário"
-            android:textColor="#1A1F71"
+            android:fontFamily="@font/raleway_medium"
+            android:text="HUB de Usuário"
+            android:textColor="#000"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -49,29 +50,38 @@
             android:layout_width="match_parent"
             android:layout_height="68dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Abertas"
+            android:padding="12dp"
             android:text="Visualizar Maratonas Abertas"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnVisualizarMaratonasInscritas"
             android:layout_width="match_parent"
             android:layout_height="71dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Inscritas"
+            android:padding="12dp"
             android:text="Visualizar Maratonas Inscritas"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnVisualizarMaratonaConcluidas"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="#A3E635"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Concluidas"
+            android:padding="12dp"
             android:text="Visualizar Maratonas Concluidas"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textSize="16sp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,6 +18,18 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TelaResultados"
+            android:exported="false" />
+        <activity
+            android:name=".TelaConcluida"
+            android:exported="false" />
+        <activity
+            android:name=".Cronometro"
+            android:exported="false" />
+        <activity
+            android:name=".AguardeMaratona"
+            android:exported="false" />
+        <activity
             android:name=".ScanQRCodeConcuir"
             android:exported="false" />
         <activity
