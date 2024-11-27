@@ -156,12 +156,12 @@
             android:id="@+id/txtEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:fontFamily="@font/raleway_medium"
             android:hint="Criadora: "
             android:padding="5dp"
             android:textColorHint="#000000"
-            android:background="@drawable/rounded_edit_text_maratona" />
+            android:background="@drawable/rounded_edit_text_maratona"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/raleway_medium"/>
 
         <Button
             android:id="@+id/btnInscrever"
