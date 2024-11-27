@@ -56,9 +56,6 @@ public class VisualizarAbertas extends AppCompatActivity {
         });
     }
 
-
-
-
     private void carregarMaratonasAbertas() {
         MaratonasDAO dao = new MaratonasDAO(this);
         List<Maratonas> listaMaratonas = dao.obterMaratonasAbertas();
