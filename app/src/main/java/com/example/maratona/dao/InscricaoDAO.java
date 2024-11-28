@@ -4,16 +4,31 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
+import com.example.maratona.service.GetRequestCorredoresConcluidos;
+import com.example.maratona.service.GetRequestCorredoresInscritos;
+import com.example.maratona.service.GetRequestInscricaoPorCorredoreEMaratona;
+import com.example.maratona.service.GetRequestMaratonaAbertaCorredor;
+import com.example.maratona.service.GetRequestMaratonaConcluidaCorredor;
+import com.example.maratona.service.InsertRequestInscricao;
 import com.example.maratona.util.ConnectionFactory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class InscricaoDAO {
 
@@ -25,18 +40,37 @@ public class InscricaoDAO {
         banco = conexao.getWritableDatabase();
     }
 
-
-
     // Inserir nova inscrição
     public long insert(Inscricao inscricao) {
-        ContentValues values = new ContentValues();
-        values.put("id_corredor", inscricao.getIdCorredor());
-        values.put("id_maratona", inscricao.getIdMaratona());
-        values.put("data_hora", "CURRENT_TIMESTAMP"); // Se estiver usando Timestamp
-        values.put("forma_pagamento", inscricao.getFormaPagamento());
-        values.put("status", "Inscrito");
-        return banco.insert("inscricao", null, values);
+        ObjectMapper objectMapper = new ObjectMapper();
+        long idInscricao = -1;
+
+        try {
+            // Converte o objeto Inscricao para JSON
+            String jsonInscricao = objectMapper.writeValueAsString(inscricao);
+
+            // Realiza a requisição para inserir a inscrição
+            InsertRequestInscricao insertRequest = new InsertRequestInscricao();
+            String jsonResponse = insertRequest.execute(jsonInscricao).get();
+
+            // Processa a resposta da API
+            if (jsonResponse != null && !jsonResponse.isEmpty()) {
+                // Supondo que a API retorne o ID da inscrição inserida
+                Map<String, Object> responseMap = objectMapper.readValue(jsonResponse, Map.class);
+                if (responseMap.containsKey("id_inscricao")) {
+                    idInscricao = Long.parseLong(responseMap.get("id_inscricao").toString());
+                }
+            }
+
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return idInscricao; // Retorna o id da inscrição inserida ou -1 se ocorrer algum erro
     }
+
 
     // Atualizar uma inscrição existente
     public void update(Inscricao inscricao) {
@@ -77,82 +111,55 @@ public class InscricaoDAO {
     // Obter maratonas de um determinado corredor
     public List<Maratonas> obterMaratonasPorCorredor(int idCorredor) {
         List<Maratonas> maratonas = new ArrayList<>();
+        Log.i("MARATONAS_CORREDOR", "Iniciando busca de maratonas abertas para o corredor...");
 
-        // Query com JOIN entre a tabela de inscrição e maratona
-        String query = "SELECT m.id_maratona, m.criador, m.nome, m.local, m.data_inicio, " +
-                "m.criador, m.status, m.distancia, m.descricao, m.limite_participantes, " +
-                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " +
-                "FROM maratona m " +
-                "INNER JOIN inscricao i ON m.id_maratona = i.id_maratona " +
-                "WHERE i.id_corredor = ? " +
-                "AND (m.status = 'Aberta para Inscrição' OR m.status = 'Aberta')";
+        try {
+            // Realiza a requisição para buscar as maratonas abertas por corredor
+            GetRequestMaratonaAbertaCorredor request = new GetRequestMaratonaAbertaCorredor();
+            String jsonString = request.execute(String.valueOf(idCorredor)).get(); // ID do corredor como parâmetro
+            Log.i("MARATONAS_JSON", jsonString);
 
-        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idCorredor)});
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Maratonas
+            ObjectMapper objectMapper = new ObjectMapper();
+            maratonas = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Maratonas.class));
 
-        while (cursor.moveToNext()) {
-            Maratonas maratona = new Maratonas();
-            maratona.setId(cursor.getInt(0));
-            maratona.setCriador(cursor.getInt(1));
-            maratona.setNome(cursor.getString(2));
-            maratona.setLocal(cursor.getString(3));
-            maratona.setData_inicio(cursor.getString(4)); // DATETIME
-            maratona.setCriador(cursor.getInt(5));
-            maratona.setStatus(cursor.getString(6));
-            maratona.setDistancia(cursor.getString(7));
-            maratona.setDescricao(cursor.getString(8));
-            maratona.setLimite_participantes(cursor.getInt(9));
-            maratona.setRegras(cursor.getString(10));
-            maratona.setValor(cursor.getFloat(11));
-            maratona.setData_final(cursor.getString(12)); // TIMESTAMP
-            maratona.setTipo_terreno(cursor.getString(13));
-            maratona.setClima_esperado(cursor.getString(14));
-            maratonas.add(maratona);
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("MARATONAS_CONVERTIDAS", maratonas.toString());
+
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("MARATONAS_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
 
-        cursor.close(); // Não se esqueça de fechar o cursor
         return maratonas;
     }
+
 
     // Obter maratonas de um determinado corredor
     public List<Maratonas> obterMaratonasConcluidasPorCorredor(int idCorredor) {
         List<Maratonas> maratonas = new ArrayList<>();
+        Log.i("MARATONAS_CORREDOR", "Iniciando busca de maratonas abertas para o corredor...");
 
-        // Query com JOIN entre a tabela de inscrição e maratona
-        String query = "SELECT m.id_maratona, m.criador, m.nome, m.local, m.data_inicio, " +
-                "m.status, m.distancia, m.descricao, m.limite_participantes, " +
-                "m.regras, m.valor, m.data_final, m.tipo_terreno, m.clima_esperado " +
-                "FROM maratona m " +
-                "INNER JOIN inscricao i ON m.id_maratona = i.id_maratona " +
-                "WHERE i.id_corredor = ? " +
-                "AND i.status = 'Concluido'";
+        try {
+            // Realiza a requisição para buscar as maratonas abertas por corredor
+            GetRequestMaratonaConcluidaCorredor request = new GetRequestMaratonaConcluidaCorredor();
+            String jsonString = request.execute(String.valueOf(idCorredor)).get(); // ID do corredor como parâmetro
+            Log.i("MARATONAS_JSON", jsonString);
 
-        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idCorredor)});
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Maratonas
+            ObjectMapper objectMapper = new ObjectMapper();
+            maratonas = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Maratonas.class));
 
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Maratonas maratona = new Maratonas();
-                maratona.setId(cursor.getInt(0));
-                maratona.setCriador(cursor.getInt(1));
-                maratona.setNome(cursor.getString(2));
-                maratona.setLocal(cursor.getString(3));
-                maratona.setData_inicio(cursor.getString(4)); // DATETIME
-                maratona.setStatus(cursor.getString(5)); // Correção do índice
-                maratona.setDistancia(cursor.getString(6));
-                maratona.setDescricao(cursor.getString(7));
-                maratona.setLimite_participantes(cursor.getInt(8));
-                maratona.setRegras(cursor.getString(9));
-                maratona.setValor(cursor.getFloat(10));
-                maratona.setData_final(cursor.getString(11)); // TIMESTAMP
-                maratona.setTipo_terreno(cursor.getString(12));
-                maratona.setClima_esperado(cursor.getString(13));
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("MARATONAS_CONVERTIDAS", maratonas.toString());
 
-                maratonas.add(maratona);
-            } while (cursor.moveToNext());
-        }
-
-        // Fechar cursor para evitar memory leaks
-        if (cursor != null) {
-            cursor.close();
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("MARATONAS_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
 
         return maratonas;
@@ -161,37 +168,27 @@ public class InscricaoDAO {
 
     public List<Corredores> obterCorredoresPorMaratona(int idMaratona) {
         List<Corredores> corredores = new ArrayList<>();
+        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores inscritos para a maratona...");
 
-        // Consulta com JOIN entre a tabela de inscricao e corredor
-        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
-                "c.cpf, c.endereco, c.pais_origem " +
-                "FROM corredor c " +
-                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
-                "WHERE i.id_maratona = ?  AND i.status = 'Inscrito'";
+        try {
+            // Realiza a requisição para buscar os corredores inscritos na maratona
+            GetRequestCorredoresInscritos request = new GetRequestCorredoresInscritos();
+            String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
+            Log.i("CORREDORES_JSON", jsonString);
 
-        // Executa a consulta e passa o idMaratona como parâmetro
-        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Corredores
+            ObjectMapper objectMapper = new ObjectMapper();
+            corredores = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Corredores.class));
 
-        while (cursor.moveToNext()) {
-            Corredores corredor = new Corredores();
-            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
-            corredor.setNome(cursor.getString(1)); // nome
-            corredor.setTelefone(cursor.getString(2)); // telefone
-            corredor.setEmail(cursor.getString(3)); // email
-            corredor.setSenha(cursor.getString(4)); // senha
-            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
-            corredor.setCpf(cursor.getString(5)); // cpf
-            corredor.setEndereco(cursor.getString(6)); // endereco
-            //corredor.setGenero(cursor.getString(8)); // genero
-            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
-            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("CORREDORES_CONVERTIDOS", corredores.toString());
 
-            // Adiciona o corredor à lista
-            corredores.add(corredor);
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao processar o JSON: ", e);
         }
-
-        // Fecha o cursor para liberar os recursos
-        cursor.close();
 
         return corredores;
     }
@@ -236,37 +233,27 @@ public class InscricaoDAO {
 
     public List<Corredores> obterCorredoresConcluidosPorMaratona(int idMaratona) {
         List<Corredores> corredores = new ArrayList<>();
+        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores inscritos para a maratona...");
 
-        // Consulta com JOIN entre a tabela de inscricao e corredor, incluindo filtro de status "Participando"
-        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
-                "c.cpf, c.endereco, c.pais_origem " +
-                "FROM corredor c " +
-                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
-                "WHERE i.id_maratona = ? AND i.status = 'Concluido'";
+        try {
+            // Realiza a requisição para buscar os corredores inscritos na maratona
+            GetRequestCorredoresConcluidos request = new GetRequestCorredoresConcluidos();
+            String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
+            Log.i("CORREDORES_JSON", jsonString);
 
-        // Executa a consulta e passa o idMaratona como parâmetro
-        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Corredores
+            ObjectMapper objectMapper = new ObjectMapper();
+            corredores = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Corredores.class));
 
-        while (cursor.moveToNext()) {
-            Corredores corredor = new Corredores();
-            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
-            corredor.setNome(cursor.getString(1)); // nome
-            corredor.setTelefone(cursor.getString(2)); // telefone
-            corredor.setEmail(cursor.getString(3)); // email
-            corredor.setSenha(cursor.getString(4)); // senha
-            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
-            corredor.setCpf(cursor.getString(5)); // cpf
-            corredor.setEndereco(cursor.getString(6)); // endereco
-            //corredor.setGenero(cursor.getString(8)); // genero
-            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
-            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("CORREDORES_CONVERTIDOS", corredores.toString());
 
-            // Adiciona o corredor à lista
-            corredores.add(corredor);
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao processar o JSON: ", e);
         }
-
-        // Fecha o cursor para liberar os recursos
-        cursor.close();
 
         return corredores;
     }
@@ -291,22 +278,31 @@ public class InscricaoDAO {
     }
 
     public int getIdInscricao(int idCorredor, int idMaratona) {
-        String[] args = {String.valueOf(idCorredor), String.valueOf(idMaratona)};
+        int idInscricao = -1; // Valor padrão caso não seja encontrada a inscrição
 
-        // Query para buscar o id_inscricao baseado no id_corredor e id_maratona
-        Cursor cursor = banco.query("inscricao", new String[]{"id_inscricao"},
-                "id_corredor=? AND id_maratona=?", args, null, null, null);
+        try {
+            // Realiza a requisição para buscar a inscrição do corredor na maratona
+            GetRequestInscricaoPorCorredoreEMaratona request = new GetRequestInscricaoPorCorredoreEMaratona();
+            String jsonString = request.execute(String.valueOf(idCorredor), String.valueOf(idMaratona)).get();
 
-        int idInscricao = -1; // Valor padrão caso não seja encontrada uma inscrição
+            // Verifica se o JSON contém o id_inscricao
+            if (jsonString != null && !jsonString.isEmpty()) {
+                // Processa o JSON para obter o id_inscricao
+                JSONObject jsonResponse = new JSONObject(jsonString);
+                if (jsonResponse.has("id_inscricao")) {
+                    idInscricao = jsonResponse.getInt("id_inscricao");
+                }
+            }
 
-        if (cursor.moveToFirst()) {
-            idInscricao = cursor.getInt(0); // Pega o id_inscricao
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("INSCRICAO_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JSONException e) {
+            Log.e("INSCRICAO_ERRO", "Erro ao processar o JSON: ", e);
         }
-
-        cursor.close();
 
         return idInscricao; // Retorna o id_inscricao ou -1 se não encontrado
     }
+
 
     //atualiza status
     public void updateStatus(int idInscricao, String novoStatus) {
