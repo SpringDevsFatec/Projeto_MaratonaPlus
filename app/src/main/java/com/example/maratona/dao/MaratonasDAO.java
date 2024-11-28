@@ -85,6 +85,7 @@ public class MaratonasDAO {
 
     // Atualizar
     public void update(Maratonas maratona) {
+
         ContentValues values = new ContentValues();
         values.put("criador", maratona.getCriador());
         values.put("nome", maratona.getNome());
@@ -166,17 +167,17 @@ public class MaratonasDAO {
         maratona.setCriador(maratonajson.getInt("criador"));
         maratona.setNome(maratonajson.getString("nome"));
         maratona.setLocal(maratonajson.getString("local"));
-        maratona.setData_inicio(maratonajson.getString("dataInicio"));
-        maratona.setData_final(maratonajson.getString("dataFinal"));
+        maratona.setData_inicio(maratonajson.getString("data_inicio"));
+        maratona.setData_final(maratonajson.getString("data_final"));
         maratona.setStatus(maratonajson.getString("status"));
         maratona.setDistancia(maratonajson.getString("distancia"));
         maratona.setDescricao(maratonajson.getString("descricao"));
-        maratona.setLimite_participantes(maratonajson.getInt("limiteParticipantes"));
+        maratona.setLimite_participantes(maratonajson.getInt("limite_participantes"));
         maratona.setRegras(maratonajson.getString("regras"));
         maratona.setValor((float) maratonajson.getDouble("valor"));
-        maratona.setTipo_terreno(maratonajson.getString("tipoTerreno"));
+        maratona.setTipo_terreno(maratonajson.getString("tipo_terreno"));
         maratona.setClima_esperado(maratonajson.getString("climaEsperado"));
-        maratona.setNomeCriador(jsonObject.getString("nomeEmpresa"));
+        maratona.setNomeCriador(jsonObject.getString("clima_esperado"));
 
         return maratona;
     }
