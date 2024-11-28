@@ -94,7 +94,7 @@ public class CadastroUsuario extends AppCompatActivity {
 
             long id = corredordao.insert(c);
             Log.i("idInsert", String.valueOf(id));
-            Toast.makeText(getApplicationContext(), "Corredor inserido com o ID " + id,
+            Toast.makeText(getApplicationContext(), "Corredor inserido com o ID: " + id,
                     Toast.LENGTH_LONG).show();
 
 

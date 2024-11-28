@@ -4,11 +4,14 @@ import static com.example.maratona.util.ConnectionFactory.FormConnect;
 
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.maratona.model.Empresas;
 import com.example.maratona.model.Maratonas;
 import com.example.maratona.service.GetRequestMaratonaAbertaCorredor;
 import com.example.maratona.service.GetRequestMaratonaCriador;
 import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.service.GetRequestMaratonaStatus;
+import com.example.maratona.service.InsertRequestEmpresa;
+import com.example.maratona.service.InsertRequestMaratona;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +23,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class MaratonasDAO {
@@ -34,21 +38,46 @@ public class MaratonasDAO {
 
     // Inserir
     public long insert(Maratonas maratona) {
-        ContentValues values = new ContentValues();
-        values.put("criador", maratona.getCriador());
-        values.put("nome", maratona.getNome());
-        values.put("local", maratona.getLocal());
-        values.put("data_inicio", maratona.getData_inicio()); // Armazenar como string
-        values.put("status", maratona.getStatus());
-        values.put("distancia", maratona.getDistancia());
-        values.put("descricao", maratona.getDescricao());
-        values.put("limite_participantes", maratona.getLimite_participantes());
-        values.put("regras", maratona.getRegras());
-        values.put("valor", maratona.getValor());
-        values.put("data_final", maratona.getData_final()); // Armazenar como string
-        values.put("tipo_terreno", maratona.getTipo_terreno());
-        values.put("clima_esperado", maratona.getClima_esperado());
-        return banco.insert("maratona", null, values);
+        if ("Online".equals(FormConnect)) {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            try {
+                String jsonUser = objectMapper.writeValueAsString(maratona);
+
+                InsertRequestMaratona insertRequest = new InsertRequestMaratona();
+                String jsonString = insertRequest.execute(jsonUser).get();
+                Log.i("jsonInsert", jsonString);
+                Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
+                Maratonas maratonaRetornado = objectMapper.readValue(jsonString,Maratonas.class);
+
+                // Retorna o ID do corredor inserido
+                return maratonaRetornado.getId();
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a inserção online.", e);
+            } catch (JsonProcessingException e) {
+                // Lida com erros de serialização/deserialização JSON
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao processar JSON.", e);
+            }
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("criador", maratona.getCriador());
+            values.put("nome", maratona.getNome());
+            values.put("local", maratona.getLocal());
+            values.put("data_inicio", maratona.getData_inicio()); // Armazenar como string
+            values.put("status", maratona.getStatus());
+            values.put("distancia", maratona.getDistancia());
+            values.put("descricao", maratona.getDescricao());
+            values.put("limite_participantes", maratona.getLimite_participantes());
+            values.put("regras", maratona.getRegras());
+            values.put("valor", maratona.getValor());
+            values.put("data_final", maratona.getData_final()); // Armazenar como string
+            values.put("tipo_terreno", maratona.getTipo_terreno());
+            values.put("clima_esperado", maratona.getClima_esperado());
+            return banco.insert("maratona", null, values);
+        }
     }
 
     // Atualizar
@@ -97,7 +126,7 @@ public class MaratonasDAO {
         banco.delete("maratona", "id_maratona=?", args);
     }
 
-    public Maratonas read(int id) {
+    public Maratonas readMaratona(int id) {
         Maratonas maratona = null;
 
         if ("Online".equals(FormConnect)) {
@@ -220,7 +249,7 @@ public class MaratonasDAO {
             Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
 
-        cursor.close(); // Não se esqueça de fechar o cursor
+
         return maratonas;
     }
 
@@ -251,7 +280,7 @@ public class MaratonasDAO {
             Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
 
-        cursor.close(); // Não se esqueça de fechar o cursor
+
         return maratonas;
     }
 

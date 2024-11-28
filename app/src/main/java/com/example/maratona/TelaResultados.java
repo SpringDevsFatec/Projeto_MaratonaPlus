@@ -50,6 +50,6 @@ public class TelaResultados extends AppCompatActivity {
         velocidadeKm = findViewById(R.id.velocidadeKm);
         velocidadeMs = findViewById(R.id.velocidadeMs);
         passos = findViewById(R.id.passos);
+    }
 
-        ParticipacaoDAO pdao = new ParticipacaoDAO(this);
-        Participacao p = pdao.
+}

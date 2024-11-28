@@ -47,7 +47,7 @@ public class AguardeMaratona extends AppCompatActivity {
         // Tarefa a ser repetida
         Runnable task = () -> {
             try {
-                String passa = mdao.confereMaratona(maratonaId);
+                //String passa = mdao.confereMaratona(maratonaId);
 
 
                 if (passa.equals("true")){

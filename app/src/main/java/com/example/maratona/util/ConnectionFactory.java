@@ -10,7 +10,7 @@ public class ConnectionFactory extends SQLiteOpenHelper{
 
     private static final String NAME ="banco.db";
     private static final int VERSION = 1;
-    public static String serverIP = "192.168.235.105:8080/api";
+    public static String serverIP = "192.168.15.7:8080/api";
     public static String FormConnect = "Online";
 
     public ConnectionFactory(@Nullable Context context){

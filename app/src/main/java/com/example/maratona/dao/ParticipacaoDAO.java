@@ -117,6 +117,7 @@ public class ParticipacaoDAO {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Erro ao serializar o objeto Empresas para JSON", e);
         }
+    }
 
         // Ler uma Participacao por ID
         public Participacao readParticipacao ( int id){
@@ -157,4 +158,4 @@ public class ParticipacaoDAO {
         }
 
 
-    }}
+    }
