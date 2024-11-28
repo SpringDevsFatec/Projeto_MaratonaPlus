@@ -4,13 +4,10 @@ import static com.example.maratona.util.ConnectionFactory.FormConnect;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.maratona.model.Empresas;
 import com.example.maratona.model.Maratonas;
-import com.example.maratona.service.GetRequestMaratonaAbertaCorredor;
 import com.example.maratona.service.GetRequestMaratonaCriador;
 import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.service.GetRequestMaratonaStatus;
-import com.example.maratona.service.InsertRequestEmpresa;
 import com.example.maratona.service.InsertRequestMaratona;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;

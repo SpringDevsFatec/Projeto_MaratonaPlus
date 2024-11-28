@@ -1,5 +1,6 @@
 package com.example.maratona;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,8 @@ import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Maratonas;
 
 import java.sql.Date;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class CadastrarMaratona extends AppCompatActivity {
 
@@ -50,6 +53,12 @@ public class CadastrarMaratona extends AppCompatActivity {
         edtTipoTerreno = findViewById(R.id.edtTipoTerreno);
         edtClimaEsperado = findViewById(R.id.edtClimaEsperado);
 
+        // DatePicker para a data inicial
+        edtData_I.setOnClickListener(v -> showDatePicker(edtData_I));
+
+        // DatePicker para a data final
+        edtData_F.setOnClickListener(v -> showDatePicker(edtData_F));
+
     }
 
     public void CadastrarMaratonas(View view) {
@@ -67,13 +76,12 @@ public class CadastrarMaratona extends AppCompatActivity {
             m.setNome(nome);
             m.setCriador(userId);
 
-                m.setData_inicio(edtData_I.getText().toString());
-                m.setData_final(edtData_F.getText().toString());
+            m.setData_inicio(edtData_I.getText().toString());
+            m.setData_final(edtData_F.getText().toString());
 
             m.setLocal(edtEndereco.getText().toString());
             m.setDistancia(edtDistancia.getText().toString());
             m.setDescricao(descricao);
-
 
             try {
                 m.setLimite_participantes(Integer.parseInt(edtLimite_p.getText().toString()));
@@ -109,5 +117,23 @@ public class CadastrarMaratona extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Erro ao cadastrar maratona: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
+    private void showDatePicker(EditText editText) {
+        // Obter a data atual para exibir no DatePicker
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        // Exibir o DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, yearSelected, monthSelected, daySelected) -> {
+            // Formatar a data no formato desejado (ISO-8601)
+            String formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", yearSelected, monthSelected + 1, daySelected);
+            editText.setText(formattedDate); // Exibir no campo
+        }, year, month, day);
+
+        datePickerDialog.show();
+    }
+
 
 }
