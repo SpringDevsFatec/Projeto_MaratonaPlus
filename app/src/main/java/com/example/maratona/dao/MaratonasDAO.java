@@ -21,6 +21,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +54,7 @@ public class MaratonasDAO {
                 Maratonas maratonaRetornado = objectMapper.readValue(jsonString,Maratonas.class);
 
                 // Retorna o ID do corredor inserido
-                return maratonaRetornado.getId();
+                return maratonaRetornado.getIdMaratona();
             } catch (ExecutionException | InterruptedException e) {
                 // Lida com problemas na execução assíncrona
                 e.printStackTrace();
@@ -96,7 +99,7 @@ public class MaratonasDAO {
         values.put("data_final", maratona.getData_final());
         values.put("tipo_terreno", maratona.getTipo_terreno());
         values.put("clima_esperado", maratona.getClima_esperado());
-        String[] args = {String.valueOf(maratona.getId())};
+        String[] args = {String.valueOf(maratona.getIdMaratona())};
         banco.update("maratona", values, "id_maratona=?", args);
     }
 
@@ -122,7 +125,7 @@ public class MaratonasDAO {
 
     // Deletar
     public void delete(Maratonas maratona) {
-        String[] args = {String.valueOf(maratona.getId())};
+        String[] args = {String.valueOf(maratona.getIdMaratona())};
         banco.delete("maratona", "id_maratona=?", args);
     }
 
@@ -136,60 +139,92 @@ public class MaratonasDAO {
                 String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
 
                 if (jsonString != null && !jsonString.isEmpty()) {
-                    // Desserializa o JSON diretamente para um objeto Maratonas
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    maratona = objectMapper.readValue(jsonString, Maratonas.class);
+                    maratona = parseMaratonaFromJson(jsonString);
                 } else {
                     System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
                 }
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException("Erro ao desserializar o JSON", e);
+            } catch (JSONException e) {
+                throw new RuntimeException("Erro ao processar o JSON", e);
             }
         } else {
-            String[] args = {String.valueOf(id)};
-            Cursor cursor = null;
-            try {
-                // Consulta SQL para buscar os detalhes da maratona e o nome do criador
-                cursor = banco.rawQuery(
-                        "SELECT m.id_maratona, e.nome AS nome_criador, m.Nome, m.local, m.data_inicio, " +
-                                "m.data_final, m.status, m.distancia, m.descricao, m.limite_participantes, " +
-                                "m.regras, m.valor, m.tipo_terreno, m.clima_esperado " +
-                                "FROM maratona m " +
-                                "JOIN empresa e ON m.criador = e.id_empresa " +
-                                "WHERE m.id_maratona = ?",
-                        args
-                );
+            maratona = getMaratonaFromDatabase(id);
+        }
 
-                if (cursor != null && cursor.moveToFirst()) {
-                    maratona = new Maratonas();
-                    maratona.setId(cursor.getInt(0));
-                    maratona.setNomeCriador(cursor.getString(1)); // Nome da empresa criadora
-                    maratona.setNome(cursor.getString(2));
-                    maratona.setLocal(cursor.getString(3));
-                    maratona.setData_inicio(cursor.getString(4));
-                    maratona.setData_final(cursor.getString(5));
-                    maratona.setStatus(cursor.getString(6));
-                    maratona.setDistancia(cursor.getString(7));
-                    maratona.setDescricao(cursor.getString(8));
-                    maratona.setLimite_participantes(cursor.getInt(9));
-                    maratona.setRegras(cursor.getString(10));
-                    maratona.setValor(cursor.getFloat(11));
-                    maratona.setTipo_terreno(cursor.getString(12));
-                    maratona.setClima_esperado(cursor.getString(13));
-                } else {
-                    System.err.println("Erro: Nenhuma maratona encontrada para o ID " + id);
-                }
-            } finally {
-                if (cursor != null) {
-                    cursor.close();
-                }
+        return maratona;
+    }
+
+    private Maratonas parseMaratonaFromJson(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        // Acessar os dados da chave "maratona"
+        JSONObject maratonajson = jsonObject.getJSONObject("maratona");
+
+        Maratonas maratona = new Maratonas();
+        maratona.setIdMaratona(maratonajson.getInt("idMaratona"));
+        maratona.setCriador(maratonajson.getInt("criador"));
+        maratona.setNome(maratonajson.getString("nome"));
+        maratona.setLocal(maratonajson.getString("local"));
+        maratona.setData_inicio(maratonajson.getString("dataInicio"));
+        maratona.setData_final(maratonajson.getString("dataFinal"));
+        maratona.setStatus(maratonajson.getString("status"));
+        maratona.setDistancia(maratonajson.getString("distancia"));
+        maratona.setDescricao(maratonajson.getString("descricao"));
+        maratona.setLimite_participantes(maratonajson.getInt("limiteParticipantes"));
+        maratona.setRegras(maratonajson.getString("regras"));
+        maratona.setValor((float) maratonajson.getDouble("valor"));
+        maratona.setTipo_terreno(maratonajson.getString("tipoTerreno"));
+        maratona.setClima_esperado(maratonajson.getString("climaEsperado"));
+        maratona.setNomeCriador(jsonObject.getString("nomeEmpresa"));
+
+        return maratona;
+    }
+
+    private Maratonas getMaratonaFromDatabase(int id) {
+        Maratonas maratona = null;
+        String[] args = {String.valueOf(id)};
+        Cursor cursor = null;
+
+        try {
+            cursor = banco.rawQuery(
+                    "SELECT m.id_maratona, e.nome AS nome_criador, m.Nome, m.local, m.data_inicio, " +
+                            "m.data_final, m.status, m.distancia, m.descricao, m.limite_participantes, " +
+                            "m.regras, m.valor, m.tipo_terreno, m.clima_esperado " +
+                            "FROM maratona m " +
+                            "JOIN empresa e ON m.criador = e.id_empresa " +
+                            "WHERE m.id_maratona = ?",
+                    args
+            );
+
+            if (cursor != null && cursor.moveToFirst()) {
+                maratona = new Maratonas();
+                maratona.setIdMaratona(cursor.getInt(0));
+                maratona.setNomeCriador(cursor.getString(1));
+                maratona.setNome(cursor.getString(2));
+                maratona.setLocal(cursor.getString(3));
+                maratona.setData_inicio(cursor.getString(4));
+                maratona.setData_final(cursor.getString(5));
+                maratona.setStatus(cursor.getString(6));
+                maratona.setDistancia(cursor.getString(7));
+                maratona.setDescricao(cursor.getString(8));
+                maratona.setLimite_participantes(cursor.getInt(9));
+                maratona.setRegras(cursor.getString(10));
+                maratona.setValor(cursor.getFloat(11));
+                maratona.setTipo_terreno(cursor.getString(12));
+                maratona.setClima_esperado(cursor.getString(13));
+            } else {
+                System.err.println("Erro: Nenhuma maratona encontrada para o ID " + id);
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
             }
         }
 
         return maratona;
     }
+
 
 
 
@@ -204,7 +239,7 @@ public class MaratonasDAO {
 
         while (cursor.moveToNext()) {
             Maratonas maratona = new Maratonas();
-            maratona.setId(cursor.getInt(0));
+            maratona.setIdMaratona(cursor.getInt(0));
             maratona.setCriador(cursor.getInt(1));
             maratona.setNome(cursor.getString(2));
             maratona.setLocal(cursor.getString(3));
@@ -309,7 +344,7 @@ public class MaratonasDAO {
         } catch (JsonProcessingException e) {
             Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
-
+            Log.i("MARATONAS EM OBJETOOOOO" , maratonas.toString());
         return maratonas;
     }
 

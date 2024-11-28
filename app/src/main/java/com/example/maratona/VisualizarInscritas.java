@@ -46,7 +46,7 @@ public class VisualizarInscritas extends AppCompatActivity {
 
 
             Intent it = new Intent(VisualizarInscritas.this, TelaMaratona.class);
-            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getIdMaratona());
             it.putExtra("id", userId);
             it.putExtra("activity", "VisualizarInscritas");
 

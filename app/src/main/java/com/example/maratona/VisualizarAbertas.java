@@ -48,7 +48,7 @@ public class VisualizarAbertas extends AppCompatActivity {
             Maratonas maratonaSelecionada = (Maratonas) parent.getItemAtPosition(position);
             //Toast.makeText(this, String.valueOf(maratonaSelecionada.getId()), Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(VisualizarAbertas.this, TelaMaratona.class);
-            intent.putExtra("maratonaId", maratonaSelecionada.getId());
+            intent.putExtra("maratonaId", maratonaSelecionada.getIdMaratona());
             intent.putExtra("id", userId);
             intent.putExtra("activity", "VisualizarAbertas");
 

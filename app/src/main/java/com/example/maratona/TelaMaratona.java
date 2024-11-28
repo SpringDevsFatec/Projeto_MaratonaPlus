@@ -107,7 +107,7 @@ public class TelaMaratona extends AppCompatActivity {
             txtTipoT.setText("Tipo de Terreno:"+maratona.getTipo_terreno());
             txtClimaEsperado.setText("Clima Esperado:"+maratona.getClima_esperado());
             txtValor.setText("Valor: R$"+ maratona.getValor());
-            txtIdmaratona.setText("Id da Maratona:"+ maratona.getId());
+            txtIdmaratona.setText("Id da Maratona:"+ maratona.getIdMaratona());
             txtEmpresa.setText("nome da empresa:"+maratona.getNomeCriador());
         }
 

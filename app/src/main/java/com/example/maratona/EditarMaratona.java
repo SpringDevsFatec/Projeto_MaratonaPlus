@@ -66,7 +66,7 @@ public class EditarMaratona extends AppCompatActivity {
 
 
         }else{
-            edtId.setText(String.valueOf(maratona.getId()));
+            edtId.setText(String.valueOf(maratona.getIdMaratona()));
             edtNome.setText(maratona.getNome());
             edtDescricao.setText(maratona.getDescricao());
             edtLocal.setText(maratona.getLocal());
@@ -97,7 +97,7 @@ public class EditarMaratona extends AppCompatActivity {
 
 
             Maratonas m = new Maratonas();
-            m.setId(Integer.parseInt(edtId.getText().toString()));
+            m.setIdMaratona(Integer.parseInt(edtId.getText().toString()));
             m.setNome(nome);
             m.setCriador(userId);
             m.setData_inicio(edtData_I.getText().toString());
