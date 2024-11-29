@@ -1,6 +1,7 @@
 package com.example.maratona;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -23,7 +24,7 @@ public class EditarUsuario extends AppCompatActivity {
 
     private String Activity;
     private int userId;
-    private Button btnAtualizarCorredor;
+    private Button btnAtualizarCorredor, btnEnviarEmail;
     private EditText  edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
     private TextView edtPerfil, txtIdCorredor, txtSenha, txtCpf;
 
@@ -56,6 +57,8 @@ public class EditarUsuario extends AppCompatActivity {
         edtPaisOrigem = findViewById(R.id.edtPaisOrigem);
         btnAtualizarCorredor = findViewById(R.id.btnAtualizarCorredor);
 
+        btnEnviarEmail = findViewById(R.id.btnEnviarEmail);
+
         txtIdCorredor = findViewById(R.id.txtIdCorredor);
         txtSenha = findViewById(R.id.txtSenha);
         txtCpf = findViewById(R.id.txtCpf);
@@ -85,9 +88,13 @@ public class EditarUsuario extends AppCompatActivity {
 
         if (Activity.equals("VisualizarPerfil")) {
             configurarModoVisualizar();
+        } else if (Activity.equals("EditarPerfil")) {
+            btnEnviarEmail.setVisibility(View.GONE); // Oculta o botão de envio de e-mail
         }
 
         btnAtualizarCorredor.setOnClickListener(this::AtualizarCorredor);
+        btnEnviarEmail.setOnClickListener(v -> enviarEmail(corredor.getEmail()));
+
     }
 
     private void configurarModoVisualizar() {
@@ -117,7 +124,6 @@ public class EditarUsuario extends AppCompatActivity {
         campo.setInputType(InputType.TYPE_NULL);
         campo.setFocusable(false);
     }
-
 
     public void AtualizarCorredor(View view) {
         String nome = edtNome.getText().toString();
@@ -156,4 +162,25 @@ public class EditarUsuario extends AppCompatActivity {
             Toast.makeText(this, "Erro ao atualizar os dados.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void enviarEmail(String emailDestinatario) {
+        if (emailDestinatario == null || emailDestinatario.isEmpty()) {
+            Toast.makeText(this, "E-mail não encontrado para este corredor.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // Apenas apps de e-mail
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailDestinatario});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Assunto sobre a maratona");
+        intent.putExtra(Intent.EXTRA_TEXT, "Olá! Gostaria de conversar sobre a maratona.");
+
+        // Verifica se há algum aplicativo que pode lidar com a intenção
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Nenhum aplicativo de e-mail encontrado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

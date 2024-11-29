@@ -202,6 +202,19 @@
             android:text="Atualizar"
             android:textColor="#FFFFFF" />
 
+        <!-- Botão para enviar email ao usuario -->
+        <Button
+            android:id="@+id/btnEnviarEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
+            android:textSize="20sp"
+            android:padding="12dp"
+            android:text="Enviar E-mail"
+            android:textColor="#FFFFFF" />
+
         <ImageView
             android:id="@+id/imgLogo"
             android:layout_width="244dp"
