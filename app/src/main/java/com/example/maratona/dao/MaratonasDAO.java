@@ -10,6 +10,7 @@ import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.service.GetRequestMaratonaStatus;
 import com.example.maratona.service.InsertRequestMaratona;
 import com.example.maratona.service.UpdateRequestMaratonaAbrir;
+import com.example.maratona.service.UpdateRequestMaratonaAtualizar;
 import com.example.maratona.service.UpdateRequestMaratonaCancelar;
 import com.example.maratona.service.UpdateRequestMaratonaConcluir;
 import com.example.maratona.service.UpdateRequestMaratonaIniciar;
@@ -88,22 +89,46 @@ public class MaratonasDAO {
     // Atualizar
     public void update(Maratonas maratona) {
 
-        ContentValues values = new ContentValues();
-        values.put("criador", maratona.getCriador());
-        values.put("nome", maratona.getNome());
-        values.put("local", maratona.getLocal());
-        values.put("data_inicio", maratona.getData_inicio());
-        values.put("status", maratona.getStatus());
-        values.put("distancia", maratona.getDistancia());
-        values.put("descricao", maratona.getDescricao());
-        values.put("limite_participantes", maratona.getLimite_participantes());
-        values.put("regras", maratona.getRegras());
-        values.put("valor", maratona.getValor());
-        values.put("data_final", maratona.getData_final());
-        values.put("tipo_terreno", maratona.getTipo_terreno());
-        values.put("clima_esperado", maratona.getClima_esperado());
-        String[] args = {String.valueOf(maratona.getIdMaratona())};
-        banco.update("maratona", values, "id_maratona=?", args);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON do objeto Maratonas
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(maratona);
+
+                // Envia os dados para o servidor usando um PUT
+                UpdateRequestMaratonaAtualizar updateRequest = new UpdateRequestMaratonaAtualizar();
+                String response = updateRequest.execute(String.valueOf(maratona.getIdMaratona()), jsonString).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar maratona com ID " + maratona.getIdMaratona());
+                } else {
+                    System.out.println("Maratona atualizada com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao serializar o objeto Maratonas para JSON", e);
+            }
+        } else {
+            // Atualização local no banco de dados SQLite
+            ContentValues values = new ContentValues();
+            values.put("criador", maratona.getCriador());
+            values.put("nome", maratona.getNome());
+            values.put("local", maratona.getLocal());
+            values.put("data_inicio", maratona.getData_inicio());
+            values.put("status", maratona.getStatus());
+            values.put("distancia", maratona.getDistancia());
+            values.put("descricao", maratona.getDescricao());
+            values.put("limite_participantes", maratona.getLimite_participantes());
+            values.put("regras", maratona.getRegras());
+            values.put("valor", maratona.getValor());
+            values.put("data_final", maratona.getData_final());
+            values.put("tipo_terreno", maratona.getTipo_terreno());
+            values.put("clima_esperado", maratona.getClima_esperado());
+            String[] args = {String.valueOf(maratona.getIdMaratona())};
+            banco.update("maratona", values, "id_maratona=?", args);
+        }
+
     }
 
     //atualiza status

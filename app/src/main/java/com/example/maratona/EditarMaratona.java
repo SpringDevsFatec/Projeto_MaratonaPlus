@@ -114,7 +114,7 @@ public class EditarMaratona extends AppCompatActivity {
 
 
             Maratonas m = new Maratonas();
-            m.setIdMaratona(Integer.parseInt(edtId.getText().toString()));
+            m.setIdMaratona(maratonaId);
             m.setNome(nome);
             m.setCriador(userId);
             m.setData_inicio(edtData_I.getText().toString());
