@@ -138,7 +138,7 @@ public class MaratonasDAO {
             // Atualiza apenas o campo status da maratona com o id fornecido
             banco.update("maratona", values, "id_maratona=?", args);
         }
-        }
+    }
 
     //atualiza status
     public void updateMaratonaAbrir(int idMaratona) {
@@ -439,9 +439,8 @@ public class MaratonasDAO {
         } catch (JsonProcessingException e) {
             Log.e("MARATONAS_ERRO", "Erro ao processar o JSON: ", e);
         }
-            Log.i("MARATONAS EM OBJETOOOOO" , maratonas.toString());
+        Log.i("MARATONAS EM OBJETOOOOO" , maratonas.toString());
         return maratonas;
     }
 
 }
-

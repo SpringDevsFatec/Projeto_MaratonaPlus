@@ -25,7 +25,7 @@ public class EditarUsuario extends AppCompatActivity {
     private int userId;
     private Button btnAtualizarCorredor;
     private EditText  edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
-    private TextView edtPerfil;
+    private TextView edtPerfil, txtIdCorredor, txtSenha, txtCpf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +45,6 @@ public class EditarUsuario extends AppCompatActivity {
         userId = intent.getIntExtra("id", -1);
         Activity = String.valueOf(intent.getStringExtra("activity"));
 
-
-
-
         edtPerfil = findViewById(R.id.edtPerfil);
         edtId = findViewById(R.id.edtId);
         edtNome = findViewById(R.id.edtNome);
@@ -59,6 +56,9 @@ public class EditarUsuario extends AppCompatActivity {
         edtPaisOrigem = findViewById(R.id.edtPaisOrigem);
         btnAtualizarCorredor = findViewById(R.id.btnAtualizarCorredor);
 
+        txtIdCorredor = findViewById(R.id.txtIdCorredor);
+        txtSenha = findViewById(R.id.txtSenha);
+        txtCpf = findViewById(R.id.txtCpf);
 
         CorredoresDAO dao = new CorredoresDAO(this);
         Corredores corredor = dao.read(userId);
@@ -70,7 +70,7 @@ public class EditarUsuario extends AppCompatActivity {
             finish();
         } else {
 
-            edtId.setText(String.valueOf(corredor.getIdCorredor()));
+            desativarCampo(edtId);
             edtNome.setText(corredor.getNome());
             edtTelefone.setText(corredor.getTelefone());
             edtEmail.setText(corredor.getEmail());
@@ -78,34 +78,46 @@ public class EditarUsuario extends AppCompatActivity {
             edtCpf.setText(corredor.getCpf());
             edtGenero.setText(corredor.getGenero());
             edtPaisOrigem.setText(corredor.getPaisOrigem());
+
+            txtIdCorredor.setVisibility(View.GONE);
+            edtId.setVisibility(View.GONE);
         }
 
         if (Activity.equals("VisualizarPerfil")) {
-            edtPerfil.setText("Perfil de Usuário");
-            edtId.setVisibility(View.GONE);
-            edtNome.setInputType(InputType.TYPE_NULL);
-            edtTelefone.setInputType(InputType.TYPE_NULL);
-            edtEmail.setInputType(InputType.TYPE_NULL);
-            edtSenha.setInputType(InputType.TYPE_NULL);
-            edtCpf.setInputType(InputType.TYPE_NULL);
-            edtGenero.setInputType(InputType.TYPE_NULL);
-            edtPaisOrigem.setInputType(InputType.TYPE_NULL);
-
-            edtId.setFocusable(false);
-            edtNome.setFocusable(false);
-            edtTelefone.setFocusable(false);
-            edtEmail.setFocusable(false);
-            edtSenha.setFocusable(false);
-            edtCpf.setFocusable(false);
-            edtGenero.setFocusable(false);
-            edtPaisOrigem.setFocusable(false);
-
-            btnAtualizarCorredor.setVisibility(View.GONE);
+            configurarModoVisualizar();
         }
-
 
         btnAtualizarCorredor.setOnClickListener(this::AtualizarCorredor);
     }
+
+    private void configurarModoVisualizar() {
+        edtPerfil.setText("Perfil de Usuário");
+        desativarCampo(edtId);
+        desativarCampo(edtNome);
+        desativarCampo(edtTelefone);
+        desativarCampo(edtEmail);
+        desativarCampo(edtSenha);
+        desativarCampo(edtCpf);
+        desativarCampo(edtGenero);
+        desativarCampo(edtPaisOrigem);
+
+        txtIdCorredor.setVisibility(View.GONE);
+        edtId.setVisibility(View.GONE);
+
+        txtSenha.setVisibility(View.GONE);
+        edtSenha.setVisibility(View.GONE);
+
+        txtCpf.setVisibility(View.GONE);
+        edtCpf.setVisibility(View.GONE);
+
+        btnAtualizarCorredor.setVisibility(View.GONE);
+    }
+
+    private void desativarCampo(EditText campo) {
+        campo.setInputType(InputType.TYPE_NULL);
+        campo.setFocusable(false);
+    }
+
 
     public void AtualizarCorredor(View view) {
         String nome = edtNome.getText().toString();

@@ -1,5 +1,7 @@
 package com.example.maratona.dao;
 
+import static com.example.maratona.util.ConnectionFactory.FormConnect;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,6 +11,7 @@ import android.util.Log;
 import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
+import com.example.maratona.service.DeleteRequestInscricao;
 import com.example.maratona.service.GetRequestCorredoresConcluidos;
 import com.example.maratona.service.GetRequestCorredoresInscritos;
 import com.example.maratona.service.GetRequestCorredoresParticipando;
@@ -16,6 +19,9 @@ import com.example.maratona.service.GetRequestInscricaoPorCorredoreEMaratona;
 import com.example.maratona.service.GetRequestMaratonaAbertaCorredor;
 import com.example.maratona.service.GetRequestMaratonaConcluidaCorredor;
 import com.example.maratona.service.InsertRequestInscricao;
+import com.example.maratona.service.UpdateRequestInscricaoAtualizar;
+import com.example.maratona.service.UpdateRequestInscricaoDesistente;
+import com.example.maratona.service.UpdateRequestInscricaoFinalizado;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +31,7 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -42,51 +49,86 @@ public class InscricaoDAO {
     // Inserir nova inscrição
     public long insert(Inscricao inscricao) {
         ObjectMapper objectMapper = new ObjectMapper();
-        long idInscricao = -1;
 
         try {
-            // Converte o objeto Inscricao para JSON
             String jsonInscricao = objectMapper.writeValueAsString(inscricao);
 
-            // Realiza a requisição para inserir a inscrição
             InsertRequestInscricao insertRequest = new InsertRequestInscricao();
-            String jsonResponse = insertRequest.execute(jsonInscricao).get();
+            String jsonString = insertRequest.execute(jsonInscricao).get();
+            Log.i("jsonInsert", jsonString);
+            Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
+            Inscricao inscricaoRetornada = objectMapper.readValue(jsonString, Inscricao.class);
 
-            // Processa a resposta da API
-            if (jsonResponse != null && !jsonResponse.isEmpty()) {
-                // Supondo que a API retorne o ID da inscrição inserida
-                Map<String, Object> responseMap = objectMapper.readValue(jsonResponse, Map.class);
-                if (responseMap.containsKey("id_inscricao")) {
-                    idInscricao = Long.parseLong(responseMap.get("id_inscricao").toString());
-                }
-            }
-
+            // Retorna o ID da inscrição inserida
+            return inscricaoRetornada.getIdInscricao();
         } catch (ExecutionException | InterruptedException e) {
+            // Lida com problemas na execução assíncrona
             e.printStackTrace();
+            throw new RuntimeException("Erro ao executar a inserção online.", e);
         } catch (JsonProcessingException e) {
+            // Lida com erros de serialização/deserialização JSON
             e.printStackTrace();
+            throw new RuntimeException("Erro ao processar JSON.", e);
         }
-
-        return idInscricao; // Retorna o id da inscrição inserida ou -1 se ocorrer algum erro
     }
-
 
     // Atualizar uma inscrição existente
     public void update(Inscricao inscricao) {
-        ContentValues values = new ContentValues();
-        values.put("id_corredor", inscricao.getIdCorredor());
-        values.put("id_maratona", inscricao.getIdMaratona());
-        values.put("data_hora", String.valueOf(inscricao.getDataHora()));
-        values.put("forma_pagamento", inscricao.getFormaPagamento());
-        values.put("status", inscricao.getFormaPagamento());
-        String[] args = {String.valueOf(inscricao.getIdInscricao())};
-        banco.update("inscricao", values, "id_inscricao=?", args);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON do objeto Inscricao
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(inscricao);
+
+                // Envia os dados para o servidor usando um PUT
+                UpdateRequestInscricaoAtualizar updateRequest = new UpdateRequestInscricaoAtualizar();
+                String response = updateRequest.execute(String.valueOf(inscricao.getIdInscricao()), jsonString).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar inscricao com ID " + inscricao.getIdInscricao());
+                } else {
+                    System.out.println("Inscricao atualizada com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao serializar o objeto Inscricao para JSON", e);
+            }
+        } else {
+            // Atualização local no banco de dados SQLite
+            ContentValues values = new ContentValues();
+            values.put("id_corredor", inscricao.getIdCorredor());
+            values.put("id_maratona", inscricao.getIdMaratona());
+            values.put("data_hora", String.valueOf(inscricao.getDataHora()));
+            values.put("forma_pagamento", inscricao.getFormaPagamento());
+            values.put("status", inscricao.getFormaPagamento());
+            String[] args = {String.valueOf(inscricao.getIdInscricao())};
+            banco.update("inscricao", values, "id_inscricao=?", args);
+        }
     }
 
     // Deletar uma inscrição
     public void delete(Inscricao inscricao) {
-        String[] args = {String.valueOf(inscricao.getIdInscricao())};
-        banco.delete("inscricao", "id_inscricao=?", args);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON do objeto Inscricao
+                ObjectMapper objectMapper = new ObjectMapper();
+                String jsonString = objectMapper.writeValueAsString(inscricao);
+
+                DeleteRequestInscricao deleteRequest = new DeleteRequestInscricao();
+                deleteRequest.execute(String.valueOf(inscricao.getIdInscricao()), jsonString).get();
+
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        }   else {
+            String[] args = {String.valueOf(inscricao.getIdInscricao())};
+            banco.delete("inscricao", "id_inscricao=?", args);
+        }
     }
 
     // Obter todas as inscrições
@@ -194,48 +236,37 @@ public class InscricaoDAO {
 
     public List<Corredores> obterCorredoresParticipandoPorMaratona(int idMaratona) {
         List<Corredores> corredores = new ArrayList<>();
+        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores participando da maratona...");
 
-        // Consulta com JOIN entre a tabela de inscricao e corredor, incluindo filtro de status "Participando"
-        String query = "SELECT c.id_corredor, c.nome, c.telefone, c.email, c.senha, " +
-                "c.cpf, c.endereco, c.pais_origem " +
-                "FROM corredor c " +
-                "INNER JOIN inscricao i ON c.id_corredor = i.id_corredor " +
-                "WHERE i.id_maratona = ? AND i.status = 'Participando'";
+        try {
+            // Realiza a requisição para buscar os corredores inscritos na maratona
+            GetRequestCorredoresParticipando request = new GetRequestCorredoresParticipando();
+            String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
+            Log.i("CORREDORES_JSON", jsonString);
 
-        // Executa a consulta e passa o idMaratona como parâmetro
-        Cursor cursor = banco.rawQuery(query, new String[]{String.valueOf(idMaratona)});
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Corredores
+            ObjectMapper objectMapper = new ObjectMapper();
+            corredores = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Corredores.class));
 
-        while (cursor.moveToNext()) {
-            Corredores corredor = new Corredores();
-            corredor.setIdCorredor(cursor.getInt(0)); // id_corredor
-            corredor.setNome(cursor.getString(1)); // nome
-            corredor.setTelefone(cursor.getString(2)); // telefone
-            corredor.setEmail(cursor.getString(3)); // email
-            corredor.setSenha(cursor.getString(4)); // senha
-            //corredor.setDataNasc(cursor.getString(5)); // data_nasc
-            corredor.setCpf(cursor.getString(5)); // cpf
-            corredor.setEndereco(cursor.getString(6)); // endereco
-            //corredor.setGenero(cursor.getString(8)); // genero
-            //corredor.setUrlFoto(cursor.getString(9)); // url_foto
-            corredor.setPaisOrigem(cursor.getString(7)); // pais_origem
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("CORREDORES_CONVERTIDOS", corredores.toString());
 
-            // Adiciona o corredor à lista
-            corredores.add(corredor);
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao processar o JSON: ", e);
         }
-
-        // Fecha o cursor para liberar os recursos
-        cursor.close();
 
         return corredores;
     }
 
-
     public List<Corredores> obterCorredoresConcluidosPorMaratona(int idMaratona) {
         List<Corredores> corredores = new ArrayList<>();
-        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores inscritos para a maratona...");
+        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores concluiram a maratona...");
 
         try {
-            // Realiza a requisição para buscar os corredores inscritos na maratona
+            // Realiza a requisição para buscar os corredores concluiram a maratona
             GetRequestCorredoresConcluidos request = new GetRequestCorredoresConcluidos();
             String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
             Log.i("CORREDORES_JSON", jsonString);
@@ -284,8 +315,6 @@ public class InscricaoDAO {
         return corredores;
     }
 
-
-
     // Ler uma inscrição pelo ID
     public Inscricao read(int id) {
         String[] args = {String.valueOf(id)};
@@ -329,16 +358,99 @@ public class InscricaoDAO {
         return idInscricao; // Retorna o id_inscricao ou -1 se não encontrado
     }
 
-
     //atualiza status
     public void updateStatus(int idInscricao, String novoStatus) {
-        ContentValues values = new ContentValues();
-        values.put("status", novoStatus);
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria o JSON contendo apenas o campo a ser atualizado
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, Object> partialUpdate = new HashMap<>();
+                partialUpdate.put("status", novoStatus);
 
-        String[] args = {String.valueOf(idInscricao)};
+                String jsonString = objectMapper.writeValueAsString(partialUpdate);
 
-        // Atualiza apenas o campo status da maratona com o id fornecido
-        banco.update("inscricao", values, "id_inscricao=?", args);
+                // Envia os dados para o servidor usando um PUT
+                UpdateRequestInscricaoAtualizar updateRequest = new UpdateRequestInscricaoAtualizar();
+                String response = updateRequest.execute(String.valueOf(idInscricao), jsonString).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);
+                } else {
+                    System.out.println("Status da inscrição atualizado com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Erro ao serializar o JSON para a atualização parcial", e);
+            }
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("status", novoStatus);
+
+            String[] args = {String.valueOf(idInscricao)};
+
+            // Atualiza apenas o campo status da inscrição com o id fornecido
+            banco.update("inscricao", values, "id_inscricao=?", args);
+        }
     }
 
+    public void updateStatusParaFinalizado(int idInscricao) {
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria a requisição para o servidor
+                UpdateRequestInscricaoFinalizado updateRequest = new UpdateRequestInscricaoFinalizado();
+
+                // Executa a atualização e obtém a resposta do servidor
+                String response = updateRequest.execute(String.valueOf(idInscricao), "{\"status\":\"FINALIZADO\"}").get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);
+                } else {
+                    System.out.println("Status da inscrição atualizado com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Atualiza o status localmente no banco offline
+            ContentValues values = new ContentValues();
+            values.put("status", "FINALIZADO");
+
+            String[] args = {String.valueOf(idInscricao)};
+
+            // Atualiza o campo 'status' no SQLite
+            banco.update("inscricao", values, "id_inscricao=?", args);
+            System.out.println("Status atualizado localmente no banco offline.");
+        }
+    }
+
+    public void updateStatusParaDesistente(int idInscricao) {
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria a requisição para o servidor
+                UpdateRequestInscricaoDesistente updateRequest = new UpdateRequestInscricaoDesistente();
+
+                // Executa a atualização e obtém a resposta do servidor
+                String response = updateRequest.execute(String.valueOf(idInscricao), "{\"status\":\"DESISTENTE\"}").get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);
+                } else {
+                    System.out.println("Status da inscrição atualizado com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Atualiza o status localmente no banco offline
+            ContentValues values = new ContentValues();
+            values.put("status", "DESISTENTE");
+
+            String[] args = {String.valueOf(idInscricao)};
+
+            // Atualiza o campo 'status' no SQLite
+            banco.update("inscricao", values, "id_inscricao=?", args);
+            System.out.println("Status atualizado localmente no banco offline.");
+        }
+    }
 }

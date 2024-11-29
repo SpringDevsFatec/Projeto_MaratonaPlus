@@ -1,6 +1,5 @@
 package com.example.maratona;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +16,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
-import androidx.core.graphics.drawable.IconCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -28,7 +25,6 @@ import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Maratonas;
 
 import java.util.List;
-import java.util.Objects;
 
 public class TelaMaratonaAdm extends AppCompatActivity {
 
@@ -169,6 +165,7 @@ public class TelaMaratonaAdm extends AppCompatActivity {
             btnAtualizarMaratona.setVisibility(View.GONE);
             btnCancelaMaratona.setVisibility(View.VISIBLE);
             btnCancelaMaratona.setText("Maratona Cancelada");
+            btnCancelaMaratona.setOnClickListener(this.AvisoCancelada(TelaMaratonaAdm.this.getCurrentFocus()));
             btnCancelaMaratona.setInputType(InputType.TYPE_NULL);
             btnCancelaMaratona.setFocusable(false);
         }
@@ -328,5 +325,10 @@ public class TelaMaratonaAdm extends AppCompatActivity {
         });
         dialog.show();
 
+    }
+
+    public View.OnClickListener AvisoCancelada(View view){
+        Toast.makeText(TelaMaratonaAdm.this, "Maratona Já Cancelada", Toast.LENGTH_SHORT).show();
+        return null;
     }
 }

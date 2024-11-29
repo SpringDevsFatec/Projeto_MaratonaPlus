@@ -8,16 +8,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.maratona.model.Corredores;
 import com.example.maratona.model.Empresas;
 import com.example.maratona.service.GetRequestEmpresaId;
-import com.example.maratona.service.InsertRequestCorredor;
 import com.example.maratona.service.InsertRequestEmpresa;
 import com.example.maratona.service.InsertRequestEmpresaLogin;
 import com.example.maratona.service.UpdateRequestEmpresa;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 

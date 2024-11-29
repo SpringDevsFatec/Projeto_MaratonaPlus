@@ -135,5 +135,4 @@ public class CadastrarMaratona extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-
 }
