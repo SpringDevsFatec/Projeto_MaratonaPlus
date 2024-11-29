@@ -49,7 +49,7 @@ public class ScanQRCode extends AppCompatActivity {
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
         distanciaMaratona = intent.getIntExtra("distancia", -1);
-        inscricaoId = intent.getIntExtra("distancia", -1);
+        inscricaoId = intent.getIntExtra("inscricaoId", -1);
 
         Log.i("DISTANCIA", String.valueOf(distanciaMaratona));
         Log.i("INSCRICAOID", String.valueOf(inscricaoId));

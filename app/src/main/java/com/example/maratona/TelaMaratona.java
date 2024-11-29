@@ -280,7 +280,7 @@ public class TelaMaratona extends AppCompatActivity {
         intent.putExtra("maratonaId", maratonaId);
         intent.putExtra("id", userId);
         intent.putExtra("distancia", distancia);
-        intent.putExtra("inscricaoid", inscricaoId);
+        intent.putExtra("inscricaoId", inscricaoId);
         intent.putExtra("activity", "Participar");
 
         startActivityForResult(intent, 1);

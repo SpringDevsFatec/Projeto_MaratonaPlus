@@ -5,6 +5,7 @@ import static com.example.maratona.util.ConnectionFactory.FormConnect;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.maratona.model.Maratonas;
+import com.example.maratona.service.GetRequestMaratonaAndamento;
 import com.example.maratona.service.GetRequestMaratonaCriador;
 import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.service.GetRequestMaratonaStatus;
@@ -468,4 +469,30 @@ public class MaratonasDAO {
         return maratonas;
     }
 
+    // Verificar se a maratona está em andamento
+    public boolean verificaEmAndamento(int idMaratona) {
+        boolean emAndamento = false;
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                GetRequestMaratonaAndamento findByIdRequest = new GetRequestMaratonaAndamento();
+                String response = findByIdRequest.execute(String.valueOf(idMaratona)).get();
+
+                if (response != null && !response.isEmpty()) {
+                    Log.d("JSON Recebido", response); // Log para validar a resposta
+                    // Processa diretamente o valor booleano retornado
+                    emAndamento = Boolean.parseBoolean(response);
+                } else {
+                    Log.e("Erro", "Resposta vazia ou nula para o ID " + idMaratona);
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                Log.e("Erro", "Erro ao executar requisição", e);
+            }
+        } else {
+            Maratonas maratona = getMaratonaFromDatabase(idMaratona);
+            emAndamento = maratona != null && "EM_ANDAMENTO".equals(maratona.getStatus());
+        }
+
+        return emAndamento;
+    }
 }
