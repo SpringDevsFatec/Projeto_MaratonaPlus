@@ -2,6 +2,8 @@ package com.example.maratona;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.maratona.dao.CorredoresDAO;
 import com.example.maratona.dao.EmpresasDAO;
 import com.example.maratona.dao.MaratonasDAO;
+import com.example.maratona.util.NetworkUtils;
 
 public class TeladeLogin extends AppCompatActivity {
 
@@ -47,84 +50,64 @@ public class TeladeLogin extends AppCompatActivity {
     }
 
     public void Logar(View view) {
-
+        // Verificar se há conexão com a internet antes de continuar
+        if (!NetworkUtils.isInternetAvailable(this)) {
+            Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
+            return; // Encerra o método para evitar execução adicional
+        }
 
         String email = edtEmail.getText().toString();
         String senha = edtSenha.getText().toString();
 
-        if (email.trim().isEmpty() ) {
+        if (email.trim().isEmpty()) {
             // O EditText está vazio
             Toast.makeText(this, "O campo Email não pode estar vazio", Toast.LENGTH_SHORT).show();
-        } else if(senha.trim().isEmpty()) {
+        } else if (senha.trim().isEmpty()) {
             Toast.makeText(this, "O campo Senha não pode estar vazio", Toast.LENGTH_SHORT).show();
-        }else if(!rdbRunner.isChecked() && !rdbEmpresa.isChecked()) {
+        } else if (!rdbRunner.isChecked() && !rdbEmpresa.isChecked()) {
             Toast.makeText(this, "Escolha a forma de Login", Toast.LENGTH_SHORT).show();
-        }
-        else {
-
-            if(rdbEmpresa.isChecked()){
+        } else {
+            if (rdbEmpresa.isChecked()) {
                 // Lógica de buscar e comparar os dados
-
                 EmpresasDAO empresaDAO = new EmpresasDAO(this);
                 int loginValido = empresaDAO.verificarLoginEmpresaId(email, senha);
-                Log.i("UserId",String.valueOf(loginValido));
+                Log.i("UserId", String.valueOf(loginValido));
                 if (loginValido != -1) {
-
-
-                    Toast.makeText(this, "Seja bem vindo novamente!", Toast.LENGTH_SHORT).show();
-                    //Declarando uma variável do tipo Intent
+                    Toast.makeText(this, "Seja bem-vindo novamente!", Toast.LENGTH_SHORT).show();
                     Intent it = new Intent(this, TelaAdm.class);
-
-                     it.putExtra(
-                            "id",
-                           loginValido
-                      );
-                    //Iniciando a Tela desejada (tela 2)
+                    it.putExtra("id", loginValido);
                     startActivity(it);
-
-
                 } else {
                     Toast.makeText(this, "Login inválido", Toast.LENGTH_SHORT).show();
                 }
-
-
-
-            }else {
+            } else {
                 // Lógica de buscar e comparar os dados
                 CorredoresDAO corredorDAO = new CorredoresDAO(this);
                 int loginValido = corredorDAO.verificarLoginCorredorId(email, senha);
-
                 if (loginValido != -1) {
-
-
-                    Toast.makeText(this, "Seja bem vindo novamente! ", Toast.LENGTH_SHORT).show();
-                    //Declarando uma variável do tipo Intent
+                    Toast.makeText(this, "Seja bem-vindo novamente!", Toast.LENGTH_SHORT).show();
                     Intent it = new Intent(this, TelaHub.class);
-
-                    it.putExtra(
-                            "id",
-                             loginValido
-                    );
-                    //Iniciando a Tela desejada (tela 2)
+                    it.putExtra("id", loginValido);
                     startActivity(it);
-
-
                 } else {
                     Toast.makeText(this, "Login inválido", Toast.LENGTH_SHORT).show();
                 }
             }
-
-
         }
-
     }
+
 
     public void Tela_Cadastrar(View view) {
-
+        if (!NetworkUtils.isInternetAvailable(this)) {
         //Declarando uma variável do tipo Intent
-        Intent it = new Intent(this, CadastroUsuario.class);
+            Intent it = new Intent(this, CadastroUsuario.class);
 
-        startActivity(it);
+            startActivity(it);
+        } else {
+            // Caso contrário, exibir uma mensagem de erro
+            Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
+        }
     }
+
 }
 
