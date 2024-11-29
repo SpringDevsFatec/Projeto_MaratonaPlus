@@ -10,13 +10,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class UpdateRequestInscricaoFinalizado extends AsyncTask<String, Void, String> {
+public class UpdateRequestInscricaoParticipacao extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
         StringBuilder apiResponse = new StringBuilder();
         try {
-            URL update = new URL("http://" + ConnectionFactory.serverIP + "/inscricoes/" + strings[0] + "/finalizar" );
+            URL update = new URL("http://" + ConnectionFactory.serverIP + "/inscricoes/" + strings[0] + "/participar" );
             HttpURLConnection connection = (HttpURLConnection) update.openConnection();
 
             connection.setRequestMethod("PUT");
@@ -25,7 +25,6 @@ public class UpdateRequestInscricaoFinalizado extends AsyncTask<String, Void, St
             connection.setRequestProperty("Accept", "application/json");
 
             connection.setDoOutput(true);
-
             connection.connect();
 
             String jsonResponse = new Scanner(connection.getInputStream()).next();

@@ -130,8 +130,8 @@ public class ParticipacaoDAO {
                 participacao.setIdInscricao(cursor.getInt(1));
                 participacao.setStatusConclusao(cursor.getString(2));
                 participacao.setTempoRegistrado(String.valueOf(cursor.getString(3)));
-                participacao.setTempoInicio(Time.valueOf(cursor.getString(4)));
-                participacao.setTempoFim(Time.valueOf(cursor.getString(5)));
+                participacao.setTempoInicio(String.valueOf(cursor.getString(4)));
+                participacao.setTempoFim(String.valueOf(cursor.getString(5)));
                 participacao.setPassos(cursor.getInt(6));
             }
             cursor.close();

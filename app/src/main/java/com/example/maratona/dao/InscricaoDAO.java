@@ -22,6 +22,7 @@ import com.example.maratona.service.InsertRequestInscricao;
 import com.example.maratona.service.UpdateRequestInscricaoAtualizar;
 import com.example.maratona.service.UpdateRequestInscricaoDesistente;
 import com.example.maratona.service.UpdateRequestInscricaoFinalizado;
+import com.example.maratona.service.UpdateRequestInscricaoParticipacao;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -401,7 +402,7 @@ public class InscricaoDAO {
                 UpdateRequestInscricaoFinalizado updateRequest = new UpdateRequestInscricaoFinalizado();
 
                 // Executa a atualização e obtém a resposta do servidor
-                String response = updateRequest.execute(String.valueOf(idInscricao), "{\"status\":\"FINALIZADO\"}").get();
+                String response = updateRequest.execute(String.valueOf(idInscricao)).get();
 
                 if (response == null || response.isEmpty()) {
                     System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);
@@ -431,7 +432,37 @@ public class InscricaoDAO {
                 UpdateRequestInscricaoDesistente updateRequest = new UpdateRequestInscricaoDesistente();
 
                 // Executa a atualização e obtém a resposta do servidor
-                String response = updateRequest.execute(String.valueOf(idInscricao), "{\"status\":\"DESISTENTE\"}").get();
+                String response = updateRequest.execute(String.valueOf(idInscricao)).get();
+
+                if (response == null || response.isEmpty()) {
+                    System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);
+                } else {
+                    System.out.println("Status da inscrição atualizado com sucesso no servidor.");
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Atualiza o status localmente no banco offline
+            ContentValues values = new ContentValues();
+            values.put("status", "DESISTENTE");
+
+            String[] args = {String.valueOf(idInscricao)};
+
+            // Atualiza o campo 'status' no SQLite
+            banco.update("inscricao", values, "id_inscricao=?", args);
+            System.out.println("Status atualizado localmente no banco offline.");
+        }
+    }
+
+    public void updateStatusParaParticipando(int idInscricao) {
+        if ("Online".equals(FormConnect)) {
+            try {
+                // Cria a requisição para o servidor
+                UpdateRequestInscricaoParticipacao updateRequest = new UpdateRequestInscricaoParticipacao();
+
+                // Executa a atualização e obtém a resposta do servidor
+                String response = updateRequest.execute(String.valueOf(idInscricao)).get();
 
                 if (response == null || response.isEmpty()) {
                     System.err.println("Erro: Nenhuma resposta ao atualizar o status da inscrição com ID " + idInscricao);

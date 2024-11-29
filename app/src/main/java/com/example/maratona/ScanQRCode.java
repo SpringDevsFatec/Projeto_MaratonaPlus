@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class ScanQRCode extends AppCompatActivity {
 
-    private int userId,maratonaId, distanciaMaratona;
+    private int userId,maratonaId, distanciaMaratona,inscricaoId;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -48,7 +49,10 @@ public class ScanQRCode extends AppCompatActivity {
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
         distanciaMaratona = intent.getIntExtra("distancia", -1);
+        inscricaoId = intent.getIntExtra("distancia", -1);
 
+        Log.i("DISTANCIA", String.valueOf(distanciaMaratona));
+        Log.i("INSCRICAOID", String.valueOf(inscricaoId));
 
         barcodeScannerView = findViewById(R.id.barcodeScanner);
 
@@ -73,20 +77,19 @@ public class ScanQRCode extends AppCompatActivity {
 
                             // adicona participação e muda status da inscrição
                             InscricaoDAO idao = new InscricaoDAO(ScanQRCode.this);
-                            int id = idao.getIdInscricao(userId, maratonaId);
-                            idao.updateStatus(id,"Participando");
+                            int id = inscricaoId;
+                            idao.updateStatusParaParticipando(id);
 
                             Participacao p = new Participacao();
                             p.setIdInscricao(id);
 
                             ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCode.this);
-                            Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
 
                             long idParticipacao = pdao.insertParticipacao(p);
-
+                        Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
                             // Vai para a tela de Participando
                             Intent intent;
-                            intent = new Intent(ScanQRCode.this, Cronometro.class);
+                            intent = new Intent(ScanQRCode.this, AguardeMaratona.class);
 
                             intent.putExtra("maratonaId", maratonaId);
                             intent.putExtra("userId", userId);
