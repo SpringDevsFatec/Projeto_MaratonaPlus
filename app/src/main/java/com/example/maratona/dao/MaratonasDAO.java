@@ -9,6 +9,11 @@ import com.example.maratona.service.GetRequestMaratonaCriador;
 import com.example.maratona.service.GetRequestMaratonaId;
 import com.example.maratona.service.GetRequestMaratonaStatus;
 import com.example.maratona.service.InsertRequestMaratona;
+import com.example.maratona.service.UpdateRequestMaratonaAbrir;
+import com.example.maratona.service.UpdateRequestMaratonaCancelar;
+import com.example.maratona.service.UpdateRequestMaratonaConcluir;
+import com.example.maratona.service.UpdateRequestMaratonaIniciar;
+import com.example.maratona.service.UpdateRequestMaratonaStatus;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -102,14 +107,106 @@ public class MaratonasDAO {
     }
 
     //atualiza status
-    public void updateStatus(int idMaratona, String novoStatus) {
-        ContentValues values = new ContentValues();
-        values.put("status", novoStatus);
+    public void updateStatus(int idMaratona, Maratonas novoStatus) {
 
-        String[] args = {String.valueOf(idMaratona)};
+        if ("Online".equals(FormConnect)) {
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        // Atualiza apenas o campo status da maratona com o id fornecido
-        banco.update("maratona", values, "id_maratona=?", args);
+            try {
+                String jsonUser = objectMapper.writeValueAsString(novoStatus);
+
+                UpdateRequestMaratonaStatus insertRequest = new UpdateRequestMaratonaStatus();
+                String jsonString = insertRequest.execute(String.valueOf(idMaratona),jsonUser).get();
+                Log.i("UPDATE_RETURN", jsonString);
+
+
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a Update online.", e);
+            } catch (JsonProcessingException e) {
+                // Lida com erros de serialização/deserialização JSON
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao processar JSON.", e);
+            }
+        }else {
+            ContentValues values = new ContentValues();
+            values.put("status", novoStatus.getStatus() );
+
+            String[] args = {String.valueOf(idMaratona)};
+
+            // Atualiza apenas o campo status da maratona com o id fornecido
+            banco.update("maratona", values, "id_maratona=?", args);
+        }
+        }
+
+    //atualiza status
+    public void updateMaratonaAbrir(int idMaratona) {
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                UpdateRequestMaratonaAbrir insertRequest = new UpdateRequestMaratonaAbrir();
+                String jsonString = insertRequest.execute(String.valueOf(idMaratona)).get();
+                Log.i("UPDATE_ABRIR_RETURN", jsonString);
+
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a Update online.", e);
+            }
+        }
+    }
+
+    //atualiza status
+    public void updateMaratonaCancelar(int idMaratona) {
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                UpdateRequestMaratonaCancelar insertRequest = new UpdateRequestMaratonaCancelar();
+                String jsonString = insertRequest.execute(String.valueOf(idMaratona)).get();
+                Log.i("UPDATE_CANCELAR_RETURN", jsonString);
+
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a Update online.", e);
+            }
+        }
+    }
+
+    //atualiza status
+    public void updateMaratonaConcluir(int idMaratona) {
+
+        if ("Online".equals(FormConnect)) {
+            try {
+                UpdateRequestMaratonaConcluir insertRequest = new UpdateRequestMaratonaConcluir();
+                String jsonString = insertRequest.execute(String.valueOf(idMaratona)).get();
+                Log.i("UPDATE_CONCLUIR_RETURN", jsonString);
+
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a Update online.", e);
+            }
+        }
+    }
+
+    //atualiza status
+    public void updateMaratonaIniciar(int idMaratona) {
+        if ("Online".equals(FormConnect)) {
+
+            try {
+                UpdateRequestMaratonaIniciar insertRequest = new UpdateRequestMaratonaIniciar();
+                String jsonString = insertRequest.execute(String.valueOf(idMaratona)).get();
+                Log.i("UPDATE_CONCLUIR_RETURN", jsonString);
+
+            } catch (ExecutionException | InterruptedException e) {
+                // Lida com problemas na execução assíncrona
+                e.printStackTrace();
+                throw new RuntimeException("Erro ao executar a Update online.", e);
+            }
+
+        }
     }
 
 
@@ -135,7 +232,7 @@ public class MaratonasDAO {
                 // Faz a solicitação para obter o JSON correspondente ao ID
                 GetRequestMaratonaId findByIdRequest = new GetRequestMaratonaId();
                 String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
-
+                Log.i("MARATONA JSONNNNNNN",jsonString);
                 if (jsonString != null && !jsonString.isEmpty()) {
                     maratona = parseMaratonaFromJson(jsonString);
                 } else {
@@ -173,8 +270,8 @@ public class MaratonasDAO {
         maratona.setRegras(maratonajson.getString("regras"));
         maratona.setValor((float) maratonajson.getDouble("valor"));
         maratona.setTipo_terreno(maratonajson.getString("tipo_terreno"));
-        maratona.setClima_esperado(maratonajson.getString("climaEsperado"));
-        maratona.setNomeCriador(jsonObject.getString("clima_esperado"));
+        maratona.setClima_esperado(maratonajson.getString("clima_esperado"));
+        maratona.setNomeCriador(jsonObject.getString("nomeEmpresa"));
 
         return maratona;
     }

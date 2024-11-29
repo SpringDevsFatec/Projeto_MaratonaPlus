@@ -11,20 +11,19 @@ import com.example.maratona.model.Inscricao;
 import com.example.maratona.model.Maratonas;
 import com.example.maratona.service.GetRequestCorredoresConcluidos;
 import com.example.maratona.service.GetRequestCorredoresInscritos;
+import com.example.maratona.service.GetRequestCorredoresParticipando;
 import com.example.maratona.service.GetRequestInscricaoPorCorredoreEMaratona;
 import com.example.maratona.service.GetRequestMaratonaAbertaCorredor;
 import com.example.maratona.service.GetRequestMaratonaConcluidaCorredor;
 import com.example.maratona.service.InsertRequestInscricao;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -238,6 +237,33 @@ public class InscricaoDAO {
         try {
             // Realiza a requisição para buscar os corredores inscritos na maratona
             GetRequestCorredoresConcluidos request = new GetRequestCorredoresConcluidos();
+            String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
+            Log.i("CORREDORES_JSON", jsonString);
+
+            // Usa o ObjectMapper para converter o JSON em uma lista de objetos Corredores
+            ObjectMapper objectMapper = new ObjectMapper();
+            corredores = objectMapper.readValue(jsonString,
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, Corredores.class));
+
+            // Log para verificar se a conversão foi bem-sucedida
+            Log.i("CORREDORES_CONVERTIDOS", corredores.toString());
+
+        } catch (ExecutionException | InterruptedException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao executar a requisição: ", e);
+        } catch (JsonProcessingException e) {
+            Log.e("CORREDORES_ERRO", "Erro ao processar o JSON: ", e);
+        }
+
+        return corredores;
+    }
+
+    public List<Corredores> obterCorredoresParticipando(int idMaratona) {
+        List<Corredores> corredores = new ArrayList<>();
+        Log.i("CORREDORES_MARATONA", "Iniciando busca de corredores inscritos para a maratona...");
+
+        try {
+            // Realiza a requisição para buscar os corredores inscritos na maratona
+            GetRequestCorredoresParticipando request = new GetRequestCorredoresParticipando();
             String jsonString = request.execute(String.valueOf(idMaratona)).get(); // ID da maratona como parâmetro
             Log.i("CORREDORES_JSON", jsonString);
 

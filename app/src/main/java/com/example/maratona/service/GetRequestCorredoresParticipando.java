@@ -9,15 +9,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class GetRequestMaratonaAbertaCorredor extends AsyncTask<String, Void, String> {
-
+public class GetRequestCorredoresParticipando extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
 
         StringBuilder apiResponse = new StringBuilder();
         try {
-            URL findById = new URL("http://" + ConnectionFactory.serverIP + "/maratonas/abertas-por-corredor/" + strings[0] );
+            URL findById = new URL("http://" + ConnectionFactory.serverIP + "/corredores/participando/" + strings[0] );
             HttpURLConnection connection = (HttpURLConnection) findById.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-type", "application/json");
@@ -35,5 +34,4 @@ public class GetRequestMaratonaAbertaCorredor extends AsyncTask<String, Void, St
         }
         return apiResponse.toString();
     }
-
 }

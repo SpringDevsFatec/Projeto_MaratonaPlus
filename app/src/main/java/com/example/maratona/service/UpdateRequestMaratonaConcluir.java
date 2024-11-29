@@ -26,9 +26,6 @@ public class UpdateRequestMaratonaConcluir extends AsyncTask<String, Void, Strin
 
             connection.setDoOutput(true);
 
-            PrintStream printStream = new PrintStream(connection.getOutputStream());
-            printStream.println(strings[1]);
-
             connection.connect();
 
             String jsonResponse = new Scanner(connection.getInputStream()).next();

@@ -1,6 +1,7 @@
 package com.example.maratona.service;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.maratona.util.ConnectionFactory;
 
@@ -26,12 +27,14 @@ public class GetRequestMaratonaId extends AsyncTask<String, Void, String> {
             connection.connect();
 
             Scanner scanner = new Scanner(findById.openStream());
+            scanner.useDelimiter("\\A");
             while (scanner.hasNext()) {
                 apiResponse.append(scanner.next());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.i("MARATONA ",apiResponse.toString());
         return apiResponse.toString();
     }
 

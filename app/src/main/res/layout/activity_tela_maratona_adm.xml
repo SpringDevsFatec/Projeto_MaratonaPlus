@@ -166,20 +166,43 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_height="65dp"
                 android:padding="12dp"
                 android:background="@drawable/rounded_edit_text"
                 android:backgroundTint="#A3E635"
-                android:text="Iniciar Maratona"
+                android:text="Receber Competidores"
                 android:visibility="visible"
                 android:onClick="IniciaMaratona"
                 />
 
             <Button
+                android:id="@+id/btnLargadaMaratona"
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="65dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
+                android:backgroundTint="#A3E635"
+                android:text="Iniciar Maratona"
+                android:visibility="gone"
+                android:onClick="DarLargada"
+                />
+
+
+            <Button
                 android:id="@+id/btnEncerrar"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="65dp"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edit_text"
                 android:backgroundTint="#A3E635"
                 android:onClick="FecharMaratona"
                 android:text="Encerrar Maratona"
@@ -212,6 +235,15 @@
                 android:onClick="VisualizarCorredoresConcluidos"
                 android:visibility="gone"
                 android:text="Concluir Vencedores" />
+            <Button
+                android:id="@+id/btnMostrarParticipando"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="#A3E635"
+                android:onClick="VisualizarCorredoresParticipando"
+                android:visibility="gone"
+                android:text="Mostrar Participantes" />
 
             <Button
                 android:id="@+id/btnMostrarInscritos"
@@ -221,7 +253,7 @@
                 android:backgroundTint="#505050"
                 android:onClick="VisualizarCorredoresInscritos"
                 android:padding="12dp"
-                android:text="Mostrar Inscritos na Maratona"
+                android:text="Mostrar Inscritos "
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -236,6 +268,18 @@
                 android:onClick="EditarMaratona"
                 android:backgroundTint="#8D8D8D"
                 android:text="Atualizar Maratona" />
+
+            <Button
+                android:id="@+id/btnCancelaMaratona"
+                android:layout_width="match_parent"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="20dp"
+                android:layout_height="65dp"
+                android:padding="12dp"
+                android:onClick="CancelarMaratona"
+                android:backgroundTint="@color/red"
+                android:text="Cancelar Maratona" />
 
         </LinearLayout>
     </ScrollView>

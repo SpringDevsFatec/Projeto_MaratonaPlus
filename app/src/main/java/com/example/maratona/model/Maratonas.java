@@ -26,7 +26,9 @@ public class Maratonas {
 
     @Override
     public String toString() {
-        return "Maratona "+ Nome+ " id " + idMaratona; // ou qualquer outra informação que você queira exibir na ListView
+        return "Maratona "+ Nome
+                //+ " id " + idMaratona // ou qualquer outra informação que você queira exibir na ListView
+    ;
     }
 
     public Maratonas() {

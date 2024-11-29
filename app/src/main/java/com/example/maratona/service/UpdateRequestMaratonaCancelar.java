@@ -26,8 +26,6 @@ public class UpdateRequestMaratonaCancelar extends AsyncTask<String, Void, Strin
 
             connection.setDoOutput(true);
 
-            PrintStream printStream = new PrintStream(connection.getOutputStream());
-            printStream.println(strings[1]);
 
             connection.connect();
 

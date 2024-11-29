@@ -26,6 +26,7 @@ public class GetRequestEmpresaId extends AsyncTask<String, Void, String> {
             connection.connect();
 
             Scanner scanner = new Scanner(findById.openStream());
+            scanner.useDelimiter("\\A");
             while (scanner.hasNext()) {
                 apiResponse.append(scanner.next());
             }

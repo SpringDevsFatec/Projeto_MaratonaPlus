@@ -25,6 +25,7 @@ public class GetRequestCorredoresInscritos extends AsyncTask<String, Void, Strin
             connection.connect();
 
             Scanner scanner = new Scanner(findById.openStream());
+            scanner.useDelimiter("\\A");
             while (scanner.hasNext()) {
                 apiResponse.append(scanner.next());
             }

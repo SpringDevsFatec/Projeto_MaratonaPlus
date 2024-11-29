@@ -82,7 +82,7 @@ public class EditarUsuario extends AppCompatActivity {
 
         if (Activity.equals("VisualizarPerfil")) {
             edtPerfil.setText("Perfil de Usuário");
-            edtId.setInputType(InputType.TYPE_NULL);
+            edtId.setVisibility(View.GONE);
             edtNome.setInputType(InputType.TYPE_NULL);
             edtTelefone.setInputType(InputType.TYPE_NULL);
             edtEmail.setInputType(InputType.TYPE_NULL);
