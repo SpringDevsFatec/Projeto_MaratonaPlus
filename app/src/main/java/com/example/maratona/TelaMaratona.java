@@ -83,7 +83,7 @@ public class TelaMaratona extends AppCompatActivity {
         rdbPix = findViewById(R.id.rdbPix);
         rdbCartao = findViewById(R.id.rdbCartao);
 
-        Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
 
         /*Puxa Id Inscricão*/
         InscricaoDAO i = new InscricaoDAO(this);
@@ -281,7 +281,6 @@ public class TelaMaratona extends AppCompatActivity {
         intent.putExtra("id", userId);
         intent.putExtra("distancia", distancia);
         intent.putExtra("inscricaoId", inscricaoId);
-        intent.putExtra("activity", "Participar");
 
         startActivityForResult(intent, 1);
 
@@ -296,7 +295,7 @@ public class TelaMaratona extends AppCompatActivity {
         confirmaCancelamento.setCancelable(false);
         confirmaCancelamento.setPositiveButton("Sim", (dialogInterface, i) -> {
             InscricaoDAO m = new InscricaoDAO(TelaMaratona.this);
-            m.updateStatusParaDesistente(maratonaId);
+            m.updateStatusParaDesistente(inscricaoId);
             Toast.makeText(TelaMaratona.this, "Inscrição Cancelada com Sucesso.", Toast.LENGTH_SHORT).show();
         });
         confirmaCancelamento.setNegativeButton("Não", null);

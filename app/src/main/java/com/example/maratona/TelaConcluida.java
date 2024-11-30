@@ -28,7 +28,6 @@ public class TelaConcluida extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
-        distanciaMaratona = intent.getIntExtra("distancia", -1);
         idinscricao = intent.getIntExtra("inscricaoId", -1);
         idParticipacao = intent.getIntExtra("participacaoId", -1);
 

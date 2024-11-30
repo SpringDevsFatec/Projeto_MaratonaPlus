@@ -16,9 +16,9 @@ import com.example.maratona.model.Participacao;
 
 public class TelaResultados extends AppCompatActivity {
 
-    private int userId, maratonaId, distanciaMaratona, idinscricao, idparticipacao;
-    private TextView title, idPartipacao, idInscricao, statusConclusao, tempoRegistrado;
-    private TextView tempoInicio, tempoFim, velocidadeKm, velocidadeMs, passos;
+    private int userId, maratonaId, idInscricao, idParticipacao;
+    private TextView title, idPartipacaoView, idInscricaoView, statusConclusaoView, tempoRegistradoView;
+    private TextView tempoInicioView, tempoFimView, velocidadeKmView, velocidadeMsView, passosView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,21 +35,55 @@ public class TelaResultados extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
-        distanciaMaratona = intent.getIntExtra("distancia", -1);
-        idinscricao = intent.getIntExtra("inscricaoId", -1);
-        idparticipacao = intent.getIntExtra("participacaoId", -1);
+        idInscricao = intent.getIntExtra("inscricaoId", -1);
 
         // Instanciando os TextViews
         title = findViewById(R.id.title);
-        idPartipacao = findViewById(R.id.idPartipacao);
-        idInscricao = findViewById(R.id.idInscricao);
-        statusConclusao = findViewById(R.id.statusConclusao);
-        tempoRegistrado = findViewById(R.id.tempoRegistrado);
-        tempoInicio = findViewById(R.id.tempoInicio);
-        tempoFim = findViewById(R.id.tempoFim);
-        velocidadeKm = findViewById(R.id.velocidadeKm);
-        velocidadeMs = findViewById(R.id.velocidadeMs);
-        passos = findViewById(R.id.passos);
-    }
+        idPartipacaoView = findViewById(R.id.idPartipacao);
+        idInscricaoView = findViewById(R.id.idInscricao);
+        statusConclusaoView = findViewById(R.id.statusConclusao);
+        tempoRegistradoView = findViewById(R.id.tempoRegistrado);
+        tempoInicioView = findViewById(R.id.tempoInicio);
+        tempoFimView = findViewById(R.id.tempoFim);
+        velocidadeKmView = findViewById(R.id.velocidadeKm);
+        velocidadeMsView = findViewById(R.id.velocidadeMs);
+        passosView = findViewById(R.id.passos);
 
+        // Recuperando os dados do objeto Participacao a partir do banco de dados
+        ParticipacaoDAO pdao = new ParticipacaoDAO(TelaResultados.this);
+        Participacao p = pdao.readParticipacao(idInscricao);
+
+        if (p != null) {
+            // Definindo os valores nos TextViews
+            title.setText("Detalhes da Participação");
+            idPartipacaoView.setText("ID Participação: " + p.getIdParticipacao());
+            idInscricaoView.setText("ID Inscrição: " + p.getIdInscricao());
+            statusConclusaoView.setText("Status Conclusão: " + p.getStatusConclusao());
+            tempoRegistradoView.setText("Tempo Registrado: " + p.getTempoRegistrado());
+            tempoInicioView.setText("Tempo Início: " + p.getTempoInicio());
+            tempoFimView.setText("Tempo Fim: " + p.getTempoFim());
+            velocidadeKmView.setText("Velocidade (km/h): " + p.getVelocidadeKm());
+            velocidadeMsView.setText("Velocidade (m/s): " + p.getVelocidadeMs());
+            passosView.setText("Passos: " + p.getPassos());
+        } else {
+            // Tratando o caso de nenhum dado encontrado
+            title.setText("Participação não encontrada");
+            idPartipacaoView.setText("");
+            idInscricaoView.setText("");
+            statusConclusaoView.setText("");
+            tempoRegistradoView.setText("");
+            tempoInicioView.setText("");
+            tempoFimView.setText("");
+            velocidadeKmView.setText("");
+            velocidadeMsView.setText("");
+            passosView.setText("");
+        }
+
+        if (p.getStatusConclusao().equals("DESISTENCIA")){
+            statusConclusaoView.setTextColor(Integer.parseInt("#F44336"));
+        }
+
+    }
 }
+
+

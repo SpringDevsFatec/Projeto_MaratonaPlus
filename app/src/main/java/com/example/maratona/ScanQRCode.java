@@ -92,7 +92,7 @@ public class ScanQRCode extends AppCompatActivity {
                             intent = new Intent(ScanQRCode.this, AguardeMaratona.class);
 
                             intent.putExtra("maratonaId", maratonaId);
-                            intent.putExtra("userId", userId);
+                            intent.putExtra("id", userId);
                             intent.putExtra("distancia", distanciaMaratona);
                             intent.putExtra("inscricaoId", id);
                             intent.putExtra("participacaoId", idParticipacao);

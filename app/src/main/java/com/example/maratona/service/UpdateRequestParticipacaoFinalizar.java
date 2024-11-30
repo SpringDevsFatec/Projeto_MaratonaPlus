@@ -16,7 +16,7 @@ public class UpdateRequestParticipacaoFinalizar extends AsyncTask<String, Void, 
     protected String doInBackground(String... strings) {
         StringBuilder apiResponse = new StringBuilder();
         try {
-            URL update = new URL("http://" + ConnectionFactory.serverIP + "/participacoes/finalizar/" + strings[0] );
+            URL update = new URL("http://" + ConnectionFactory.serverIP + "/participacoes/status/" + strings[0] +"/distancia/" + strings[1]);
             HttpURLConnection connection = (HttpURLConnection) update.openConnection();
 
             connection.setRequestMethod("PUT");
@@ -27,7 +27,7 @@ public class UpdateRequestParticipacaoFinalizar extends AsyncTask<String, Void, 
             connection.setDoOutput(true);
 
             PrintStream printStream = new PrintStream(connection.getOutputStream());
-            printStream.println(strings[1]);
+            printStream.println(strings[2]);
 
             connection.connect();
 

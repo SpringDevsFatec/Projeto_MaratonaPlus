@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ScanQRCodeConcuir extends AppCompatActivity {
 
-    private int userId,maratonaId, distanciaMaratona, idinscricao, idParticipacao;
+    private int userId,maratonaId,  idinscricao, idParticipacao;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -47,7 +47,6 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
-        distanciaMaratona = intent.getIntExtra("distancia", -1);
         idinscricao = intent.getIntExtra("inscricaoId", -1);
         idParticipacao = intent.getIntExtra("participacaoId", -1);
 
@@ -73,13 +72,17 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                 if (result != null) {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
-                        Intent it;
-                        it = new Intent(ScanQRCodeConcuir.this, TelaResultados.class);
-                        it.putExtra("maratonaId", maratonaId);
+                        /*Finaliza Inscrição*/
+                        InscricaoDAO idao = new InscricaoDAO(ScanQRCodeConcuir.this);
+                        idao.updateStatusParaFinalizado(idinscricao);
+
+                        Toast.makeText(ScanQRCodeConcuir.this, "Sua Presença foi contabilizada com sucesso!", Toast.LENGTH_SHORT).show();
+
+                        /*Manda para tela de Maratonas Concluidas*/
+                        Intent it = new Intent(ScanQRCodeConcuir.this, TelaConcluida.class);
                         it.putExtra("id", userId);
-                        it.putExtra("inscricaoId", idinscricao);
-                        it.putExtra("participacaoId", idParticipacao);
                         startActivity(it);
+                        finishActivity(1);
 
                         }else{
                             Toast.makeText(ScanQRCodeConcuir.this, "Tempo errado!", Toast.LENGTH_SHORT).show();

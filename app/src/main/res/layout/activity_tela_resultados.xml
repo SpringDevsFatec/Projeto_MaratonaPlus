@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -21,8 +21,8 @@
             android:layout_gravity="center_horizontal|center_vertical"
             android:fontFamily="@font/raleway_extrabold"
             android:gravity="center|center_vertical"
-            android:textColor="@color/escura"
             android:text="Obrigado pela sua Participação!"
+            android:textColor="@color/escura"
             android:textSize="24sp" />
 
         <ImageView
@@ -53,9 +53,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Id Participação: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Id Participação: "/>
+            android:textColorHint="#000000" />
 
         <!-- Campo ID Inscrição -->
         <TextView
@@ -65,9 +65,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Id Inscrição: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Id Inscrição: "/>
+            android:textColorHint="#000000" />
 
 
         <TextView
@@ -77,9 +77,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Status de Conclusao: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Status de Conclusao: "/>
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/tempoRegistrado"
@@ -88,9 +88,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Tempo Registrado: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Tempo Registrado: " />
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/tempoInicio"
@@ -99,9 +99,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Tempo Início: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Tempo Início: " />
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/tempoFim"
@@ -110,9 +110,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Tempo Fim: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Tempo Fim: " />
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/velocidadeKm"
@@ -121,9 +121,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Velocidade em Km/h: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Velocidade em Km/h: " />
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/velocidadeMs"
@@ -132,9 +132,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Velocidade em Ms/h: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Velocidade em Ms/h: " />
+            android:textColorHint="#000000" />
 
         <TextView
             android:id="@+id/passos"
@@ -143,8 +143,8 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
+            android:hint="Passos Dados: "
             android:padding="5dp"
-            android:textColorHint="#000000"
-            android:hint="Passos Dados: " />
+            android:textColorHint="#000000" />
     </LinearLayout>
 </ScrollView>

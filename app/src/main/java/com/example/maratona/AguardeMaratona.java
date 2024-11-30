@@ -39,7 +39,7 @@ public class AguardeMaratona extends AppCompatActivity {
 
         // Recebendo dados da Intent
         Intent intent = getIntent();
-        userId = intent.getIntExtra("userId", -1);
+        userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
         distanciaMaratona = intent.getIntExtra("distancia", -1);
         idInscricao = intent.getIntExtra("inscricaoId", -1);
@@ -47,6 +47,24 @@ public class AguardeMaratona extends AppCompatActivity {
 
         MaratonasDAO mdao = new MaratonasDAO(this);
 
+        // Verifica se a maratona está em andamento
+        boolean emAndamento = mdao.verificaEmAndamento(maratonaId);
+
+        if (emAndamento) {
+           ParticipacaoDAO pdao = new ParticipacaoDAO(this);
+           pdao.InicarParticipacao(idInscricao);
+            Toast.makeText(AguardeMaratona.this, "Sua Prova já foi Iniciada, Boa Sorte!", Toast.LENGTH_SHORT).show();
+
+                Intent it = new Intent(AguardeMaratona.this, Cronometro.class);
+                it.putExtra("maratonaId", maratonaId);
+                it.putExtra("id", userId);
+                it.putExtra("distancia", distanciaMaratona);
+                it.putExtra("inscricaoId", idInscricao);
+                it.putExtra("participacaoId", idParticipacao);
+
+                startActivity(it);
+                finish(); // Fecha a Activity atual
+            }
         // Executor para tarefas agendadas
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -54,10 +72,14 @@ public class AguardeMaratona extends AppCompatActivity {
         Runnable task = () -> {
             try {
                 // Verifica se a maratona está em andamento
-                boolean emAndamento = mdao.verificaEmAndamento(maratonaId);
-
-                if (emAndamento) {
+                boolean em_Andamento = mdao.verificaEmAndamento(maratonaId);
+                Toast.makeText(AguardeMaratona.this, "Aguarde a sua prova ser Iniciada!", Toast.LENGTH_SHORT).show();
+                if (em_Andamento) {
                     runOnUiThread(() -> {
+                        ParticipacaoDAO pdao = new ParticipacaoDAO(this);
+                        pdao.InicarParticipacao(idInscricao);
+                        Toast.makeText(AguardeMaratona.this, "Prova Iniciada, Boa Sorte!", Toast.LENGTH_SHORT).show();
+
                         Intent it = new Intent(AguardeMaratona.this, Cronometro.class);
                         it.putExtra("maratonaId", maratonaId);
                         it.putExtra("id", userId);

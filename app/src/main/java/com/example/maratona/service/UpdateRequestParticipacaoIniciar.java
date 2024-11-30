@@ -5,35 +5,36 @@ import android.os.AsyncTask;
 import com.example.maratona.util.ConnectionFactory;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class GetRequestParticipacaoId extends AsyncTask<String, Void, String> {
-
+public class UpdateRequestParticipacaoIniciar extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-
         StringBuilder apiResponse = new StringBuilder();
         try {
-            URL findById = new URL("http://" + ConnectionFactory.serverIP + "/participacoes/por-inscricao/" + strings[0] );
-            HttpURLConnection connection = (HttpURLConnection) findById.openConnection();
-            connection.setRequestMethod("GET");
+            URL update = new URL("http://" + ConnectionFactory.serverIP + "/participacoes/iniciar/" + strings[0] );
+            HttpURLConnection connection = (HttpURLConnection) update.openConnection();
+
+            connection.setRequestMethod("PUT");
+
             connection.setRequestProperty("Content-type", "application/json");
+            connection.setRequestProperty("Accept", "application/json");
+
             connection.setDoOutput(true);
-            connection.setConnectTimeout(15000);
+
+
             connection.connect();
 
-            Scanner scanner = new Scanner(findById.openStream());
-            scanner.useDelimiter("\\A");
-            while (scanner.hasNext()) {
-                apiResponse.append(scanner.next());
-            }
+            String jsonResponse = new Scanner(connection.getInputStream()).next();
+
+            return jsonResponse;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return apiResponse.toString();
     }
-
 }

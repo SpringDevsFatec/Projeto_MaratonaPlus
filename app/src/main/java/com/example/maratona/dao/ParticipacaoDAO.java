@@ -8,13 +8,22 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.maratona.model.Maratonas;
 import com.example.maratona.model.Participacao;
+import com.example.maratona.service.GetRequestMaratonaId;
+import com.example.maratona.service.GetRequestParticipacaoId;
 import com.example.maratona.service.InsertRequestParticipacao;
 import com.example.maratona.service.UpdateRequestEmpresa;
+import com.example.maratona.service.UpdateRequestParticipacaoDesistir;
+import com.example.maratona.service.UpdateRequestParticipacaoFinalizar;
+import com.example.maratona.service.UpdateRequestParticipacaoIniciar;
 import com.example.maratona.util.ConnectionFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -104,7 +113,7 @@ public class ParticipacaoDAO {
             String jsonString = objectMapper.writeValueAsString(p);
 
             // Envia os dados para o servidor usando um PUT
-            UpdateRequestEmpresa updateRequest = new UpdateRequestEmpresa();
+            UpdateRequestParticipacaoFinalizar updateRequest = new UpdateRequestParticipacaoFinalizar();
             String response = updateRequest.execute(String.valueOf(id), String.valueOf(distancia), jsonString).get();
 
             if (response == null || response.isEmpty()) {
@@ -119,27 +128,94 @@ public class ParticipacaoDAO {
         }
     }
 
+    public void InicarParticipacao(int id) {
+
+        try {
+            // Cria o JSON do objeto Empresas
+            ObjectMapper objectMapper = new ObjectMapper();
+
+
+            // Envia os dados para o servidor usando um PUT
+            UpdateRequestParticipacaoIniciar updateRequest = new UpdateRequestParticipacaoIniciar();
+            String response = updateRequest.execute(String.valueOf(id)).get();
+
+            if (response == null || response.isEmpty()) {
+                System.err.println("Erro: Nenhuma resposta ao atualizar empresa com ID " + response);
+            } else {
+                System.out.println("Empresa atualizada com sucesso no servidor.");
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void DesistirParticipacao(int id) {
+
+        try {
+            // Cria o JSON do objeto Empresas
+            ObjectMapper objectMapper = new ObjectMapper();
+
+
+            // Envia os dados para o servidor usando um PUT
+            UpdateRequestParticipacaoDesistir updateRequest = new UpdateRequestParticipacaoDesistir();
+            String response = updateRequest.execute(String.valueOf(id)).get();
+
+            if (response == null || response.isEmpty()) {
+                System.err.println("Erro: Nenhuma resposta ao atualizar empresa com ID " + response);
+            } else {
+                System.out.println("Empresa atualizada com sucesso no servidor.");
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
         // Ler uma Participacao por ID
         public Participacao readParticipacao ( int id){
-            String[] args = {String.valueOf(id)};
-            Cursor cursor = banco.rawQuery("SELECT * FROM participacao WHERE id_participacao = ?", args); // Corrigido
+            Participacao p = null;
 
-            Participacao participacao = new Participacao();
-            if (cursor.moveToFirst()) {
-                participacao.setIdParticipacao(cursor.getInt(0));
-                participacao.setIdInscricao(cursor.getInt(1));
-                participacao.setStatusConclusao(cursor.getString(2));
-                participacao.setTempoRegistrado(String.valueOf(cursor.getString(3)));
-                participacao.setTempoInicio(String.valueOf(cursor.getString(4)));
-                participacao.setTempoFim(String.valueOf(cursor.getString(5)));
-                participacao.setPassos(cursor.getInt(6));
+            if ("Online".equals(FormConnect)) {
+                try {
+                    // Faz a solicitação para obter o JSON correspondente ao ID
+                    GetRequestParticipacaoId findByIdRequest = new GetRequestParticipacaoId();
+                    String jsonString = findByIdRequest.execute(String.valueOf(id)).get();
+                    Log.i("MARATONA JSONNNNNNN",jsonString);
+                    if (jsonString != null && !jsonString.isEmpty()) {
+                        p = parseParticipacaoFromJson(jsonString);
+                    } else {
+                        System.err.println("Erro: Resposta JSON vazia ou nula para o ID " + id);
+                    }
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    throw new RuntimeException("Erro ao processar o JSON", e);
+                }
             }
-            cursor.close();
-            return participacao;
+
+            return p;
         }
 
+    private Participacao parseParticipacaoFromJson(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
 
-        public int getIdParticipacao ( int idInscricao){
+        Participacao p = new Participacao();
+        p.setIdParticipacao(jsonObject.getInt("idParticipacao"));
+        p.setIdInscricao(jsonObject.getInt("idInscricao"));
+        p.setStatusConclusao(jsonObject.getString("statusConclusao"));
+        p.setTempoRegistrado(jsonObject.getString("tempoRegistrado"));
+        p.setTempoInicio(jsonObject.getString("tempoInicio"));
+        p.setTempoIngresso(jsonObject.getString("tempoIngresso"));
+        p.setTempoFim(jsonObject.getString("tempoFim"));
+        p.setVelocidadeKm((float) jsonObject.getDouble("velocidadeKm"));
+        p.setVelocidadeMs((float) jsonObject.getDouble("velocidadeMs"));
+        p.setPassos(jsonObject.getInt("passos"));
+
+        return p;
+    }
+
+
+    public int getIdParticipacao ( int idInscricao){
             String[] args = {String.valueOf(idInscricao)};
 
             // Query para buscar o id_participacao baseado no id_inscricao

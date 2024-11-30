@@ -25,10 +25,6 @@ public class UpdateRequestParticipacaoDesistir extends AsyncTask<String, Void, S
             connection.setRequestProperty("Accept", "application/json");
 
             connection.setDoOutput(true);
-
-            PrintStream printStream = new PrintStream(connection.getOutputStream());
-            printStream.println(strings[1]);
-
             connection.connect();
 
             String jsonResponse = new Scanner(connection.getInputStream()).next();

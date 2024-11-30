@@ -43,6 +43,25 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/Desiste"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5sp"
+            android:layout_marginEnd="5sp"
+            android:layout_weight="1"
+            android:enabled="true"
+            android:onClick="CancelarParticipacao"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:padding="12dp"
+            android:background="@drawable/rounded_edit_text2"
+            android:capitalize="none"
+            android:fontFamily="@font/raleway_extrabold"
+            android:text="Desistir da Maratona" />
+
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/stop"
             android:layout_width="0sp"
             android:layout_height="wrap_content"
@@ -60,6 +79,8 @@
             android:capitalize="none"
             android:fontFamily="@font/raleway_extrabold"
             android:text="Finalizar Maratona" />
+
+
 
     </LinearLayout>
 
