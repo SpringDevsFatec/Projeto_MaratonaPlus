@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -67,6 +68,13 @@ public class Cronometro extends AppCompatActivity {
         distanciaMaratona = intent.getIntExtra("distancia", -1);
         idinscricao = intent.getIntExtra("inscricaoId", -1);
         idParticipacao = intent.getIntExtra("participacaoId", -1);
+
+        Log.i("USERID_CRONOMETRO",String.valueOf(userId));
+        Log.i("MARATONAID_CRONOMETRO",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_CRONOMETRO",String.valueOf(idinscricao));
+        Log.i("DISTANCIA_CRONOMETRO",String.valueOf(distanciaMaratona));
+        Log.i("PARTICIPACAOID_CRONOMETRO",String.valueOf(idParticipacao));
+
 
         handler = new Handler(Looper.getMainLooper());
 

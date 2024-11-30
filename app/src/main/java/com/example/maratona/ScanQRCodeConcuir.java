@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -51,6 +52,12 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
         idParticipacao = intent.getIntExtra("participacaoId", -1);
 
 
+        Log.i("USERID_SCANQRCODECONCLUIR",String.valueOf(userId));
+        Log.i("MARATONAID_SCANQRCODECONCLUIR",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_SCANQRCODECONCLUIR",String.valueOf(idinscricao));
+        Log.i("PARTICIPACAOID_SCANQRCODECONCLUIR",String.valueOf(idParticipacao));
+
+
 
         barcodeScannerView = findViewById(R.id.barcodeScanner2);
 
@@ -79,7 +86,7 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                         Toast.makeText(ScanQRCodeConcuir.this, "Sua Presença foi contabilizada com sucesso!", Toast.LENGTH_SHORT).show();
 
                         /*Manda para tela de Maratonas Concluidas*/
-                        Intent it = new Intent(ScanQRCodeConcuir.this, TelaConcluida.class);
+                        Intent it = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
                         it.putExtra("id", userId);
                         startActivity(it);
                         finishActivity(1);

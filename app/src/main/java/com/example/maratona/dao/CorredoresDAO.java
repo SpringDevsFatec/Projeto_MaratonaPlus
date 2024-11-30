@@ -18,6 +18,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,9 +46,9 @@ public class CorredoresDAO {
 
                 InsertRequestCorredor insertRequest = new InsertRequestCorredor();
                 String jsonString = insertRequest.execute(jsonUser).get();
-                Log.i("jsonInsert", jsonString);
-                Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
-                Corredores corredorRetornado = objectMapper.readValue(jsonString, Corredores.class);
+                Log.i("JSONINSERT", jsonString);
+                //Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
+                Corredores corredorRetornado = parseCorredorFromJson(jsonString);
 
                 // Retorna o ID do corredor inserido
                 return corredorRetornado.getIdCorredor();
@@ -57,6 +60,8 @@ public class CorredoresDAO {
                 // Lida com erros de serialização/deserialização JSON
                 e.printStackTrace();
                 throw new RuntimeException("Erro ao processar JSON.", e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
         } else {
             ContentValues values = new ContentValues();
@@ -71,6 +76,24 @@ public class CorredoresDAO {
 
         }
     }
+
+    private Corredores parseCorredorFromJson(String jsonString) throws JSONException {
+        JSONObject jsonObject = new JSONObject(jsonString);
+
+        Corredores corredor = new Corredores();
+        corredor.setIdCorredor(jsonObject.getInt("idCorredor"));
+        corredor.setNome(jsonObject.getString("nome"));
+        corredor.setTelefone(jsonObject.getString("telefone"));
+        corredor.setEmail(jsonObject.getString("email"));
+        corredor.setSenha(jsonObject.getString("senha"));
+        corredor.setCpf(jsonObject.getString("cpf"));
+        corredor.setEndereco(jsonObject.getString("endereco"));
+        corredor.setPaisOrigem(jsonObject.getString("paisOrigem"));
+        corredor.setGenero(jsonObject.getString("genero"));
+
+        return corredor;
+    }
+
 
     public void update(Corredores corredor) {
         if ("Online".equals(FormConnect)) {

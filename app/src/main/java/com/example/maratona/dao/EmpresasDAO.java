@@ -45,7 +45,7 @@ public class EmpresasDAO {
                 InsertRequestEmpresa insertRequest = new InsertRequestEmpresa();
                 String jsonString = insertRequest.execute(jsonUser).get();
                 Log.i("jsonInsert", jsonString);
-                Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
+                //Map<String, Object> map = objectMapper.readValue(jsonString, Map.class);
                 Empresas empresaRetornado = objectMapper.readValue(jsonString, Empresas.class);
 
                 // Retorna o ID do corredor inserido

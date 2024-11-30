@@ -51,10 +51,10 @@ public class TeladeLogin extends AppCompatActivity {
 
     public void Logar(View view) {
         // Verificar se há conexão com a internet antes de continuar
-        if (!NetworkUtils.isInternetAvailable(this)) {
-            Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
-            return; // Encerra o método para evitar execução adicional
-        }
+       // if (!NetworkUtils.isInternetAvailable(this)) {
+         //   Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
+           // return; // Encerra o método para evitar execução adicional
+        //}
 
         String email = edtEmail.getText().toString();
         String senha = edtSenha.getText().toString();
@@ -98,15 +98,15 @@ public class TeladeLogin extends AppCompatActivity {
 
 
     public void Tela_Cadastrar(View view) {
-        if (!NetworkUtils.isInternetAvailable(this)) {
+        //if (!NetworkUtils.isInternetAvailable(this)) {
         //Declarando uma variável do tipo Intent
             Intent it = new Intent(this, CadastroUsuario.class);
 
             startActivity(it);
-        } else {
+        //} else {
             // Caso contrário, exibir uma mensagem de erro
-            Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
-        }
+           // Toast.makeText(this, "Sem conexão com a Internet. Verifique e tente novamente.", Toast.LENGTH_LONG).show();
+        //}
     }
 
 }

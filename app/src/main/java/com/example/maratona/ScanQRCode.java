@@ -51,8 +51,11 @@ public class ScanQRCode extends AppCompatActivity {
         distanciaMaratona = intent.getIntExtra("distancia", -1);
         inscricaoId = intent.getIntExtra("inscricaoId", -1);
 
-        Log.i("DISTANCIA", String.valueOf(distanciaMaratona));
-        Log.i("INSCRICAOID", String.valueOf(inscricaoId));
+
+        Log.i("USERID_SCANQRCODE",String.valueOf(userId));
+        Log.i("MARATONAID_SCANQRCODE",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_SCANQRCODE",String.valueOf(inscricaoId));
+        Log.i("DISTANCIA_SCANQRCODE",String.valueOf(distanciaMaratona));
 
         barcodeScannerView = findViewById(R.id.barcodeScanner);
 
@@ -86,7 +89,9 @@ public class ScanQRCode extends AppCompatActivity {
                             ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCode.this);
 
                             long idParticipacao = pdao.insertParticipacao(p);
-                        Toast.makeText(ScanQRCode.this, "Participação Aceita!", Toast.LENGTH_SHORT).show();
+
+                            Log.i("IDPARTICIPACAO_CRIADA_SCANQRCODE", String.valueOf(idParticipacao));
+                        Toast.makeText(ScanQRCode.this, "Participação Aceita! seu numero é "+ idParticipacao, Toast.LENGTH_SHORT).show();
                             // Vai para a tela de Participando
                             Intent intent;
                             intent = new Intent(ScanQRCode.this, AguardeMaratona.class);
@@ -94,8 +99,8 @@ public class ScanQRCode extends AppCompatActivity {
                             intent.putExtra("maratonaId", maratonaId);
                             intent.putExtra("id", userId);
                             intent.putExtra("distancia", distanciaMaratona);
-                            intent.putExtra("inscricaoId", id);
-                            intent.putExtra("participacaoId", idParticipacao);
+                            intent.putExtra("inscricaoId", Integer.valueOf(id));
+                            intent.putExtra("participacaoId", Integer.valueOf((int) idParticipacao));
 
 
                             startActivity(intent);

@@ -32,6 +32,10 @@ public class TelaConcluida extends AppCompatActivity {
         idParticipacao = intent.getIntExtra("participacaoId", -1);
 
 
+        Log.i("USERID_TELACONCLUIDA",String.valueOf(userId));
+        Log.i("MARATONAID_TELACONCLUIDA",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_TELACONCLUIDA",String.valueOf(idinscricao));
+        Log.i("PARTICIPACAOID_TELACONCLUIDA",String.valueOf(idParticipacao));
 
 
     }

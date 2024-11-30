@@ -343,17 +343,13 @@ public class InscricaoDAO {
 
             // Verifica se o JSON contém o id_inscricao
             if (jsonString != null && !jsonString.isEmpty()) {
-                // Processa o JSON para obter o id_inscricao
-                JSONObject jsonResponse = new JSONObject(jsonString);
-                if (jsonResponse.has("id_inscricao")) {
-                    idInscricao = jsonResponse.getInt("id_inscricao");
-                }
+
+                    idInscricao = Integer.parseInt(jsonString);
+
             }
 
         } catch (ExecutionException | InterruptedException e) {
             Log.e("INSCRICAO_ERRO", "Erro ao executar a requisição: ", e);
-        } catch (JSONException e) {
-            Log.e("INSCRICAO_ERRO", "Erro ao processar o JSON: ", e);
         }
 
         return idInscricao; // Retorna o id_inscricao ou -1 se não encontrado

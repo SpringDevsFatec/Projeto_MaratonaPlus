@@ -2,6 +2,8 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,7 +15,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.maratona.dao.MaratonasDAO;
 import com.example.maratona.dao.ParticipacaoDAO;
-import com.example.maratona.model.Maratonas;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,26 +46,33 @@ public class AguardeMaratona extends AppCompatActivity {
         idInscricao = intent.getIntExtra("inscricaoId", -1);
         idParticipacao = intent.getIntExtra("participacaoId", -1);
 
+        Log.i("USERID_AGUARDE", String.valueOf(userId));
+        Log.i("MARATONAID_AGUARDE", String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_AGUARDE", String.valueOf(idInscricao));
+        Log.i("DISTANCIA_AGUARDE", String.valueOf(distanciaMaratona));
+        Log.i("PARTICIPACAOID_AGUARDE", String.valueOf(idParticipacao));
+
         MaratonasDAO mdao = new MaratonasDAO(this);
 
         // Verifica se a maratona está em andamento
         boolean emAndamento = mdao.verificaEmAndamento(maratonaId);
 
         if (emAndamento) {
-           ParticipacaoDAO pdao = new ParticipacaoDAO(this);
-           pdao.InicarParticipacao(idInscricao);
-            Toast.makeText(AguardeMaratona.this, "Sua Prova já foi Iniciada, Boa Sorte!", Toast.LENGTH_SHORT).show();
+            ParticipacaoDAO pdao = new ParticipacaoDAO(this);
+            pdao.InicarParticipacao(idInscricao);
+            showToast("Sua Prova já foi Iniciada, Boa Sorte!");
 
-                Intent it = new Intent(AguardeMaratona.this, Cronometro.class);
-                it.putExtra("maratonaId", maratonaId);
-                it.putExtra("id", userId);
-                it.putExtra("distancia", distanciaMaratona);
-                it.putExtra("inscricaoId", idInscricao);
-                it.putExtra("participacaoId", idParticipacao);
+            Intent it = new Intent(AguardeMaratona.this, Cronometro.class);
+            it.putExtra("maratonaId", maratonaId);
+            it.putExtra("id", userId);
+            it.putExtra("distancia", distanciaMaratona);
+            it.putExtra("inscricaoId", idInscricao);
+            it.putExtra("participacaoId", idParticipacao);
 
-                startActivity(it);
-                finish(); // Fecha a Activity atual
-            }
+            startActivity(it);
+            finish(); // Fecha a Activity atual
+        }
+
         // Executor para tarefas agendadas
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
@@ -73,12 +81,14 @@ public class AguardeMaratona extends AppCompatActivity {
             try {
                 // Verifica se a maratona está em andamento
                 boolean em_Andamento = mdao.verificaEmAndamento(maratonaId);
-                Toast.makeText(AguardeMaratona.this, "Aguarde a sua prova ser Iniciada!", Toast.LENGTH_SHORT).show();
+
+                runOnUiThread(() -> showToast("Aguarde a sua prova ser Iniciada!"));
+
                 if (em_Andamento) {
                     runOnUiThread(() -> {
                         ParticipacaoDAO pdao = new ParticipacaoDAO(this);
-                        pdao.InicarParticipacao(idInscricao);
-                        Toast.makeText(AguardeMaratona.this, "Prova Iniciada, Boa Sorte!", Toast.LENGTH_SHORT).show();
+                        pdao.InicarParticipacao(idParticipacao);
+                        showToast("Prova Iniciada, Boa Sorte!");
 
                         Intent it = new Intent(AguardeMaratona.this, Cronometro.class);
                         it.putExtra("maratonaId", maratonaId);
@@ -102,11 +112,18 @@ public class AguardeMaratona extends AppCompatActivity {
         scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.SECONDS);
     }
 
+    private void showToast(String message) {
+        new Handler(Looper.getMainLooper()).post(() ->
+                Toast.makeText(AguardeMaratona.this, message, Toast.LENGTH_SHORT).show());
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         // Certifique-se de que o executor seja encerrado para evitar vazamento de recursos
         ExecutorService scheduler = null;
-        scheduler.shutdownNow();
+        if (scheduler != null) {
+            scheduler.shutdownNow();
+        }
     }
 }

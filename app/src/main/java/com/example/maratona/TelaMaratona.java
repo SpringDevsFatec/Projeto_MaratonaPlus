@@ -129,6 +129,13 @@ public class TelaMaratona extends AppCompatActivity {
         });
 
 
+
+        Log.i("USERID_TELAMARATONA",String.valueOf(userId));
+        Log.i("MARATONAID_TELAMARATONA",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_TELAMARATONA",String.valueOf(inscricaoId));
+        Log.i("DISTANCIA_TELAMARATONA",String.valueOf(distancia));
+
+
     }
 
     private void confereStatus(Maratonas maratonas){

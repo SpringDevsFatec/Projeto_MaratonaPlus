@@ -16,7 +16,7 @@ public class GetRequestInscricaoPorCorredoreEMaratona extends AsyncTask<String, 
 
         StringBuilder apiResponse = new StringBuilder();
         try {
-            URL findById = new URL("http://" + ConnectionFactory.serverIP + "/corredor/"+ strings[0]+"/maratona/" + strings[1] );
+            URL findById = new URL("http://" + ConnectionFactory.serverIP + "/inscricoes/corredor/"+ strings[0]+"/maratona/" + strings[1] );
             HttpURLConnection connection = (HttpURLConnection) findById.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-type", "application/json");
