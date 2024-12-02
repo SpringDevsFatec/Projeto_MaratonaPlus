@@ -33,7 +33,7 @@ public class TelaHub extends AppCompatActivity {
         userId = intent.getIntExtra("id", -1);
 
         // Log para verificar se o userId foi recebido corretamente
-        Log.d("TelaHub", "Received userId: " + userId);
+        Log.i("TelaHub", "Received userId: " + userId);
 
 
     }

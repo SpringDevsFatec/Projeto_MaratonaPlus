@@ -52,7 +52,7 @@ public class VisualizarConcluidas extends AppCompatActivity {
 
             // Cria um Intent para abrir o AlterarExcluirActivity com os dados do aluno
             Intent it = new Intent(VisualizarConcluidas.this, TelaMaratona.class);
-            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getIdMaratona());
             it.putExtra("id", userId);
             it.putExtra("activity", "VisualizarConcluidas");
 
@@ -71,7 +71,7 @@ public class VisualizarConcluidas extends AppCompatActivity {
                 listaMaratonas
         );
         Log.d("VisualizarConcluidas", "Maratonas encontradas: " + listaMaratonas.size());
-        Toast.makeText(this, "Maratonas encontradas: " + listaMaratonas.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Maratonas encontradas: " + listaMaratonas.size(), Toast.LENGTH_SHORT).show();
         listViewConcluidas.setAdapter(adapter);
     }
     @Override

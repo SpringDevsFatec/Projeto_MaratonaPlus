@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.maratona.dao.MaratonasDAO;
+import com.example.maratona.model.Maratonas;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -42,21 +43,21 @@ public class  GerarQRCode extends AppCompatActivity {
 
         txtNomeMaratona.setText(nomeMaratona);
 
-        if (!Activity.equals("Aberta para Inscrição")){
+        if (!Activity.equals("ABERTA_PARA_INSCRICAO")){
             btnGenerateQRCode.setVisibility(View.GONE);
-            geraQrCode(qrData);
+            geraQrCode(qrData,false);
         }
 
 
 
         // Ao clicar no botão, gera o QR Code
         btnGenerateQRCode.setOnClickListener(view -> {
-            geraQrCode(qrData);
+            geraQrCode(qrData,true);
         });
 
     }
 
-    public void geraQrCode(String qrData){
+    public void geraQrCode(String qrData,boolean atualiza){
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(qrData, BarcodeFormat.QR_CODE, 300, 300);
@@ -70,9 +71,12 @@ public class  GerarQRCode extends AppCompatActivity {
 
             qrCodeImageView.setImageBitmap(qrBitmap);
 
-            MaratonasDAO m = new MaratonasDAO(this);
-            m.updateStatus(maratonaId, "Aberta");
-
+            if (atualiza) {
+                MaratonasDAO m = new MaratonasDAO(this);
+                //Maratonas mara = new Maratonas();
+                //mara.setStatus("ABERTA");
+                m.updateMaratonaAbrir(maratonaId);
+            }
         } catch (WriterException e) {
             e.printStackTrace();
         }

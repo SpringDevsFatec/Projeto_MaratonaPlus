@@ -1,16 +1,21 @@
 package com.example.maratona.model;
 
-import java.sql.Time;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Time;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Participacao {
 
     private int idParticipacao;
     private int idInscricao;
     private String statusConclusao;
-    private Time tempoRegistrado;
-    private Time tempoInicio;
-    private Time tempoFim;
+    private String tempoRegistrado;
+    private String tempoIngresso;
+    private String tempoInicio;
+    private String tempoFim;
     private int Passos;
+    private float velocidadeKm;
+    private float velocidadeMs;
 
     public Participacao() {
     }
@@ -19,14 +24,17 @@ public class Participacao {
         this.idParticipacao = idParticipacao;
     }
 
-    public Participacao(int idParticipacao, int idInscricao, String statusConclusao, Time tempoRegistrado, Time tempoFim, Time tempoInicio, int passos) {
+    public Participacao(int idParticipacao, int idInscricao, String statusConclusao, String tempoRegistrado, String tempoIngresso, String tempoInicio, String tempoFim, int passos, float velocidadeKm, float velocidadeMs) {
         this.idParticipacao = idParticipacao;
         this.idInscricao = idInscricao;
         this.statusConclusao = statusConclusao;
         this.tempoRegistrado = tempoRegistrado;
-        this.tempoFim = tempoFim;
+        this.tempoIngresso = tempoIngresso;
         this.tempoInicio = tempoInicio;
+        this.tempoFim = tempoFim;
         Passos = passos;
+        this.velocidadeKm = velocidadeKm;
+        this.velocidadeMs = velocidadeMs;
     }
 
     public int getIdParticipacao() {
@@ -45,14 +53,6 @@ public class Participacao {
         this.idInscricao = idInscricao;
     }
 
-    public Time getTempoRegistrado() {
-        return tempoRegistrado;
-    }
-
-    public void setTempoRegistrado(Time tempoRegistrado) {
-        this.tempoRegistrado = tempoRegistrado;
-    }
-
     public String getStatusConclusao() {
         return statusConclusao;
     }
@@ -61,19 +61,27 @@ public class Participacao {
         this.statusConclusao = statusConclusao;
     }
 
-    public Time getTempoInicio() {
+    public String getTempoRegistrado() {
+        return tempoRegistrado;
+    }
+
+    public void setTempoRegistrado(String tempoRegistrado) {
+        this.tempoRegistrado = tempoRegistrado;
+    }
+
+    public String getTempoInicio() {
         return tempoInicio;
     }
 
-    public void setTempoInicio(Time tempoInicio) {
+    public void setTempoInicio(String tempoInicio) {
         this.tempoInicio = tempoInicio;
     }
 
-    public Time getTempoFim() {
+    public String getTempoFim() {
         return tempoFim;
     }
 
-    public void setTempoFim(Time tempoFim) {
+    public void setTempoFim(String tempoFim) {
         this.tempoFim = tempoFim;
     }
 
@@ -83,5 +91,29 @@ public class Participacao {
 
     public void setPassos(int passos) {
         Passos = passos;
+    }
+
+    public float getVelocidadeKm() {
+        return velocidadeKm;
+    }
+
+    public void setVelocidadeKm(float velocidadeKm) {
+        this.velocidadeKm = velocidadeKm;
+    }
+
+    public float getVelocidadeMs() {
+        return velocidadeMs;
+    }
+
+    public void setVelocidadeMs(float velocidadeMs) {
+        this.velocidadeMs = velocidadeMs;
+    }
+
+    public String getTempoIngresso() {
+        return tempoIngresso;
+    }
+
+    public void setTempoIngresso(String tempoIngresso) {
+        this.tempoIngresso = tempoIngresso;
     }
 }

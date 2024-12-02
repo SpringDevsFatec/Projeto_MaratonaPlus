@@ -1,7 +1,9 @@
 package com.example.maratona.model;
 
-import java.sql.Timestamp;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Timestamp;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Empresas {
 
 

@@ -30,7 +30,9 @@
                 android:textColor="#000"
                 android:text="Atualizar Maratona " />
 
+
             <TextView
+                android:id="@+id/txtIdMaratona"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
@@ -38,18 +40,20 @@
                 android:fontFamily="@font/raleway_bold"
                 android:text="ID da Maratona:" />
 
-            <EditText
-                android:id="@+id/edtId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rounded_edit_text_maratona"
-                android:fontFamily="@font/raleway_medium"
-                android:padding="12dp"
-                android:layout_marginTop="5dp"
-                android:hint="Id da Maratona"
-                android:inputType="none"
-                android:focusable="false"
-                android:focusableInTouchMode="false" />/>
+
+                        <EditText
+                            android:id="@+id/edtId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/rounded_edit_text_maratona"
+                            android:fontFamily="@font/raleway_medium"
+                            android:padding="12dp"
+                            android:layout_marginTop="5dp"
+                            android:hint="Id da Maratona"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:focusableInTouchMode="false" />
+
 
 
             <TextView
@@ -126,9 +130,12 @@
                 android:hint="Data inicial"
                 android:background="@drawable/rounded_edit_text_maratona"
                 android:fontFamily="@font/raleway_medium"
+                android:focusable="true"
+                android:clickable="true"
                 android:padding="12dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text|date" />
+                android:layout_marginTop="5dp" />
+
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,9 +153,10 @@
                 android:hint="Data Final"
                 android:background="@drawable/rounded_edit_text_maratona"
                 android:fontFamily="@font/raleway_medium"
+                android:focusable="true"
+                android:clickable="true"
                 android:padding="12dp"
-                android:layout_marginTop="5dp"
-                android:inputType="text|date" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -167,7 +175,7 @@
                 android:padding="12dp"
                 android:layout_marginTop="5dp"
                 android:hint="Distancia"
-                android:inputType="text" />
+                android:inputType="number" />
 
             <TextView
                 android:layout_width="wrap_content"

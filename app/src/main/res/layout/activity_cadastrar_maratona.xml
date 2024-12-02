@@ -51,7 +51,8 @@
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
             android:hint="Data inicial"
-            android:inputType="text|date"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp" />
 
         <EditText
@@ -62,7 +63,8 @@
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
             android:hint="Data Final"
-            android:inputType="text|date"
+            android:focusable="false"
+            android:clickable="true"
             android:padding="12dp" />
 
         <EditText
@@ -73,7 +75,7 @@
             android:background="@drawable/rounded_edit_text_maratona"
             android:fontFamily="@font/raleway_medium"
             android:hint="Distancia"
-            android:inputType="text"
+            android:inputType="number"
             android:padding="12dp" />
 
         <EditText

@@ -30,7 +30,7 @@ public class CadastroUsuario extends AppCompatActivity {
     private EditText edtCnpj;
     private EditText edtEndereco;
     private EditText edtOrigem;
-    private EditText edtGenero;
+   // private EditText edtGenero;
     private RadioButton rdbRunner;
     private RadioButton rdbEmpresa;
     //private EditText url_foto;
@@ -56,7 +56,7 @@ public class CadastroUsuario extends AppCompatActivity {
         edtEndereco = findViewById(R.id.edtEndereco);
         edtTelefone = findViewById(R.id.edtTelefone);
         edtOrigem = findViewById(R.id.edtOrigem);
-        edtGenero = findViewById(R.id.edtGenero);
+        //edtGenero = findViewById(R.id.edtGenero);
         //edtUrl_foto = findViewById(R.id.edtUrl_foto);
     }
 
@@ -88,12 +88,13 @@ public class CadastroUsuario extends AppCompatActivity {
             c.setCpf(edtCpf.getText().toString());
             c.setEndereco(edtEndereco.getText().toString());
             c.setPaisOrigem(edtOrigem.getText().toString());
-            c.setGenero(edtGenero.getText().toString());
+            //c.setGenero(edtGenero.getText().toString());
 
             CorredoresDAO corredordao = new CorredoresDAO(this);
 
             long id = corredordao.insert(c);
-            Toast.makeText(getApplicationContext(), "Corredor inserido com o ID " + id,
+            Log.i("idInsert", String.valueOf(id));
+            Toast.makeText(getApplicationContext(), "Corredor inserido com o ID: " + id,
                     Toast.LENGTH_LONG).show();
 
 
@@ -116,6 +117,7 @@ public class CadastroUsuario extends AppCompatActivity {
             EmpresasDAO empresadao = new EmpresasDAO(this);
 
             long id = empresadao.insert(e);
+            Log.i("idInsert", String.valueOf(id));
             Toast.makeText(getApplicationContext(), "Empresa inserida com o ID " + id,
                     Toast.LENGTH_LONG).show();
 

@@ -1,6 +1,7 @@
 package com.example.maratona;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -23,9 +24,9 @@ public class EditarUsuario extends AppCompatActivity {
 
     private String Activity;
     private int userId;
-    private Button btnAtualizarCorredor;
+    private Button btnAtualizarCorredor, btnEnviarEmail;
     private EditText  edtId, edtNome, edtTelefone, edtEmail, edtSenha, edtCpf, edtGenero, edtPaisOrigem;
-    private TextView edtPerfil;
+    private TextView edtPerfil, txtIdCorredor, txtSenha, txtCpf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,6 @@ public class EditarUsuario extends AppCompatActivity {
         userId = intent.getIntExtra("id", -1);
         Activity = String.valueOf(intent.getStringExtra("activity"));
 
-
-
-
         edtPerfil = findViewById(R.id.edtPerfil);
         edtId = findViewById(R.id.edtId);
         edtNome = findViewById(R.id.edtNome);
@@ -59,6 +57,11 @@ public class EditarUsuario extends AppCompatActivity {
         edtPaisOrigem = findViewById(R.id.edtPaisOrigem);
         btnAtualizarCorredor = findViewById(R.id.btnAtualizarCorredor);
 
+        btnEnviarEmail = findViewById(R.id.btnEnviarEmail);
+
+        txtIdCorredor = findViewById(R.id.txtIdCorredor);
+        txtSenha = findViewById(R.id.txtSenha);
+        txtCpf = findViewById(R.id.txtCpf);
 
         CorredoresDAO dao = new CorredoresDAO(this);
         Corredores corredor = dao.read(userId);
@@ -70,7 +73,7 @@ public class EditarUsuario extends AppCompatActivity {
             finish();
         } else {
 
-            edtId.setText(String.valueOf(corredor.getIdCorredor()));
+            desativarCampo(edtId);
             edtNome.setText(corredor.getNome());
             edtTelefone.setText(corredor.getTelefone());
             edtEmail.setText(corredor.getEmail());
@@ -78,33 +81,48 @@ public class EditarUsuario extends AppCompatActivity {
             edtCpf.setText(corredor.getCpf());
             edtGenero.setText(corredor.getGenero());
             edtPaisOrigem.setText(corredor.getPaisOrigem());
+
+            txtIdCorredor.setVisibility(View.GONE);
+            edtId.setVisibility(View.GONE);
         }
 
         if (Activity.equals("VisualizarPerfil")) {
-            edtPerfil.setText("Perfil de Usuário");
-            edtId.setInputType(InputType.TYPE_NULL);
-            edtNome.setInputType(InputType.TYPE_NULL);
-            edtTelefone.setInputType(InputType.TYPE_NULL);
-            edtEmail.setInputType(InputType.TYPE_NULL);
-            edtSenha.setInputType(InputType.TYPE_NULL);
-            edtCpf.setInputType(InputType.TYPE_NULL);
-            edtGenero.setInputType(InputType.TYPE_NULL);
-            edtPaisOrigem.setInputType(InputType.TYPE_NULL);
-
-            edtId.setFocusable(false);
-            edtNome.setFocusable(false);
-            edtTelefone.setFocusable(false);
-            edtEmail.setFocusable(false);
-            edtSenha.setFocusable(false);
-            edtCpf.setFocusable(false);
-            edtGenero.setFocusable(false);
-            edtPaisOrigem.setFocusable(false);
-
-            btnAtualizarCorredor.setVisibility(View.GONE);
+            configurarModoVisualizar();
+        } else if (Activity.equals("EditarPerfil")) {
+            btnEnviarEmail.setVisibility(View.GONE); // Oculta o botão de envio de e-mail
         }
 
-
         btnAtualizarCorredor.setOnClickListener(this::AtualizarCorredor);
+        btnEnviarEmail.setOnClickListener(v -> enviarEmail(corredor.getEmail()));
+
+    }
+
+    private void configurarModoVisualizar() {
+        edtPerfil.setText("Perfil de Usuário");
+        desativarCampo(edtId);
+        desativarCampo(edtNome);
+        desativarCampo(edtTelefone);
+        desativarCampo(edtEmail);
+        desativarCampo(edtSenha);
+        desativarCampo(edtCpf);
+        desativarCampo(edtGenero);
+        desativarCampo(edtPaisOrigem);
+
+        txtIdCorredor.setVisibility(View.GONE);
+        edtId.setVisibility(View.GONE);
+
+        txtSenha.setVisibility(View.GONE);
+        edtSenha.setVisibility(View.GONE);
+
+        txtCpf.setVisibility(View.GONE);
+        edtCpf.setVisibility(View.GONE);
+
+        btnAtualizarCorredor.setVisibility(View.GONE);
+    }
+
+    private void desativarCampo(EditText campo) {
+        campo.setInputType(InputType.TYPE_NULL);
+        campo.setFocusable(false);
     }
 
     public void AtualizarCorredor(View view) {
@@ -144,4 +162,25 @@ public class EditarUsuario extends AppCompatActivity {
             Toast.makeText(this, "Erro ao atualizar os dados.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void enviarEmail(String emailDestinatario) {
+        if (emailDestinatario == null || emailDestinatario.isEmpty()) {
+            Toast.makeText(this, "E-mail não encontrado para este corredor.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // Apenas apps de e-mail
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{emailDestinatario});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Assunto sobre a maratona");
+        intent.putExtra(Intent.EXTRA_TEXT, "Olá! Gostaria de conversar sobre a maratona.");
+
+        // Verifica se há algum aplicativo que pode lidar com a intenção
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Nenhum aplicativo de e-mail encontrado.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

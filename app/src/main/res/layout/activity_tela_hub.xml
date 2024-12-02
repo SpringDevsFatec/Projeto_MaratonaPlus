@@ -54,7 +54,7 @@
             android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Abertas"
             android:padding="12dp"
-            android:text="Visualizar Maratonas Abertas"
+            android:text="Inscrever-se em maratonas"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
@@ -67,7 +67,7 @@
             android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Inscritas"
             android:padding="12dp"
-            android:text="Visualizar Maratonas Inscritas"
+            android:text="Participar de Maratonas"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
@@ -80,7 +80,7 @@
             android:fontFamily="@font/raleway_bold"
             android:onClick="Maratonas_Concluidas"
             android:padding="12dp"
-            android:text="Visualizar Maratonas Concluidas"
+            android:text="Visualizar Resultados"
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
     </LinearLayout>

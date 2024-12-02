@@ -1,14 +1,16 @@
 package com.example.maratona.model;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.Date;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Corredores {
     private int idCorredor;
     private String nome;
     private String telefone;
     private String email;
     private String senha;
-    //private Date dataNascimento;
+    private Date dataNascimento;
     private String cpf;
     private String endereco;
     //private String genero;

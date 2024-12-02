@@ -1,6 +1,9 @@
 package com.example.maratona;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class TelaConcluida extends AppCompatActivity {
+    private int userId,maratonaId, distanciaMaratona, idinscricao, idParticipacao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,5 +24,29 @@ public class TelaConcluida extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("id", -1);
+        maratonaId = intent.getIntExtra("maratonaId", -1);
+        idinscricao = intent.getIntExtra("inscricaoId", -1);
+        idParticipacao = intent.getIntExtra("participacaoId", -1);
+
+
+        Log.i("USERID_TELACONCLUIDA",String.valueOf(userId));
+        Log.i("MARATONAID_TELACONCLUIDA",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_TELACONCLUIDA",String.valueOf(idinscricao));
+        Log.i("PARTICIPACAOID_TELACONCLUIDA",String.valueOf(idParticipacao));
+
+
+    }
+
+    public void ScanQrcode(View view) {
+        Log.d("TelaHub", "Sending userId to EditarUsuario: " + userId);  // Log para verificar o ID
+        Intent it = new Intent(this, ScanQRCodeConcuir.class);
+        it.putExtra("maratonaId", maratonaId);
+        it.putExtra("id", userId);
+        it.putExtra("inscricaoId", idinscricao);
+        it.putExtra("participacaoId", idParticipacao);
+        startActivity(it);
     }
 }

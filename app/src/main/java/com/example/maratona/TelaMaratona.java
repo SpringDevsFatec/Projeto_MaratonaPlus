@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -30,9 +32,9 @@ import java.util.List;
 public class TelaMaratona extends AppCompatActivity {
 
     private String Activity;
-    private int userId,maratonaId;
+    private int userId,maratonaId, distancia, inscricaoId;
     private int inscreve = 0;
-    private Button btnInscrever, btnIniciarCorrida;
+    private Button btnInscrever, btnIniciarCorrida, btnVerResultado,btnCancelarInscricao;
     private RadioButton rdbBoleto,rdbCartao, rdbPix ;
     private TextView txtTituloMaratona, txtDescricaoMaratona, txtlocal, txtDataIncial, txtDataFinal, txtStatus,txtDistancia,txtRegras,txtTipoT, txtClimaEsperado,txtValor, txtIdmaratona, txtEmpresa, txtForma, txtParticipantes;
     ListView listViewParticipantes;
@@ -75,16 +77,21 @@ public class TelaMaratona extends AppCompatActivity {
         txtParticipantes = findViewById(R.id.txtParticipantes);
         btnInscrever = findViewById(R.id.btnInscrever);
         btnIniciarCorrida = findViewById(R.id.btnIniciarCorrida);
+        btnVerResultado = findViewById(R.id.btnVerResultado);
+        btnCancelarInscricao = findViewById(R.id.btnCancelarInscricao);
         rdbBoleto = findViewById(R.id.rdbBoleto);
         rdbPix = findViewById(R.id.rdbPix);
         rdbCartao = findViewById(R.id.rdbCartao);
 
-        Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, String.valueOf(Activity), Toast.LENGTH_SHORT).show();
 
-
-
+        /*Puxa Id Inscricão*/
+        InscricaoDAO i = new InscricaoDAO(this);
+        inscricaoId = i.getIdInscricao(userId,maratonaId);
+        /*Puxa Maratona*/
         MaratonasDAO dao = new MaratonasDAO(this);
         Maratonas maratona = dao.readMaratona(maratonaId);
+        distancia = Integer.parseInt(maratona.getDistancia());
 
         confereStatus(maratona);
         confereActivity(Activity);
@@ -106,7 +113,7 @@ public class TelaMaratona extends AppCompatActivity {
             txtTipoT.setText("Tipo de Terreno:"+maratona.getTipo_terreno());
             txtClimaEsperado.setText("Clima Esperado:"+maratona.getClima_esperado());
             txtValor.setText("Valor: R$"+ maratona.getValor());
-            txtIdmaratona.setText("Id da Maratona:"+ maratona.getId());
+            txtIdmaratona.setText("Id da Maratona:"+ maratona.getIdMaratona());
             txtEmpresa.setText("nome da empresa:"+maratona.getNomeCriador());
         }
 
@@ -122,21 +129,34 @@ public class TelaMaratona extends AppCompatActivity {
         });
 
 
+
+        Log.i("USERID_TELAMARATONA",String.valueOf(userId));
+        Log.i("MARATONAID_TELAMARATONA",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_TELAMARATONA",String.valueOf(inscricaoId));
+        Log.i("DISTANCIA_TELAMARATONA",String.valueOf(distancia));
+
+
     }
 
     private void confereStatus(Maratonas maratonas){
         String status = maratonas.getStatus();
 
-        if (status.equals("Aberta para Inscrição")){
+        if (status.equals("ABERTA_PARA_INSCRICAO")){
             btnInscrever.setVisibility(View.VISIBLE);
             btnIniciarCorrida.setVisibility(View.GONE);
-        } else if (status.equals("Aberta")){
+            btnVerResultado.setVisibility(View.GONE);
+            btnCancelarInscricao.setVisibility(View.GONE);
+        } else if (status.equals("ABERTA")){
             btnInscrever.setVisibility(View.GONE);
             btnIniciarCorrida.setVisibility(View.VISIBLE);
+            btnVerResultado.setVisibility(View.GONE);
+            btnCancelarInscricao.setVisibility(View.VISIBLE);
         }else {
             btnInscrever.setVisibility(View.GONE);
             btnIniciarCorrida.setVisibility(View.GONE);
-            Toast.makeText(this, "Evento Já finalizado ou passado o Prazo de Inscrição!", Toast.LENGTH_SHORT).show();
+            btnVerResultado.setVisibility(View.VISIBLE);
+            btnCancelarInscricao.setVisibility(View.GONE);
+            Toast.makeText(this, "Você já Participou deste Evento!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -220,9 +240,7 @@ public class TelaMaratona extends AppCompatActivity {
 
         if (inscreve == 0 ){
             int confereInsc;
-            InscricaoDAO dao = new InscricaoDAO(this);
-
-            confereInsc = dao.getIdInscricao(userId, maratonaId);
+            confereInsc = inscricaoId;
 
             if(confereInsc != -1){
                 Toast.makeText(this, "Você já está inscrito na Maratona.", Toast.LENGTH_SHORT).show();
@@ -265,21 +283,52 @@ public class TelaMaratona extends AppCompatActivity {
 
     public void iniciarMaratona(View view){
 
-        InscricaoDAO idao = new InscricaoDAO(this);
-        int id = idao.getIdInscricao(maratonaId, userId);
-        Inscricao i = new Inscricao();
-
-
-
         Intent intent = new Intent(this, ScanQRCode.class);
         intent.putExtra("maratonaId", maratonaId);
         intent.putExtra("id", userId);
-        intent.putExtra("activity", "Participar");
+        intent.putExtra("distancia", distancia);
+        intent.putExtra("inscricaoId", inscricaoId);
 
         startActivityForResult(intent, 1);
 
 
     }
+
+    public void CancelaInscricao(View view){
+        AlertDialog.Builder confirmaCancelamento = new AlertDialog.Builder(this, R.style.RoundedAlertDialog);
+        confirmaCancelamento.setTitle("Alerta de Cancelamento!");
+        confirmaCancelamento.setMessage("A Inscrição será Cancelada, tem certeza desta ação?");
+        confirmaCancelamento.setIcon(R.drawable.logo);
+        confirmaCancelamento.setCancelable(false);
+        confirmaCancelamento.setPositiveButton("Sim", (dialogInterface, i) -> {
+            InscricaoDAO m = new InscricaoDAO(TelaMaratona.this);
+            m.updateStatusParaDesistente(inscricaoId);
+            Toast.makeText(TelaMaratona.this, "Inscrição Cancelada com Sucesso.", Toast.LENGTH_SHORT).show();
+        });
+        confirmaCancelamento.setNegativeButton("Não", null);
+
+        AlertDialog dialog = confirmaCancelamento.create();
+        dialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            Button negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+
+            positiveButton.setTextColor(ContextCompat.getColor(this, R.color.green));
+            negativeButton.setTextColor(ContextCompat.getColor(this, R.color.red));
+        });
+        dialog.show();
+
+    }
+
+    public void VerResultado(View view){
+        Intent intent = new Intent(this, TelaResultados.class);
+        intent.putExtra("maratonaId", maratonaId);
+        intent.putExtra("id", userId);
+        intent.putExtra("inscricaoId", inscricaoId);
+
+        startActivity(intent);
+        finish();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

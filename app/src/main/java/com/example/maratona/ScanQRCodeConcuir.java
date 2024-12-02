@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,7 +30,7 @@ import java.util.List;
 
 public class ScanQRCodeConcuir extends AppCompatActivity {
 
-    private int userId,maratonaId, inscricaoId;
+    private int userId,maratonaId,  idinscricao, idParticipacao;
     private CompoundBarcodeView barcodeScannerView;
     private static final int CAMERA_PERMISSION_CODE = 100;
 
@@ -47,7 +48,14 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
         Intent intent = getIntent();
         userId = intent.getIntExtra("id", -1);
         maratonaId = intent.getIntExtra("maratonaId", -1);
-        inscricaoId = intent.getIntExtra("inscricaoId", -1);
+        idinscricao = intent.getIntExtra("inscricaoId", -1);
+        idParticipacao = intent.getIntExtra("participacaoId", -1);
+
+
+        Log.i("USERID_SCANQRCODECONCLUIR",String.valueOf(userId));
+        Log.i("MARATONAID_SCANQRCODECONCLUIR",String.valueOf(maratonaId));
+        Log.i("INSCRICAOID_SCANQRCODECONCLUIR",String.valueOf(idinscricao));
+        Log.i("PARTICIPACAOID_SCANQRCODECONCLUIR",String.valueOf(idParticipacao));
 
 
 
@@ -71,58 +79,28 @@ public class ScanQRCodeConcuir extends AppCompatActivity {
                 if (result != null) {
                     String scannedData = result.getText();
                     if (scannedData.equals(String.valueOf(maratonaId))) {
+                        /*Finaliza Inscrição*/
+                        InscricaoDAO idao = new InscricaoDAO(ScanQRCodeConcuir.this);
+                        idao.updateStatusParaFinalizado(idinscricao);
 
+                        Toast.makeText(ScanQRCodeConcuir.this, "Sua Presença foi contabilizada com sucesso!", Toast.LENGTH_SHORT).show();
 
-                        ParticipacaoDAO pdao = new ParticipacaoDAO(ScanQRCodeConcuir.this);
-                        int id = pdao.getIdParticipacao(inscricaoId);
+                        /*Manda para tela de Maratonas Concluidas*/
+                        Intent it = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
+                        it.putExtra("id", userId);
+                        startActivity(it);
+                        finishActivity(1);
 
-                        // Buscar tempo inicial
-                        long time_inicial = pdao.readTimeInicialParticipacao(id);
-
-
-                        if (time_inicial != -1) {
-
-                            long time_atual = System.currentTimeMillis();
-
-
-                            long tempo_registrado_ms = time_atual - time_inicial;
-
-
-                            Participacao p = new Participacao();
-                            p.setIdParticipacao(id);
-                            p.setStatusConclusao("Desativado");
-
-
-                            p.setTempoFim(new Time(time_atual));
-                            p.setTempoRegistrado(new Time(tempo_registrado_ms));  // Converte de milissegundos para Time
-
-                            pdao.updateStatus(p);
                         }else{
                             Toast.makeText(ScanQRCodeConcuir.this, "Tempo errado!", Toast.LENGTH_SHORT).show();
 
                             return ;
                         }
 
-                        InscricaoDAO idao = new InscricaoDAO(ScanQRCodeConcuir.this);
-
-
-                        idao.updateStatus(inscricaoId,"Concluido");
-                        Toast.makeText(ScanQRCodeConcuir.this, "Participação Finalizada, Parabens!", Toast.LENGTH_SHORT).show();
-                        // Vai para a tela de Participando
-                        Intent intent;
-                        intent = new Intent(ScanQRCodeConcuir.this, VisualizarConcluidas.class);
-
-
-                        intent.putExtra("id", userId);
-
-
-                        //  startActivityForResult(intent, 1);
-                        startActivityForResult(intent,2);
-                        finish();
 
 
 
-                }
+
             }}
 
             @Override

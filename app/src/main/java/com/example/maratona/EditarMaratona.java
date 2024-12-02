@@ -1,7 +1,9 @@
 package com.example.maratona;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +20,9 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.maratona.dao.MaratonasDAO;
 import com.example.maratona.model.Maratonas;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 public class EditarMaratona extends AppCompatActivity {
 
     private String Activity;
@@ -25,6 +30,7 @@ public class EditarMaratona extends AppCompatActivity {
     private Button btnAtualizarMaratona;
     private EditText edtId,edtStatus, edtNome, edtLocal, edtData_I, edtData_F, edtDistancia, edtDescricao,
             edtLimite_p,edtRegras,edtValor, edtTipoTerreno,edtClimaEsperado;
+    private TextView txtIdMaratona;
 
 
     @Override
@@ -57,6 +63,14 @@ public class EditarMaratona extends AppCompatActivity {
         edtClimaEsperado = findViewById(R.id.edtClimaEsperado);
         edtValor = findViewById(R.id.edtValor);
 
+        txtIdMaratona = findViewById(R.id.txtIdMaratona);
+
+        // DatePicker para a data inicial
+        edtData_I.setOnClickListener(v -> showDatePicker(edtData_I));
+
+        // DatePicker para a data final
+        edtData_F.setOnClickListener(v -> showDatePicker(edtData_F));
+
         MaratonasDAO dao = new MaratonasDAO(this);
         Maratonas maratona = dao.readMaratona(maratonaId);
 
@@ -66,7 +80,7 @@ public class EditarMaratona extends AppCompatActivity {
 
 
         }else{
-            edtId.setText(String.valueOf(maratona.getId()));
+            edtId.setInputType(InputType.TYPE_NULL);
             edtNome.setText(maratona.getNome());
             edtDescricao.setText(maratona.getDescricao());
             edtLocal.setText(maratona.getLocal());
@@ -79,6 +93,9 @@ public class EditarMaratona extends AppCompatActivity {
             edtTipoTerreno.setText(maratona.getTipo_terreno());
             edtClimaEsperado.setText(maratona.getClima_esperado());
             edtValor.setText(String.valueOf(maratona.getValor()));
+
+            txtIdMaratona.setVisibility(View.GONE);
+            edtId.setVisibility(View.GONE);
         }
 
     }
@@ -97,7 +114,7 @@ public class EditarMaratona extends AppCompatActivity {
 
 
             Maratonas m = new Maratonas();
-            m.setId(Integer.parseInt(edtId.getText().toString()));
+            m.setIdMaratona(maratonaId);
             m.setNome(nome);
             m.setCriador(userId);
             m.setData_inicio(edtData_I.getText().toString());
@@ -145,8 +162,21 @@ public class EditarMaratona extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "Erro ao cadastrar maratona: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+    private void showDatePicker(EditText editText) {
+        // Obter a data atual para exibir no DatePicker
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+        // Exibir o DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, yearSelected, monthSelected, daySelected) -> {
+            // Formatar a data no formato desejado (ISO-8601)
+            String formattedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", yearSelected, monthSelected + 1, daySelected);
+            editText.setText(formattedDate); // Exibir no campo
+        }, year, month, day);
 
-
+        datePickerDialog.show();
     }
 }

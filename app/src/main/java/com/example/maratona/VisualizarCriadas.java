@@ -2,6 +2,7 @@ package com.example.maratona;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,7 +45,7 @@ public class VisualizarCriadas extends AppCompatActivity {
 
 
             Intent it = new Intent(VisualizarCriadas.this, TelaMaratonaAdm.class);
-            it.putExtra("maratonaId", maratonaSelecionada.getId());
+            it.putExtra("maratonaId", maratonaSelecionada.getIdMaratona());
             it.putExtra("id", userId);
             it.putExtra("activity", "VisualizarCriadas");
 
@@ -54,6 +55,8 @@ public class VisualizarCriadas extends AppCompatActivity {
     private void carregarMaratonasCriadas() {
         MaratonasDAO dao = new MaratonasDAO(this);
         List<Maratonas> listaMaratonas = dao.obterMaratonasPorCriador(userId);
+
+        Log.i("MARATONASSSSSSSSS",String.valueOf(listaMaratonas));
 
         // Criando um ArrayAdapter para mostrar a lista
         ArrayAdapter<Maratonas> adapter = new ArrayAdapter<>(

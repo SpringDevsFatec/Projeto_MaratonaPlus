@@ -1,12 +1,14 @@
 package com.example.maratona.model;
 
-import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.sql.Date;
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Maratonas {
 
 
     //atributos
-    private int Id;
+    private int idMaratona;
     private int criador;
     private String Nome;
     private String local;
@@ -24,18 +26,20 @@ public class Maratonas {
 
     @Override
     public String toString() {
-        return "Maratona "+ Nome; // ou qualquer outra informação que você queira exibir na ListView
+        return "Maratona "+ Nome
+                //+ " id " + idMaratona // ou qualquer outra informação que você queira exibir na ListView
+    ;
     }
 
     public Maratonas() {
     }
 
     public Maratonas(int id) {
-        Id = id;
+        idMaratona = id;
     }
 
-    public Maratonas(int id, int criador, String nome, String local, String data_inicio, String data_final, String status, String distancia, String descricao, String regras, int limite_participantes, float valor, String clima_esperado, String tipo_terreno) {
-        Id = id;
+    public Maratonas(int idMaratona, int criador, String nome, String local, String data_inicio, String data_final, String status, String distancia, String descricao, String regras, int limite_participantes, float valor, String clima_esperado, String tipo_terreno) {
+        this.idMaratona = idMaratona;
         this.criador = criador;
         Nome = nome;
         this.local = local;
@@ -59,12 +63,12 @@ public class Maratonas {
         NomeCriador = nomeCriador;
     }
 
-    public int getId() {
-        return Id;
+    public int getIdMaratona() {
+        return idMaratona;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setIdMaratona(int id) {
+        idMaratona = id;
     }
 
     public int getCriador() {

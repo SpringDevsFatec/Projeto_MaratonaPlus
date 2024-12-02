@@ -23,11 +23,10 @@
             android:fontFamily="@font/raleway_bold"
             android:text="Editar Dados do Corredor"
             android:textColor="#000000" />
-        <!--id-->
-
-        <!-- Nome -->
+        <!--id -->
 
         <TextView
+            android:id="@+id/txtIdCorredor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -44,6 +43,7 @@
             android:padding="12dp"
             android:layout_marginTop="5dp"
             android:hint="Id do Corredor" />
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,6 +105,7 @@
 
         <!-- Senha -->
         <TextView
+            android:id="@+id/txtSenha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -127,6 +128,7 @@
 
         <!-- CPF -->
         <TextView
+            android:id="@+id/txtCpf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -198,6 +200,19 @@
             android:textSize="20sp"
             android:padding="12dp"
             android:text="Atualizar"
+            android:textColor="#FFFFFF" />
+
+        <!-- Botão para enviar email ao usuario -->
+        <Button
+            android:id="@+id/btnEnviarEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edit_text"
+            android:fontFamily="@font/raleway_bold"
+            android:textSize="20sp"
+            android:padding="12dp"
+            android:text="Enviar E-mail"
             android:textColor="#FFFFFF" />
 
         <ImageView
