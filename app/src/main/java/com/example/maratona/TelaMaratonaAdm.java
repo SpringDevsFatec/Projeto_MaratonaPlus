@@ -257,7 +257,7 @@ public class TelaMaratonaAdm extends AppCompatActivity {
 
             // Verificar se a lista está preenchida
             if (listaCorredores == null || listaCorredores.isEmpty()) {
-                Toast.makeText(this, "Nenhum Corredor Concluiu está Maratona", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(this, "Nenhum Corredor Concluiu está Maratona", Toast.LENGTH_SHORT).show();
                 Log.d("VisualizarAbertas", "Nenhuma maratona aberta encontrada");
             }
 

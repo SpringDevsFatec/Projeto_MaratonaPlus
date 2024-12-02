@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -42,16 +43,10 @@
             android:name=".CadastrarMaratona"
             android:exported="false" />
         <activity
-            android:name=".ConfirmacaoQrCode"
-            android:exported="false" />
-        <activity
             android:name=".GerarQRCode"
             android:exported="false" />
         <activity
             android:name=".EditarEmpresa"
-            android:exported="false" />
-        <activity
-            android:name=".CadastroEmpresa"
             android:exported="false" />
         <activity
             android:name=".EditarUsuario"
@@ -61,12 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".CadastroUsuario"
-            android:exported="false" />
-        <activity
-            android:name=".participar_tela"
-            android:exported="false" />
-        <activity
-            android:name=".Tela_concluir"
             android:exported="false" />
         <activity
             android:name=".TelaParticipando"

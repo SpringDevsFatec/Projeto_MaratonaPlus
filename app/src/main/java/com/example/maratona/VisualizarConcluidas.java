@@ -71,7 +71,7 @@ public class VisualizarConcluidas extends AppCompatActivity {
                 listaMaratonas
         );
         Log.d("VisualizarConcluidas", "Maratonas encontradas: " + listaMaratonas.size());
-        Toast.makeText(this, "Maratonas encontradas: " + listaMaratonas.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, "Maratonas encontradas: " + listaMaratonas.size(), Toast.LENGTH_SHORT).show();
         listViewConcluidas.setAdapter(adapter);
     }
     @Override
